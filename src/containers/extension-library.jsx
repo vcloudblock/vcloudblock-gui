@@ -19,8 +19,16 @@ const messages = defineMessages({
         defaultMessage: 'Enter the URL of the extension',
         description: 'Prompt for unoffical extension url',
         id: 'gui.extensionLibrary.extensionUrl'
+    },
+    legoTag: {
+        id: 'gui.library.lego',
+        defaultMessage: 'Lego',
+        description: 'Lego tag to filter all lego libraries.'
     }
 });
+
+const LEGO_TAG = {tag: 'lego', intlLabel: messages.legoTag};
+const tagListPrefix = [LEGO_TAG];
 
 class ExtensionLibrary extends React.PureComponent {
     constructor (props) {
@@ -45,16 +53,19 @@ class ExtensionLibrary extends React.PureComponent {
                 });
             }
         }
+        this.props.vm.extensionManager.loadExtensionURL
     }
     render () {
         const extensionLibraryThumbnailData = extensionLibraryContent.map(extension => ({
             rawURL: extension.iconURL || extensionIcon,
             ...extension
         }));
+
         return (
             <LibraryComponent
                 data={extensionLibraryThumbnailData}
-                filterable={false}
+                filterable={true}
+                tags={tagListPrefix}
                 id="extensionLibrary"
                 title={this.props.intl.formatMessage(messages.extensionTitle)}
                 visible={this.props.visible}
