@@ -53,7 +53,6 @@ class ExtensionLibrary extends React.PureComponent {
                 });
             }
         }
-        this.props.vm.extensionManager.loadExtensionURL
     }
     render () {
         const extensionLibraryThumbnailData = extensionLibraryContent.map(extension => ({
