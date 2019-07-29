@@ -46,6 +46,9 @@ import gdxforInsetIconURL from './gdxfor/gdxfor-small.svg';
 import gdxforConnectionIconURL from './gdxfor/gdxfor-illustration.svg';
 import gdxforConnectionSmallIconURL from './gdxfor/gdxfor-small.svg';
 
+import arduinoUnoIconURL from './arduinoUno/arduino.png';
+import arduinoUnoInsetIconURL from './arduinoUno/arduino-small.png';
+
 export default [
     {
         name: (
@@ -317,5 +320,22 @@ export default [
             />
         ),
         helpLink: 'https://scratch.mit.edu/vernier'
-    }
+    },
+    {
+        name: 'Arduino Uno',
+        extensionId: 'arduinouno',
+        collaborator: 'ScienceStorm',
+        iconURL: arduinoUnoIconURL,
+        insetIconURL: arduinoUnoInsetIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="Test message."
+                description="Test description"
+                id="gui.extension.arduinouno.description"
+            />
+        ),
+        featured: true,
+        disabled: false,
+        helpLink: 'https://www.sxyiqichuang.com'
+    },
 ];
