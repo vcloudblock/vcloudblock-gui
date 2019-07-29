@@ -1,0 +1,24 @@
+.cm-s-arduino span.cm-meta { color: #FF1717; }
+/* .cm-s-arduino span.cm-keyword { line-height: 1em; font-weight: bold; color: rgb(94, 109, 3); } */
+.cm-s-arduino span.cm-keyword { color: rgb(94, 109, 3); }
+.cm-s-arduino span.cm-atom { color: #219; }
+.cm-s-arduino span.cm-number { color:black; }
+.cm-s-arduino span.cm-def { color: rgb(94, 109, 3); }
+.cm-s-arduino span.cm-variable { color: black; }
+.cm-s-arduino span.cm-variable-2 { color: #0000C0; }
+.cm-s-arduino span.cm-type { color: rgb(23, 161, 165); }
+.cm-s-arduino span.cm-property { color: black; }
+.cm-s-arduino span.cm-operator { color: black; }
+.cm-s-arduino span.cm-comment { color: #3F7F5F; }
+.cm-s-arduino span.cm-string { color: #2A00FF; }
+.cm-s-arduino span.cm-string-2 { color: #f50; }
+.cm-s-arduino span.cm-qualifier { color: #555; }
+.cm-s-arduino span.cm-builtin { color: #30a; }
+.cm-s-arduino span.cm-bracket { color: #cc7; }
+.cm-s-arduino span.cm-tag { color: #170; }
+.cm-s-arduino span.cm-attribute { color: #00c; }
+.cm-s-arduino span.cm-link { color: #219; }
+.cm-s-arduino span.cm-error { color: #f00; }
+
+.cm-s-arduino .CodeMirror-activeline-background { background: #e8f2ff; }
+.cm-s-arduino .CodeMirror-matchingbracket { outline:1px solid grey; color:black !important; }
