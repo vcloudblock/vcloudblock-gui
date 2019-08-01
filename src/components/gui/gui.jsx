@@ -333,7 +333,7 @@ const GUIComponent = props => {
                             ) : null}
                         </Box>
 
-                        {/*<Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
+                        <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
                             <StageWrapper
                                 isRendererSupported={isRendererSupported}
                                 isRtl={isRtl}
@@ -346,7 +346,7 @@ const GUIComponent = props => {
                                     vm={vm}
                                 />
                             </Box>
-                        </Box>*/}
+                        </Box>
                         <Box>
                             <CodeEditor/>
                         </Box>
