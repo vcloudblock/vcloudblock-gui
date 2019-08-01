@@ -1,64 +1,53 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import CodeMirror from 'react-codemirror';
-import 'codemirror/lib/codemirror.css';
+import MonacoEditor from "react-monaco-editor";
 
-// 导入语言类型
-import 'codemirror/mode/clike/clike.js';
-
-// 按ctrl+空格进行提示功能
-import 'codemirror/addon/hint/show-hint.css';
-import 'codemirror/addon/hint/show-hint.js';
-
-// 导入theme文件
-import './arduino.css';
-
-const CodeEditorComponent = function (props) {
+const CodeEditorComponent = props => {
     const {
+        language,
         value,
-        onChange,
         options,
+        onChange,
+        editorDidMount,
+        theme,
         ...componentProps
     } = props;
     return (
-        <CodeMirror
+        <MonacoEditor
+            language={language}
             value={value}
-            onChange={onChange}
             options={options}
+            height="400"
+            width="400"
+            onChange={onChange}
+            editorDidMount={editorDidMount}
+            theme={theme}
             {...componentProps}
         />
     );
 };
 
 CodeEditorComponent.propTypes = {
-    active: PropTypes.bool,
-    className: PropTypes.string,
-    onClick: PropTypes.func.isRequired,
-    title: PropTypes.string,
-    options:{
-        lineNumbers: PropTypes.bool,
-        mode: {
-            name: PropTypes.string
-        },
-        extraKeys: {
-            "Ctrl-Space": PropTypes.string
-        }, 
-        theme: PropTypes.string,
-        tabSize: PropTypes.number,
-        indentWithTabs: PropTypes.bool
-    }
+    language: PropTypes.string,
+    value: PropTypes.string,
+    options:PropTypes.object,
+    onChange: PropTypes.func,
+    editorDidMount: PropTypes.func,
+    theme: PropTypes.string
 };
 
 CodeEditorComponent.defaultProps = {
+    language: "cpp",
+    value: "void setup() {\n  // put your setup code here, to run once:\n\n}\n\nvoid loop() {\n  // put your main code here, to run repeatedly:\n\n}",
     options:{
-        lineNumbers: true,
-        mode: { name: 'text/x-c++src' },
-        extraKeys: { "Ctrl-Space": "autocomplete" }, 
-        theme: "arduino",
-        tabSize: 2,
-        indentWithTabs: true
-    }
+        selectOnLineNumbers: true,
+        roundedSelection: true,
+        readOnly: false,
+        cursorStyle: "line",
+        automaticLayout: false
+    },
+    theme: "vs-light"
 };
 
 export default CodeEditorComponent;
