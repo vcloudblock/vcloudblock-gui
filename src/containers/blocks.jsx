@@ -57,6 +57,8 @@ class Blocks extends React.Component {
             'handleDrop',
             'handleStatusButtonUpdate',
             'handleOpenSoundRecorder',
+            // 'sb2cpp',
+            'handleDragUpdate',
             'handlePromptStart',
             'handlePromptCallback',
             'handlePromptClose',
@@ -263,6 +265,7 @@ class Blocks extends React.Component {
         this.props.vm.addListener('BLOCKSINFO_UPDATE', this.handleBlocksInfoUpdate);
         this.props.vm.addListener('PERIPHERAL_CONNECTED', this.handleStatusButtonUpdate);
         this.props.vm.addListener('PERIPHERAL_DISCONNECTED', this.handleStatusButtonUpdate);
+        this.props.vm.addListener('BLOCK_DRAG_UPDATE', this.handleDragUpdate);
     }
     detachVM () {
         this.props.vm.removeListener('SCRIPT_GLOW_ON', this.onScriptGlowOn);
@@ -276,6 +279,7 @@ class Blocks extends React.Component {
         this.props.vm.removeListener('BLOCKSINFO_UPDATE', this.handleBlocksInfoUpdate);
         this.props.vm.removeListener('PERIPHERAL_CONNECTED', this.handleStatusButtonUpdate);
         this.props.vm.removeListener('PERIPHERAL_DISCONNECTED', this.handleStatusButtonUpdate);
+        this.props.vm.removeListener('BLOCK_DRAG_UPDATE', this.handleDragUpdate);
     }
 
     updateToolboxBlockValue (id, value) {
@@ -470,6 +474,19 @@ class Blocks extends React.Component {
     }
     handleStatusButtonUpdate () {
         this.ScratchBlocks.refreshStatusButtons(this.workspace);
+    }
+    // sb2cpp(){
+    //     try {
+    //         var code = "";
+    //         code += Blockly.Arduino.workspaceToCode(this.workspace);
+    //     } catch(e) {
+    //         console.log(e.message);
+    //     }
+    //     return code;
+    // }
+    handleDragUpdate (){
+        // this.props.updatecode(this.sb2cpp());
+        console.log('handleDragUpdate');
     }
     handleOpenSoundRecorder () {
         this.props.onOpenSoundRecorder();
