@@ -61,6 +61,11 @@ class GUI extends React.Component {
             this.props.onProjectLoaded();
         }
     }
+    getEditorCode(code) {
+        this.setState({
+            editorCode: code
+          })
+    }
     render () {
         if (this.props.isError) {
             throw new Error(

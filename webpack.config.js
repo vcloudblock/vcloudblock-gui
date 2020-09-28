@@ -102,7 +102,8 @@ const base = {
     },
     plugins: [
         new MonacoWebpackPlugin({
-            languages: ["c", "cpp", "python", "lua", "javascript"]
+            languages: ["c", "cpp", "python", "lua", "javascript"],
+            features: ['!gotoSymbol']
           })
     ]
 };
