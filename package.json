@@ -13,7 +13,6 @@
     "start": "webpack-dev-server",
     "start-open": "webpack-dev-server --open --host 127.0.0.1",
     "electron-start": "electron .",
-    "electron-rebuild": "electron-rebuild  -d=http://npm.taobao.org/mirrors/atom-shell -v 5.0.11 -m=./",
     "test": "npm run test:lint && npm run test:unit && npm run build && npm run test:integration",
     "test:integration": "jest --runInBand test[\\\\/]integration",
     "test:lint": "eslint . --ext .js,.jsx",

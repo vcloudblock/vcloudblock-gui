@@ -257,46 +257,42 @@ const GUIComponent = props => {
                                                 id="gui.gui.codeTab"
                                             />
                                         </Tab>
-                                        {isRealTimeMode ? (
-                                            <Tab
-                                                className={tabClassNames.tab}
-                                                onClick={onActivateCostumesTab}
-                                            >
-                                                <img
-                                                    draggable={false}
-                                                    src={costumesIcon}
+                                        <Tab
+                                            className={tabClassNames.tab}
+                                            onClick={onActivateCostumesTab}
+                                        >
+                                            <img
+                                                draggable={false}
+                                                src={costumesIcon}
+                                            />
+                                            {targetIsStage ? (
+                                                <FormattedMessage
+                                                    defaultMessage="Backdrops"
+                                                    description="Button to get to the backdrops panel"
+                                                    id="gui.gui.backdropsTab"
                                                 />
-                                                {targetIsStage ? (
+                                            ) : (
                                                     <FormattedMessage
-                                                        defaultMessage="Backdrops"
-                                                        description="Button to get to the backdrops panel"
-                                                        id="gui.gui.backdropsTab"
+                                                        defaultMessage="Costumes"
+                                                        description="Button to get to the costumes panel"
+                                                        id="gui.gui.costumesTab"
                                                     />
-                                                ) : (
-                                                        <FormattedMessage
-                                                            defaultMessage="Costumes"
-                                                            description="Button to get to the costumes panel"
-                                                            id="gui.gui.costumesTab"
-                                                        />
-                                                    )}
-                                            </Tab>) : null}
-                                        {isRealTimeMode ? (
-                                            <Tab
-                                                className={tabClassNames.tab}
-                                                onClick={onActivateSoundsTab}
-                                            >
-                                                <React.Fragment>
-                                                    <img
-                                                        draggable={false}
-                                                        src={soundsIcon}
-                                                    />
-                                                    <FormattedMessage
-                                                        defaultMessage="Sounds"
-                                                        description="Button to get to the sounds panel"
-                                                        id="gui.gui.soundsTab"
-                                                    />
-                                                </React.Fragment>
-                                            </Tab>) : null}
+                                                )}
+                                        </Tab>
+                                        <Tab
+                                            className={tabClassNames.tab}
+                                            onClick={onActivateSoundsTab}
+                                        >
+                                            <img
+                                                draggable={false}
+                                                src={soundsIcon}
+                                            />
+                                            <FormattedMessage
+                                                defaultMessage="Sounds"
+                                                description="Button to get to the sounds panel"
+                                                id="gui.gui.soundsTab"
+                                            />
+                                        </Tab>
                                     </TabList>
                                     <TabPanel className={tabClassNames.tabPanel}>
                                         <Box className={styles.blocksWrapper}>
@@ -360,7 +356,6 @@ const GUIComponent = props => {
                                 </Box>
                             ) : (
                                     <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
-
                                         <CodeEditor value={editorCode} />
                                     </Box>
                                 )}
@@ -459,7 +454,7 @@ GUIComponent.defaultProps = {
     showComingSoon: false,
     stageSizeMode: STAGE_SIZE_MODES.large,
     editorCode: '',
-    isRealTimeMode: false,
+    isRealTimeMode: true,
 };
 
 const mapStateToProps = state => ({
