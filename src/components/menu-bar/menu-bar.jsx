@@ -562,8 +562,33 @@ class MenuBar extends React.Component {
                     </div>
                 </div>
 
+                <div className={styles.accountInfoGroup}>
+                    <div className={styles.menuBarItem}>
+                        {this.props.canSave && (
+                            <SaveStatus />
+                        )}
+                    </div>
+                    <React.Fragment>
+                        <a href="/mystuff/">
+                            <div
+                                className={classNames(
+                                    styles.menuBarItem,
+                                    styles.hoverable,
+                                    styles.mystuffButton
+                                )}
+                            >
+                                <img
+                                    className={styles.mystuffIcon}
+                                    src={mystuffIcon}
+                                />
+                            </div>
+                        </a>
+                    </React.Fragment>
+                </div>
+
                 {/* show the proper UI in the account menu, given whether the user is
                 logged in, and whether a session is available to log in with */}
+                {/*
                 <div className={styles.accountInfoGroup}>
                     <div className={styles.menuBarItem}>
                         {this.props.canSave && (
@@ -691,6 +716,7 @@ class MenuBar extends React.Component {
                         </React.Fragment>
                     )}
                 </div>
+                */}
             </Box>
         );
     }

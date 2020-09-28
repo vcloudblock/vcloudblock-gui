@@ -1,3 +1,4 @@
+/*global chrome*/
 import bindAll from 'lodash.bindall';
 import debounce from 'lodash.debounce';
 import defaultsDeep from 'lodash.defaultsdeep';
@@ -24,7 +25,10 @@ import {updateToolbox} from '../reducers/toolbox';
 import {activateColorPicker} from '../reducers/color-picker';
 import {closeExtensionLibrary, openSoundRecorder, openConnectionModal} from '../reducers/modals';
 import {activateCustomProcedures, deactivateCustomProcedures} from '../reducers/custom-procedures';
-import {setConnectionModalExtensionId} from '../reducers/connection-modal';
+import {setConnectionModalExtensionId } from '../reducers/connection-modal';
+
+// import Blockly from 'scratch-blocks';
+import ArduinoGenerator from 'scratch-blocks/arduino_compressed';
 
 import {
     activateTab,
@@ -57,7 +61,7 @@ class Blocks extends React.Component {
             'handleDrop',
             'handleStatusButtonUpdate',
             'handleOpenSoundRecorder',
-            // 'sb2cpp',
+            'sb2cpp',
             'handleDragUpdate',
             'handlePromptStart',
             'handlePromptCallback',
@@ -87,7 +91,8 @@ class Blocks extends React.Component {
         this.onTargetsUpdate = debounce(this.onTargetsUpdate, 100);
         this.toolboxUpdateQueue = [];
     }
-    componentDidMount () {
+    componentDidMount() {
+
         this.ScratchBlocks.FieldColourSlider.activateEyedropper_ = this.props.onActivateColorPicker;
         this.ScratchBlocks.Procedures.externalProcedureDefCallback = this.props.onActivateCustomProcedures;
         this.ScratchBlocks.ScratchMsgs.setLocale(this.props.locale);
@@ -475,18 +480,21 @@ class Blocks extends React.Component {
     handleStatusButtonUpdate () {
         this.ScratchBlocks.refreshStatusButtons(this.workspace);
     }
-    // sb2cpp(){
-    //     try {
-    //         var code = "";
-    //         code += Blockly.Arduino.workspaceToCode(this.workspace);
-    //     } catch(e) {
-    //         console.log(e.message);
-    //     }
-    //     return code;
-    // }
+    sb2cpp(){
+        try {
+            var code = ArduinoGenerator.workspaceToCode(this.workspace);
+        } catch(e) {
+            console.log(e.message);
+        }
+        return code;
+    }
     handleDragUpdate (){
-        // this.props.updatecode(this.sb2cpp());
-        console.log('handleDragUpdate');
+        this.props.handleCodeUpdate(this.sb2cpp());
+    }
+    onGetDevices(ports) {//遍历获取串口名称，一般只有一个串口判断if(ports.length==1){port=ports[0].path}即可
+       for (var i = 0; i < ports.length; i++) {
+           console.log(ports[i].path);
+       }
     }
     handleOpenSoundRecorder () {
         this.props.onOpenSoundRecorder();
@@ -542,6 +550,7 @@ class Blocks extends React.Component {
             onRequestCloseExtensionLibrary,
             onRequestCloseCustomProcedures,
             toolboxXML,
+            handleCodeUpdate,
             ...props
         } = this.props;
         /* eslint-enable no-unused-vars */
@@ -625,7 +634,8 @@ Blocks.propTypes = {
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
     toolboxXML: PropTypes.string,
     updateToolboxState: PropTypes.func,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    handleCodeUpdate: PropTypes.func
 };
 
 Blocks.defaultOptions = {

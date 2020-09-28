@@ -48,6 +48,12 @@ const messages = defineMessages({
 });
 
 class GUI extends React.Component {
+    constructor(props){
+        super(props);
+        this.state={
+            editorCode: ''
+        };
+    }
     componentDidMount () {
         setIsScratchDesktop(this.props.isScratchDesktop);
         this.setReduxTitle(this.props.projectTitle);
@@ -75,6 +81,11 @@ class GUI extends React.Component {
         } else {
             this.props.onUpdateReduxProjectTitle(newTitle);
         }
+    }
+    getEditorCode(code) {
+        this.setState({
+            editorCode: code
+          })
     }
     render () {
         if (this.props.isError) {
@@ -107,6 +118,8 @@ class GUI extends React.Component {
         return (
             <GUIComponent
                 loading={fetchingProject || isLoading || loadingStateVisible}
+                onCodeUpdate={(code) => { this.getEditorCode(code) }}
+                editorCode={this.state.editorCode}
                 {...componentProps}
             >
                 {children}

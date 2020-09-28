@@ -10,8 +10,10 @@
     "prune": "./prune-gh-pages.sh",
     "i18n:push": "tx-push-src scratch-editor interface translations/en.json",
     "i18n:src": "rimraf ./translations/messages/src && babel src > tmp.js && rimraf tmp.js && build-i18n-src ./translations/messages/src ./translations/ && npm run i18n:push",
-    "start": "webpack-dev-server --open --host 127.0.0.1",
-    "desk": "electron .",
+    "start": "webpack-dev-server",
+    "start-open": "webpack-dev-server --open --host 127.0.0.1",
+    "electron-start": "electron .",
+    "electron-rebuild": "electron-rebuild  -d=http://npm.taobao.org/mirrors/atom-shell -v 5.0.11 -m=./",
     "test": "npm run test:lint && npm run test:unit && npm run build && npm run test:integration",
     "test:integration": "jest --runInBand test[\\\\/]integration",
     "test:lint": "eslint . --ext .js,.jsx",
@@ -143,5 +145,6 @@
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test/__mocks__/fileMock.js",
       "\\.(css|less)$": "<rootDir>/test/__mocks__/styleMock.js"
     }
-  }
+  },
+  "dependencies": {}
 }
