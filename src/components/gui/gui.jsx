@@ -90,12 +90,12 @@ const GUIComponent = props => {
         loading,
         logo,
         renderLogin,
+        onClickAbout,
         onClickAccountNav,
         onCloseAccountNav,
         onLogOut,
         onOpenRegistration,
         onToggleLoginOpen,
-        onUpdateProjectTitle,
         onActivateCostumesTab,
         onActivateSoundsTab,
         onActivateTab,
@@ -107,6 +107,7 @@ const GUIComponent = props => {
         onRequestCloseTelemetryModal,
         onSeeCommunity,
         onShare,
+        onShowPrivacyPolicy,
         onTelemetryModalCancel,
         onTelemetryModalOptIn,
         onTelemetryModalOptOut,
@@ -156,106 +157,127 @@ const GUIComponent = props => {
                 ) : null}
             </StageWrapper>
         ) : (
-                <Box
-                    className={styles.pageWrapper}
-                    dir={isRtl ? 'rtl' : 'ltr'}
-                    {...componentProps}
-                >
-                    {telemetryModalVisible ? (
-                        <TelemetryModal
-                            onCancel={onTelemetryModalCancel}
-                            onOptIn={onTelemetryModalOptIn}
-                            onOptOut={onTelemetryModalOptOut}
-                            onRequestClose={onRequestCloseTelemetryModal}
-                        />
-                    ) : null}
-                    {loading ? (
-                        <Loader />
-                    ) : null}
-                    {isCreating ? (
-                        <Loader messageId="gui.loader.creating" />
-                    ) : null}
-                    {isRendererSupported ? null : (
-                        <WebGlModal isRtl={isRtl} />
-                    )}
-                    {tipsLibraryVisible ? (
-                        <TipsLibrary />
-                    ) : null}
-                    {cardsVisible ? (
-                        <Cards />
-                    ) : null}
-                    {alertsVisible ? (
-                        <Alerts className={styles.alertsContainer} />
-                    ) : null}
-                    {connectionModalVisible ? (
-                        <ConnectionModal
-                            vm={vm}
-                        />
-                    ) : null}
-                    {costumeLibraryVisible ? (
-                        <CostumeLibrary
-                            vm={vm}
-                            onRequestClose={onRequestCloseCostumeLibrary}
-                        />
-                    ) : null}
-                    {backdropLibraryVisible ? (
-                        <BackdropLibrary
-                            vm={vm}
-                            onRequestClose={onRequestCloseBackdropLibrary}
-                        />
-                    ) : null}
-                    <MenuBar
-                        accountNavOpen={accountNavOpen}
-                        authorId={authorId}
-                        authorThumbnailUrl={authorThumbnailUrl}
-                        authorUsername={authorUsername}
-                        canChangeLanguage={canChangeLanguage}
-                        canCreateCopy={canCreateCopy}
-                        canCreateNew={canCreateNew}
-                        canEditTitle={canEditTitle}
-                        canManageFiles={canManageFiles}
-                        canRemix={canRemix}
-                        canSave={canSave}
-                        canShare={canShare}
-                        className={styles.menuBarPosition}
-                        enableCommunity={enableCommunity}
-                        isShared={isShared}
-                        logo={logo}
-                        renderLogin={renderLogin}
-                        showComingSoon={showComingSoon}
-                        onClickAccountNav={onClickAccountNav}
-                        onClickLogo={onClickLogo}
-                        onCloseAccountNav={onCloseAccountNav}
-                        onLogOut={onLogOut}
-                        onOpenRegistration={onOpenRegistration}
-                        onProjectTelemetryEvent={onProjectTelemetryEvent}
-                        onSeeCommunity={onSeeCommunity}
-                        onShare={onShare}
-                        onToggleLoginOpen={onToggleLoginOpen}
-                        onUpdateProjectTitle={onUpdateProjectTitle}
+            <Box
+                className={styles.pageWrapper}
+                dir={isRtl ? 'rtl' : 'ltr'}
+                {...componentProps}
+            >
+                {telemetryModalVisible ? (
+                    <TelemetryModal
+                        onCancel={onTelemetryModalCancel}
+                        onOptIn={onTelemetryModalOptIn}
+                        onOptOut={onTelemetryModalOptOut}
+                        onRequestClose={onRequestCloseTelemetryModal}
+                        onShowPrivacyPolicy={onShowPrivacyPolicy}
                     />
-                    <Box className={styles.bodyWrapper}>
-                        <Box className={styles.flexWrapper}>
-                            <Box className={styles.editorWrapper}>
-                                <Tabs
-                                    forceRenderTabPanel
-                                    className={tabClassNames.tabs}
-                                    selectedIndex={activeTabIndex}
-                                    selectedTabClassName={tabClassNames.tabSelected}
-                                    selectedTabPanelClassName={tabClassNames.tabPanelSelected}
-                                    onSelect={onActivateTab}
-                                >
-                                    <TabList className={tabClassNames.tabList}>
-                                        <Tab className={tabClassNames.tab}>
-                                            <img
-                                                draggable={false}
-                                                src={codeIcon}
-                                            />
-                                            <FormattedMessage
-                                                defaultMessage="Code"
-                                                description="Button to get to the code panel"
-                                                id="gui.gui.codeTab"
-                                            />
+                ) : null}
+                {loading ? (
+                    <Loader />
+                ) : null}
+                {isCreating ? (
+                    <Loader messageId="gui.loader.creating" />
+                ) : null}
+                {isRendererSupported ? null : (
+                    <WebGlModal isRtl={isRtl} />
+                )}
+                {tipsLibraryVisible ? (
+                    <TipsLibrary />
+                ) : null}
+                {cardsVisible ? (
+                    <Cards />
+                ) : null}
+                {alertsVisible ? (
+                    <Alerts className={styles.alertsContainer} />
+                ) : null}
+                {connectionModalVisible ? (
+                    <ConnectionModal
+                        vm={vm}
+                    />
+                ) : null}
+                {costumeLibraryVisible ? (
+                    <CostumeLibrary
+                        vm={vm}
+                        onRequestClose={onRequestCloseCostumeLibrary}
+                    />
+                ) : null}
+                {backdropLibraryVisible ? (
+                    <BackdropLibrary
+                        vm={vm}
+                        onRequestClose={onRequestCloseBackdropLibrary}
+                    />
+                ) : null}
+                <MenuBar
+                    accountNavOpen={accountNavOpen}
+                    authorId={authorId}
+                    authorThumbnailUrl={authorThumbnailUrl}
+                    authorUsername={authorUsername}
+                    canChangeLanguage={canChangeLanguage}
+                    canCreateCopy={canCreateCopy}
+                    canCreateNew={canCreateNew}
+                    canEditTitle={canEditTitle}
+                    canManageFiles={canManageFiles}
+                    canRemix={canRemix}
+                    canSave={canSave}
+                    canShare={canShare}
+                    className={styles.menuBarPosition}
+                    enableCommunity={enableCommunity}
+                    isShared={isShared}
+                    logo={logo}
+                    renderLogin={renderLogin}
+                    showComingSoon={showComingSoon}
+                    onClickAbout={onClickAbout}
+                    onClickAccountNav={onClickAccountNav}
+                    onClickLogo={onClickLogo}
+                    onCloseAccountNav={onCloseAccountNav}
+                    onLogOut={onLogOut}
+                    onOpenRegistration={onOpenRegistration}
+                    onProjectTelemetryEvent={onProjectTelemetryEvent}
+                    onSeeCommunity={onSeeCommunity}
+                    onShare={onShare}
+                    onToggleLoginOpen={onToggleLoginOpen}
+                />
+                <Box className={styles.bodyWrapper}>
+                    <Box className={styles.flexWrapper}>
+                        <Box className={styles.editorWrapper}>
+                            <Tabs
+                                forceRenderTabPanel
+                                className={tabClassNames.tabs}
+                                selectedIndex={activeTabIndex}
+                                selectedTabClassName={tabClassNames.tabSelected}
+                                selectedTabPanelClassName={tabClassNames.tabPanelSelected}
+                                onSelect={onActivateTab}
+                            >
+                                <TabList className={tabClassNames.tabList}>
+                                    <Tab className={tabClassNames.tab}>
+                                        <img
+                                            draggable={false}
+                                            src={codeIcon}
+                                        />
+                                        <FormattedMessage
+                                            defaultMessage="Code"
+                                            description="Button to get to the code panel"
+                                            id="gui.gui.codeTab"
+                                        />
+                                    </Tab>
+                                    <Tab
+                                        className={tabClassNames.tab}
+                                        onClick={onActivateCostumesTab}
+                                    >
+                                        <img
+                                            draggable={false}
+                                            src={costumesIcon}
+                                        />
+                                            {targetIsStage ? (
+                                                <FormattedMessage
+                                                    defaultMessage="Backdrops"
+                                                    description="Button to get to the backdrops panel"
+                                                    id="gui.gui.backdropsTab"
+                                                />) : (
+                                                    <FormattedMessage
+                                                        defaultMessage="Code"
+                                                        description="Button to get to the code panel"
+                                                        id="gui.gui.codeTab"
+                                                    />)}
                                         </Tab>
                                         <Tab
                                             className={tabClassNames.tab}
@@ -342,6 +364,7 @@ const GUIComponent = props => {
                             {isRealTimeMode ? (
                                 <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
                                     <StageWrapper
+                                        isFullScreen={isFullScreen}
                                         isRendererSupported={isRendererSupported}
                                         isRtl={isRtl}
                                         stageSize={stageSize}
@@ -359,8 +382,6 @@ const GUIComponent = props => {
                                         <CodeEditor value={editorCode} />
                                     </Box>
                                 )}
-
-                        </Box>
                     </Box>
                     <DragLayer />
                 </Box>
@@ -404,6 +425,7 @@ GUIComponent.propTypes = {
     onActivateCostumesTab: PropTypes.func,
     onActivateSoundsTab: PropTypes.func,
     onActivateTab: PropTypes.func,
+    onClickAbout: PropTypes.func,
     onClickAccountNav: PropTypes.func,
     onClickLogo: PropTypes.func,
     onCloseAccountNav: PropTypes.func,
@@ -415,12 +437,12 @@ GUIComponent.propTypes = {
     onRequestCloseTelemetryModal: PropTypes.func,
     onSeeCommunity: PropTypes.func,
     onShare: PropTypes.func,
+    onShowPrivacyPolicy: PropTypes.func,
     onTabSelect: PropTypes.func,
     onTelemetryModalCancel: PropTypes.func,
     onTelemetryModalOptIn: PropTypes.func,
     onTelemetryModalOptOut: PropTypes.func,
     onToggleLoginOpen: PropTypes.func,
-    onUpdateProjectTitle: PropTypes.func,
     renderLogin: PropTypes.func,
     showComingSoon: PropTypes.bool,
     soundsTabVisible: PropTypes.bool,
@@ -450,7 +472,6 @@ GUIComponent.defaultProps = {
     isCreating: false,
     isShared: false,
     loading: false,
-    onUpdateProjectTitle: () => { },
     showComingSoon: false,
     stageSizeMode: STAGE_SIZE_MODES.large,
     editorCode: '',
