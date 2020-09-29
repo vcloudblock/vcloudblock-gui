@@ -12,6 +12,8 @@ const CodeEditorComponent = props => {
         language,
         value,
         options,
+        height,
+        width,
         onChange,
         editorDidMount,
         theme,
@@ -23,8 +25,8 @@ const CodeEditorComponent = props => {
                 language={language}
                 value={value}
                 options={options}
-                height="400"
-                width="400"
+                height={height}
+                width={width}
                 onChange={onChange}
                 editorDidMount={editorDidMount}
                 theme={theme}
@@ -38,6 +40,8 @@ CodeEditorComponent.propTypes = {
     language: PropTypes.string,
     value: PropTypes.string,
     options: PropTypes.object,
+    height: PropTypes.number,
+    width: PropTypes.number,
     onChange: PropTypes.func,
     editorDidMount: PropTypes.func,
     theme: PropTypes.string
@@ -53,7 +57,9 @@ CodeEditorComponent.defaultProps = {
         cursorStyle: "line",
         automaticLayout: false
     },
-    theme: "vs-light"
+    theme: "vs-light",
+    height: 500,
+    width: 480,
 };
 
 export default CodeEditorComponent;

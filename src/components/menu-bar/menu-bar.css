@@ -225,3 +225,30 @@
     margin: 0.5rem;
     vertical-align: middle;
 }
+
+.mode-group {
+    padding-right: 2rem;
+    padding-left: 2rem;
+}
+
+.mode-switch {
+  vertical-align: middle;
+}
+
+.mode-switch .mode-switch-realtime {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  vertical-align: middle;
+  padding-right: 2rem;
+}
+
+.mode-switch .mode-switch-upload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  vertical-align: middle;
+  padding-left: 2rem;
+}

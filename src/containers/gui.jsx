@@ -43,7 +43,8 @@ class GUI extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            editorCode: ''
+            editorCode: '',
+            isRealTimeMode: true
         };
     }
     componentDidMount () {
@@ -64,6 +65,11 @@ class GUI extends React.Component {
     getEditorCode(code) {
         this.setState({
             editorCode: code
+          })
+    }
+    toggleMode() {
+        this.setState({
+            isRealTimeMode: !this.state.isRealTimeMode
           })
     }
     render () {
@@ -96,7 +102,9 @@ class GUI extends React.Component {
             <GUIComponent
                 loading={fetchingProject || isLoading || loadingStateVisible}
                 onCodeUpdate={(code) => { this.getEditorCode(code) }}
+                onModeSwitch={() => { this.toggleMode() }}
                 editorCode={this.state.editorCode}
+                isRealTimeMode={this.state.isRealTimeMode}
                 {...componentProps}
             >
                 {children}

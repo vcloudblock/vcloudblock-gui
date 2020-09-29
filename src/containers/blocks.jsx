@@ -492,12 +492,7 @@ class Blocks extends React.Component {
         return code;
     }
     handleDragUpdate (){
-        this.props.handleCodeUpdate(this.sb2cpp());
-    }
-    onGetDevices(ports) {//遍历获取串口名称，一般只有一个串口判断if(ports.length==1){port=ports[0].path}即可
-       for (var i = 0; i < ports.length; i++) {
-           console.log(ports[i].path);
-       }
+        this.props.onCodeUpdate(this.sb2cpp());
     }
     handleOpenSoundRecorder () {
         this.props.onOpenSoundRecorder();
@@ -555,7 +550,7 @@ class Blocks extends React.Component {
             toolboxXML,
             updateMetrics: updateMetricsProp,
             workspaceMetrics,
-            handleCodeUpdate,
+            onCodeUpdate,
             ...props
         } = this.props;
         /* eslint-enable no-unused-vars */
@@ -641,7 +636,7 @@ Blocks.propTypes = {
     updateMetrics: PropTypes.func,
     updateToolboxState: PropTypes.func,
     vm: PropTypes.instanceOf(VM).isRequired,
-    handleCodeUpdate: PropTypes.func,
+    onCodeUpdate: PropTypes.func,
     workspaceMetrics: PropTypes.shape({
         targets: PropTypes.objectOf(PropTypes.object)
     })

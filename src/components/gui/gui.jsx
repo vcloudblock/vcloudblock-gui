@@ -120,6 +120,7 @@ const GUIComponent = props => {
         vm,
         onCodeUpdate,
         editorCode,
+        onModeSwitch,
         isRealTimeMode,
         ...componentProps
     } = omit(props, 'dispatch');
@@ -235,6 +236,8 @@ const GUIComponent = props => {
                         onSeeCommunity={onSeeCommunity}
                         onShare={onShare}
                         onToggleLoginOpen={onToggleLoginOpen}
+                        onModeSwitch={onModeSwitch}
+                        isRealTimeMode={isRealTimeMode}
                     />
                     <Box className={styles.bodyWrapper}>
                         <Box className={styles.flexWrapper}>
@@ -307,7 +310,7 @@ const GUIComponent = props => {
                                                 }}
                                                 stageSize={stageSize}
                                                 vm={vm}
-                                                handleCodeUpdate={onCodeUpdate}
+                                                onCodeUpdate={onCodeUpdate}
                                             />
                                         </Box>
                                         <Box className={styles.extensionButtonContainer}>
@@ -341,27 +344,27 @@ const GUIComponent = props => {
                                 */}
                             </Box>
 
-                            {isRealTimeMode ? (
-                                <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
-                                    <StageWrapper
-                                        isFullScreen={isFullScreen}
-                                        isRendererSupported={isRendererSupported}
-                                        isRtl={isRtl}
+                            {/* stageAndTargetWrapper should use css to control show or hidden, prevent scratch-vm error due to unload StageWrapper */}
+                            <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize], isRealTimeMode ? styles.show : styles.hidden)}>
+                                <StageWrapper
+                                    isFullScreen={isFullScreen}
+                                    isRendererSupported={isRendererSupported}
+                                    isRtl={isRtl}
+                                    stageSize={stageSize}
+                                    vm={vm}
+                                />
+                                <Box className={styles.targetWrapper}>
+                                    <TargetPane
                                         stageSize={stageSize}
                                         vm={vm}
                                     />
-                                    <Box className={styles.targetWrapper}>
-                                        <TargetPane
-                                            stageSize={stageSize}
-                                            vm={vm}
-                                        />
-                                    </Box>
                                 </Box>
-                            ) : (
-                                    <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
-                                        <CodeEditor value={editorCode} />
-                                    </Box>
-                                )}
+                            </Box>
+                            {isRealTimeMode ? null : (
+                                <Box className={classNames(styles.hardwareWrapper, styles[stageSize])}>
+                                    <CodeEditor value={editorCode} />
+                                </Box>)
+                            }
                         </Box>
                         <DragLayer />
                     </Box>
@@ -434,7 +437,8 @@ GUIComponent.propTypes = {
     vm: PropTypes.instanceOf(VM).isRequired,
     onCodeUpdate: PropTypes.func,
     editorCode: PropTypes.string,
-    isRealTimeMode: PropTypes.bool
+    isRealTimeMode: PropTypes.bool,
+    onModeSwitch: PropTypes.func
 };
 GUIComponent.defaultProps = {
     backpackHost: null,
@@ -456,7 +460,7 @@ GUIComponent.defaultProps = {
     showComingSoon: false,
     stageSizeMode: STAGE_SIZE_MODES.large,
     editorCode: '',
-    isRealTimeMode: true,
+    isRealTimeMode: false,
 };
 
 const mapStateToProps = state => ({

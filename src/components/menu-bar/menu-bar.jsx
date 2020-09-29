@@ -75,6 +75,8 @@ import scratchLogo from './scratch-logo.svg';
 
 import sharedMessages from '../../lib/shared-messages';
 
+import Switch from "react-switch";
+
 const ariaMessages = defineMessages({
     language: {
         id: 'gui.menuBar.LanguageSelector',
@@ -169,7 +171,8 @@ class MenuBar extends React.Component {
             'handleLanguageMouseUp',
             'handleRestoreOption',
             'getSaveToComputerHandler',
-            'restoreOptionMessage'
+            'restoreOptionMessage',
+            'handleScratchModeSwitchOnChange'
         ]);
     }
     componentDidMount () {
@@ -282,6 +285,9 @@ class MenuBar extends React.Component {
             />);
         }
         }
+    }
+    handleScratchModeSwitchOnChange() {
+        this.props.onModeSwitch();
     }
     render () {
         const saveNowMessage = (
@@ -575,8 +581,37 @@ class MenuBar extends React.Component {
                         ) : [])}
                     </div>
                 </div>
-
-                <div className={styles.accountInfoGroup}>
+                <div className={styles.modeGroup}>
+                    <div className={styles.menuBarItem}>
+                        <Switch
+                            className={styles.modeSwitch}
+                            onChange={this.handleScratchModeSwitchOnChange}
+                            checked={!this.props.isRealTimeMode}
+                            height={25}
+                            width={90}
+                            offColor="#FF8C1A"
+                            uncheckedIcon={
+                                <div className={styles.modeSwitchRealtime}>
+                                    <FormattedMessage
+                                        defaultMessage="Realtime"
+                                        description="Button to switch to upload mode"
+                                        id="gui.menu-bar.modeSwitchRealtime"
+                                    />
+                                </div>
+                            }
+                            checkedIcon={
+                                <div className={styles.modeSwitchUpload}>
+                                    <FormattedMessage
+                                        defaultMessage="Upload"
+                                        description="Button to switch to realtime mode"
+                                        id="gui.menu-bar.modeSwitchRealtimeUpload"
+                                    />
+                                </div>
+                            }
+                        />
+                    </div>
+                </div>
+                {/*<div className={styles.accountInfoGroup}>
                     <div className={styles.menuBarItem}>
                         {this.props.canSave && (
                             <SaveStatus />
@@ -598,7 +633,7 @@ class MenuBar extends React.Component {
                             </div>
                         </a>
                     </React.Fragment>
-                </div>
+                </div>*/}
 
                 {/* show the proper UI in the account menu, given whether the user is
                 logged in, and whether a session is available to log in with */}
@@ -795,7 +830,9 @@ MenuBar.propTypes = {
     showComingSoon: PropTypes.bool,
     userOwnsProject: PropTypes.bool,
     username: PropTypes.string,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    onModeSwitch: PropTypes.func,
+    isRealTimeMode: PropTypes.bool
 };
 
 MenuBar.defaultProps = {
