@@ -226,16 +226,16 @@
     vertical-align: middle;
 }
 
-.mode-group {
+.program-mode-group {
     padding-right: 2rem;
     padding-left: 2rem;
 }
 
-.mode-switch {
+.program-mode-switch {
   vertical-align: middle;
 }
 
-.mode-switch .mode-switch-realtime {
+.program-mode-switch .mode-switch-realtime {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -244,7 +244,7 @@
   padding-right: 2rem;
 }
 
-.mode-switch .mode-switch-upload {
+.program-mode-switch .mode-switch-upload {
   display: flex;
   justify-content: center;
   align-items: center;

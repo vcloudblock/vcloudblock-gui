@@ -76,6 +76,7 @@ import scratchLogo from './scratch-logo.svg';
 import sharedMessages from '../../lib/shared-messages';
 
 import Switch from "react-switch";
+import { setUploadMode, setRealtimeMode } from '../../reducers/program-mode';
 
 const ariaMessages = defineMessages({
     language: {
@@ -172,7 +173,7 @@ class MenuBar extends React.Component {
             'handleRestoreOption',
             'getSaveToComputerHandler',
             'restoreOptionMessage',
-            'handleScratchModeSwitchOnChange'
+            'handleProgramModeSwitchOnChange'
         ]);
     }
     componentDidMount () {
@@ -286,8 +287,11 @@ class MenuBar extends React.Component {
         }
         }
     }
-    handleScratchModeSwitchOnChange() {
-        this.props.onModeSwitch();
+    handleProgramModeSwitchOnChange() {
+        if (this.props.isRealtimeMode)
+            this.props.onSetUploadMode();
+        else
+            this.props.onSetRealtimeMode();
     }
     render () {
         const saveNowMessage = (
@@ -581,12 +585,12 @@ class MenuBar extends React.Component {
                         ) : [])}
                     </div>
                 </div>
-                <div className={styles.modeGroup}>
+                <div className={styles.programModeGroup}>
                     <div className={styles.menuBarItem}>
                         <Switch
-                            className={styles.modeSwitch}
-                            onChange={this.handleScratchModeSwitchOnChange}
-                            checked={!this.props.isRealTimeMode}
+                            className={styles.programModeSwitch}
+                            onChange={this.handleProgramModeSwitchOnChange}
+                            checked={!this.props.isRealtimeMode}
                             height={25}
                             width={90}
                             offColor="#FF8C1A"
@@ -831,8 +835,9 @@ MenuBar.propTypes = {
     userOwnsProject: PropTypes.bool,
     username: PropTypes.string,
     vm: PropTypes.instanceOf(VM).isRequired,
-    onModeSwitch: PropTypes.func,
-    isRealTimeMode: PropTypes.bool
+    isRealtimeMode: PropTypes.bool,
+    onSetUploadMode: PropTypes.func,
+    onsetRealtimeMode: PropTypes.func,
 };
 
 MenuBar.defaultProps = {
@@ -858,7 +863,8 @@ const mapStateToProps = (state, ownProps) => {
         username: user ? user.username : null,
         userOwnsProject: ownProps.authorUsername && user &&
             (ownProps.authorUsername === user.username),
-        vm: state.scratchGui.vm
+        vm: state.scratchGui.vm,
+        isRealtimeMode: state.scratchGui.programMode.isRealtimeMode
     };
 };
 
@@ -879,7 +885,9 @@ const mapDispatchToProps = dispatch => ({
     onClickRemix: () => dispatch(remixProject()),
     onClickSave: () => dispatch(manualUpdateProject()),
     onClickSaveAsCopy: () => dispatch(saveProjectAsCopy()),
-    onSeeCommunity: () => dispatch(setPlayer(true))
+    onSeeCommunity: () => dispatch(setPlayer(true)),
+    onSetUploadMode: () => dispatch(setUploadMode()),
+    onSetRealtimeMode: () => dispatch(setRealtimeMode())
 });
 
 export default compose(

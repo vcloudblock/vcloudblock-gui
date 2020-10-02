@@ -325,6 +325,7 @@ $fade-out-distance: 15px;
 .hidden {
     display: none;
     width: 0;
+    height: 0;
 }
 
 .hardware-wrapper {

@@ -43,8 +43,7 @@ class GUI extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            editorCode: '',
-            isRealTimeMode: true
+            editorCode: ''
         };
     }
     componentDidMount () {
@@ -65,11 +64,6 @@ class GUI extends React.Component {
     getEditorCode(code) {
         this.setState({
             editorCode: code
-          })
-    }
-    toggleMode() {
-        this.setState({
-            isRealTimeMode: !this.state.isRealTimeMode
           })
     }
     render () {
@@ -102,9 +96,7 @@ class GUI extends React.Component {
             <GUIComponent
                 loading={fetchingProject || isLoading || loadingStateVisible}
                 onCodeUpdate={(code) => { this.getEditorCode(code) }}
-                onModeSwitch={() => { this.toggleMode() }}
                 editorCode={this.state.editorCode}
-                isRealTimeMode={this.state.isRealTimeMode}
                 {...componentProps}
             >
                 {children}
@@ -133,7 +125,8 @@ GUI.propTypes = {
     projectHost: PropTypes.string,
     projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     telemetryModalVisible: PropTypes.bool,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    isRealtimeMode: PropTypes.bool
 };
 
 GUI.defaultProps = {
@@ -170,7 +163,8 @@ const mapStateToProps = state => {
         ),
         telemetryModalVisible: state.scratchGui.modals.telemetryModal,
         tipsLibraryVisible: state.scratchGui.modals.tipsLibrary,
-        vm: state.scratchGui.vm
+        vm: state.scratchGui.vm,
+        isRealtimeMode: state.scratchGui.programMode.isRealtimeMode
     };
 };
 
