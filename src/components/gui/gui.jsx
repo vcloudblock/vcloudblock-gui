@@ -118,8 +118,6 @@ const GUIComponent = props => {
         telemetryModalVisible,
         tipsLibraryVisible,
         vm,
-        onCodeUpdate,
-        editorCode,
         isRealtimeMode,
         ...componentProps
     } = omit(props, 'dispatch');
@@ -307,7 +305,6 @@ const GUIComponent = props => {
                                                 }}
                                                 stageSize={stageSize}
                                                 vm={vm}
-                                                onCodeUpdate={onCodeUpdate}
                                             />
                                         </Box>
                                         <Box className={styles.extensionButtonContainer}>
@@ -359,7 +356,7 @@ const GUIComponent = props => {
                             </Box>
                             {isRealtimeMode ? null : (
                                 <Box className={classNames(styles.hardwareWrapper, styles[stageSize])}>
-                                    <CodeEditor value={editorCode} />
+                                    <CodeEditor/>
                                 </Box>)
                             }
                         </Box>
@@ -432,8 +429,6 @@ GUIComponent.propTypes = {
     telemetryModalVisible: PropTypes.bool,
     tipsLibraryVisible: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired,
-    onCodeUpdate: PropTypes.func,
-    editorCode: PropTypes.string,
     isRealtimeMode: PropTypes.bool
 };
 GUIComponent.defaultProps = {
@@ -454,8 +449,7 @@ GUIComponent.defaultProps = {
     isShared: false,
     loading: false,
     showComingSoon: false,
-    stageSizeMode: STAGE_SIZE_MODES.large,
-    editorCode: ''
+    stageSizeMode: STAGE_SIZE_MODES.large
 };
 
 const mapStateToProps = state => ({

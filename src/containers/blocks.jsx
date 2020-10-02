@@ -27,6 +27,7 @@ import {closeExtensionLibrary, openSoundRecorder, openConnectionModal} from '../
 import {activateCustomProcedures, deactivateCustomProcedures} from '../reducers/custom-procedures';
 import {setConnectionModalExtensionId} from '../reducers/connection-modal';
 import {updateMetrics} from '../reducers/workspace-metrics';
+import {setCodeEditorValue} from '../reducers/code';
 
 // import Blockly from 'scratch-blocks';
 import ArduinoGenerator from 'scratch-blocks/arduino_compressed';
@@ -492,7 +493,7 @@ class Blocks extends React.Component {
         return code;
     }
     handleDragUpdate (){
-        this.props.onCodeUpdate(this.sb2cpp());
+        this.props.setCodeEditorValue(this.sb2cpp());
     }
     handleOpenSoundRecorder () {
         this.props.onOpenSoundRecorder();
@@ -550,7 +551,7 @@ class Blocks extends React.Component {
             toolboxXML,
             updateMetrics: updateMetricsProp,
             workspaceMetrics,
-            onCodeUpdate,
+            setCodeEditorValue,
             ...props
         } = this.props;
         /* eslint-enable no-unused-vars */
@@ -636,10 +637,10 @@ Blocks.propTypes = {
     updateMetrics: PropTypes.func,
     updateToolboxState: PropTypes.func,
     vm: PropTypes.instanceOf(VM).isRequired,
-    onCodeUpdate: PropTypes.func,
     workspaceMetrics: PropTypes.shape({
         targets: PropTypes.objectOf(PropTypes.object)
-    })
+    }),
+    setMonacoEditorValue: PropTypes.func
 };
 
 Blocks.defaultOptions = {
@@ -711,7 +712,11 @@ const mapDispatchToProps = dispatch => ({
     },
     updateMetrics: metrics => {
         dispatch(updateMetrics(metrics));
+    },
+    setCodeEditorValue: (value) => {
+        dispatch(setCodeEditorValue(value));
     }
+
 });
 
 export default errorBoundaryHOC('Blocks')(

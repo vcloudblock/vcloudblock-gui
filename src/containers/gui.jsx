@@ -42,9 +42,6 @@ import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
 class GUI extends React.Component {
     constructor(props){
         super(props);
-        this.state={
-            editorCode: ''
-        };
     }
     componentDidMount () {
         setIsScratchDesktop(this.props.isScratchDesktop);
@@ -60,11 +57,6 @@ class GUI extends React.Component {
             // At this time the project view in www doesn't need to know when a project is unloaded
             this.props.onProjectLoaded();
         }
-    }
-    getEditorCode(code) {
-        this.setState({
-            editorCode: code
-          })
     }
     render () {
         if (this.props.isError) {
@@ -95,8 +87,6 @@ class GUI extends React.Component {
         return (
             <GUIComponent
                 loading={fetchingProject || isLoading || loadingStateVisible}
-                onCodeUpdate={(code) => { this.getEditorCode(code) }}
-                editorCode={this.state.editorCode}
                 {...componentProps}
             >
                 {children}
