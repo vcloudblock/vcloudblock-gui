@@ -348,6 +348,19 @@ export default [
         ),
         featured: true,
         disabled: false,
+        bluetoothRequired: true,
+        internetConnectionRequired: true,
+        launchPeripheralConnectionFlow: true,
+        useAutoScan: false,
+        connectionIconURL: microbitConnectionIconURL,
+        connectionSmallIconURL: microbitConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their micro:bit."
+                id="gui.extension.microbit.connectingMessage"
+            />
+        ),
         helpLink: 'https://www.sxyiqichuang.com'
     },
     // s3ext
@@ -363,7 +376,6 @@ export default [
         internetConnectionRequired: true,
         bluetoothRequired: false,
         helpLink: 'https://mryslab.github.io/s3-extend/'
-
     }
     ,
     {
