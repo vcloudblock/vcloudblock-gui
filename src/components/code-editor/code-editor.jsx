@@ -49,17 +49,18 @@ CodeEditorComponent.propTypes = {
 
 CodeEditorComponent.defaultProps = {
     language: "cpp",
-    value: "void setup() {\n  // put your setup code here, to run once:\n\n}\n\nvoid loop() {\n  // put your main code here, to run repeatedly:\n\n}",
-    options: {
-        selectOnLineNumbers: true,
-        roundedSelection: true,
-        readOnly: false,
-        cursorStyle: "line",
-        automaticLayout: false
-    },
     theme: "vs-light",
     height: 500,
     width: 480,
+    options: {
+        highlightActiveIndentGuide: false,
+        cursorSmoothCaretAnimation: true,
+        readOnly: true,
+        contextmenu: false,
+        minimap: {
+            enabled: false
+        }
+    }
 };
 
 export default CodeEditorComponent;

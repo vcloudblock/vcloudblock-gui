@@ -1,7 +1,7 @@
 const UPDATE_CODE = 'scratch-gui/code/UPDATE_CODE';
 
 const initialState = {
-    codeEditorValue: "",
+    codeEditorValue: "// Monaco editor",
 };
 
 const reducer = function (state, action) {
