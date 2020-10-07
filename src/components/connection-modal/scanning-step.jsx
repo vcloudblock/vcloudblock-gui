@@ -39,6 +39,7 @@ const ScanningStep = props => (
                                 name={peripheral.name}
                                 peripheralId={peripheral.peripheralId}
                                 rssi={peripheral.rssi}
+                                isSerialport={props.isSerialport}
                                 onConnecting={props.onConnecting}
                             />)
                         )}
@@ -87,6 +88,7 @@ const ScanningStep = props => (
 
 ScanningStep.propTypes = {
     connectionSmallIconURL: PropTypes.string,
+    isSerialport: PropTypes.bool,
     onConnecting: PropTypes.func,
     onRefresh: PropTypes.func,
     peripheralList: PropTypes.arrayOf(PropTypes.shape({

@@ -55,6 +55,7 @@ class ScanningStep extends React.Component {
         return (
             <ScanningStepComponent
                 connectionSmallIconURL={this.props.connectionSmallIconURL}
+                isSerialport={this.props.isSerialport}
                 peripheralList={this.state.peripheralList}
                 phase={this.state.phase}
                 scanning={this.state.scanning}
@@ -69,6 +70,7 @@ class ScanningStep extends React.Component {
 
 ScanningStep.propTypes = {
     connectionSmallIconURL: PropTypes.string,
+    isSerialport: PropTypes.bool,
     extensionId: PropTypes.string.isRequired,
     onConnected: PropTypes.func.isRequired,
     onConnecting: PropTypes.func.isRequired,

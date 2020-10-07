@@ -5,6 +5,7 @@ import React from 'react';
 import Box from '../box/box.jsx';
 import Dots from './dots.jsx';
 import bluetoothIcon from './icons/bluetooth-white.svg';
+import usbIcon from './icons/usb-white.svg';
 import styles from './connection-modal.css';
 import classNames from 'classnames';
 
@@ -17,10 +18,15 @@ const ConnectedStep = props => (
                         className={styles.peripheralActivityIcon}
                         src={props.connectionIconURL}
                     />
-                    <img
-                        className={styles.bluetoothConnectedIcon}
-                        src={bluetoothIcon}
-                    />
+                    {props.isSerialport ? (
+                        <img
+                            className={styles.bluetoothConnectingIcon}
+                            src={usbIcon}
+                        />) : (
+                            <img
+                                className={styles.bluetoothConnectingIcon}
+                                src={bluetoothIcon}
+                            />)}
                 </div>
             </Box>
         </Box>

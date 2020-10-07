@@ -110,6 +110,7 @@ class ConnectionModal extends React.Component {
                 connectingMessage={this.state.extension && this.state.extension.connectingMessage}
                 connectionIconURL={this.state.extension && this.state.extension.connectionIconURL}
                 connectionSmallIconURL={this.state.extension && this.state.extension.connectionSmallIconURL}
+                isSerialport={this.state.extension && this.state.extension.serialportRequired}
                 connectionTipIconURL={this.state.extension && this.state.extension.connectionTipIconURL}
                 extensionId={this.props.extensionId}
                 name={this.state.extension && this.state.extension.name}

@@ -48,7 +48,9 @@ import gdxforConnectionSmallIconURL from './gdxfor/gdxfor-small.svg';
 
 // my text
 import arduinoUnoIconURL from './arduinoUno/arduino.png';
-import arduinoUnoInsetIconURL from './arduinoUno/arduino-small.png';
+import arduinoUnoInsetIconURL from './arduinoUno/arduino-small.svg';
+import arduinoUnoConnectionIconURLL from './arduinoUno/arduino-illustration.svg';
+import arduinoUnoConnectionSmallIconURL from './arduinoUno/arduino-small.svg';
 
 // s3ext
 import onegpioArduinoImage from './onegpioArduino/onegpioArduino.png';
@@ -348,12 +350,13 @@ export default [
         ),
         featured: true,
         disabled: false,
-        bluetoothRequired: true,
+        bluetoothRequired: false,
+        serialportRequired: true,
         internetConnectionRequired: true,
         launchPeripheralConnectionFlow: true,
         useAutoScan: false,
-        connectionIconURL: microbitConnectionIconURL,
-        connectionSmallIconURL: microbitConnectionSmallIconURL,
+        connectionIconURL: arduinoUnoConnectionIconURLL,
+        connectionSmallIconURL: arduinoUnoConnectionSmallIconURL,
         connectingMessage: (
             <FormattedMessage
                 defaultMessage="Connecting"

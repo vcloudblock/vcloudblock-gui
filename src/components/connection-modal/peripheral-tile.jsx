@@ -39,28 +39,29 @@ class PeripheralTile extends React.Component {
                     </Box>
                 </Box>
                 <Box className={styles.peripheralTileWidgets}>
-                    <Box className={styles.signalStrengthMeter}>
-                        <div
-                            className={classNames(styles.signalBar, {
-                                [styles.greenBar]: this.props.rssi > -80
-                            })}
-                        />
-                        <div
-                            className={classNames(styles.signalBar, {
-                                [styles.greenBar]: this.props.rssi > -60
-                            })}
-                        />
-                        <div
-                            className={classNames(styles.signalBar, {
-                                [styles.greenBar]: this.props.rssi > -40
-                            })}
-                        />
-                        <div
-                            className={classNames(styles.signalBar, {
-                                [styles.greenBar]: this.props.rssi > -20
-                            })}
-                        />
-                    </Box>
+                    {this.props.isSerialport ? null : (
+                        <Box className={styles.signalStrengthMeter}>
+                            <div
+                                className={classNames(styles.signalBar, {
+                                    [styles.greenBar]: this.props.rssi > -80
+                                })}
+                            />
+                            <div
+                                className={classNames(styles.signalBar, {
+                                    [styles.greenBar]: this.props.rssi > -60
+                                })}
+                            />
+                            <div
+                                className={classNames(styles.signalBar, {
+                                    [styles.greenBar]: this.props.rssi > -40
+                                })}
+                            />
+                            <div
+                                className={classNames(styles.signalBar, {
+                                    [styles.greenBar]: this.props.rssi > -20
+                                })}
+                            />
+                        </Box>)}
                     <button
                         onClick={this.handleConnecting}
                     >
