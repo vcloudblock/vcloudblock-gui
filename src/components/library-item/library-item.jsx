@@ -8,6 +8,7 @@ import styles from './library-item.css';
 import classNames from 'classnames';
 
 import bluetoothIconURL from './bluetooth.svg';
+import serialportIconURL from './serialport.svg';
 import internetConnectionIconURL from './internet-connection.svg';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -58,10 +59,10 @@ class LibraryItemComponent extends React.PureComponent {
                     <br />
                     <span className={styles.featuredDescription}>{this.props.description}</span>
                 </div>
-                {this.props.bluetoothRequired || this.props.internetConnectionRequired || this.props.collaborator ? (
+                {this.props.bluetoothRequired || this.props.serialportRequired || this.props.internetConnectionRequired || this.props.collaborator ? (
                     <div className={styles.featuredExtensionMetadata}>
                         <div className={styles.featuredExtensionRequirement}>
-                            {this.props.bluetoothRequired || this.props.internetConnectionRequired ? (
+                            {this.props.bluetoothRequired || this.props.serialportRequired || this.props.internetConnectionRequired ? (
                                 <div>
                                     <div>
                                         <FormattedMessage
@@ -75,6 +76,9 @@ class LibraryItemComponent extends React.PureComponent {
                                     >
                                         {this.props.bluetoothRequired ? (
                                             <img src={bluetoothIconURL} />
+                                        ) : null}
+                                        {this.props.serialportRequired ? (
+                                            <img src={serialportIconURL} />
                                         ) : null}
                                         {this.props.internetConnectionRequired ? (
                                             <img src={internetConnectionIconURL} />

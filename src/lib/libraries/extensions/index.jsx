@@ -352,7 +352,7 @@ export default [
         disabled: false,
         bluetoothRequired: false,
         serialportRequired: true,
-        internetConnectionRequired: true,
+        internetConnectionRequired: false,
         launchPeripheralConnectionFlow: true,
         useAutoScan: false,
         connectionIconURL: arduinoUnoConnectionIconURLL,
