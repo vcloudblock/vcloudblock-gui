@@ -80,6 +80,10 @@ import { setUploadMode, setRealtimeMode } from '../../reducers/program-mode';
 import { openConnectionModal } from '../../reducers/modals';
 import { clearConnectionModalPeripheralName } from '../../reducers/connection-modal';
 
+import screenshotIcon from './icon--screenshot.svg';
+import saveSvgAsPng from 'save-svg-as-png';
+import {showStandardAlert} from '../../reducers/alerts';
+
 const ariaMessages = defineMessages({
     language: {
         id: 'gui.menuBar.LanguageSelector',
@@ -589,6 +593,36 @@ class MenuBar extends React.Component {
                         ) : [])}
                     </div>
                 </div>
+                <div className={classNames(styles.menuBarItem, styles.hoverable)}
+                    onMouseUp={() => {
+                        let blocks = document.querySelector('.blocklyWorkspace .blocklyBlockCanvas');
+                        if (blocks.getBBox().height == 0) {
+                            this.props.onWorkspaceIsEmpty();
+                        }
+                        else {
+                            let transform = blocks.getAttribute('transform');
+                            let scale = parseFloat(transform.substring(transform.indexOf('scale') + 6, transform.length - 1));
+                            let data = new Date();
+
+                            saveSvgAsPng.saveSvgAsPng(blocks, this.props.projectTitle + '-' + data.getTime() + '.png', {
+                                left: blocks.getBBox().x * scale,
+                                top: blocks.getBBox().y * scale,
+                                height: blocks.getBBox().height * scale,
+                                width: blocks.getBBox().width * scale,
+                                scale: 2 / scale,
+                                encoderOptions: 1,
+                            });
+                        }
+                    }}
+                >
+                    <img
+                        alt="Screenshot"
+                        className={classNames(styles.scratchLogo)}
+                        draggable={false}
+                        src={screenshotIcon}
+                    />
+                </div>
+                <Divider className={classNames(styles.menuBarItem, styles.divider)} />
                 <div
                     className={classNames(styles.menuBarItem, styles.hoverable)}
                     onMouseUp={this.props.extensionId ? (this.props.onOpenConnectionModal) : null}
@@ -860,6 +894,7 @@ MenuBar.propTypes = {
     extensionId: PropTypes.string,
     peripheralName: PropTypes.string,
     onDisconnect: PropTypes.func.isRequired,
+    onWorkspaceIsEmpty: PropTypes.func.isRequired
 };
 
 MenuBar.defaultProps = {
@@ -913,7 +948,8 @@ const mapDispatchToProps = dispatch => ({
     onSetUploadMode: () => dispatch(setUploadMode()),
     onSetRealtimeMode: () => dispatch(setRealtimeMode()),
     onOpenConnectionModal: () => dispatch(openConnectionModal()),
-    onDisconnect: () => { dispatch(clearConnectionModalPeripheralName()); }
+    onDisconnect: () => dispatch(clearConnectionModalPeripheralName()),
+    onWorkspaceIsEmpty: () => dispatch(showStandardAlert('workspaceIsEmpty'))
 });
 
 export default compose(

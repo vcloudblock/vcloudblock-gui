@@ -81,6 +81,7 @@
     "react-virtualized": "9.20.1",
     "redux": "3.7.2",
     "redux-throttle": "0.1.1",
+    "save-svg-as-png": "^1.4.17",
     "scratch-audio": "0.1.0-prerelease.20200528195344",
     "scratch-blocks": "0.1.0-prerelease.20200923031615",
     "scratch-l10n": "3.10.20200923030814",

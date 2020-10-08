@@ -212,6 +212,20 @@ const alerts = [
         ),
         iconSpinner: true,
         level: AlertLevels.SUCCESS
+    },
+    {
+        alertId: 'workspaceIsEmpty',
+        alertType: AlertTypes.STANDARD,
+        clearList: ['workspaceIsEmpty'],
+        closeButton: true,
+        content: (
+            <FormattedMessage
+                defaultMessage="Workspace is empty"
+                description="Message indicating that workspace is empty"
+                id="gui.alerts.workspaceIsEmpty"
+            />
+        ),
+        level: AlertLevels.WARN
     }
 ];
 
