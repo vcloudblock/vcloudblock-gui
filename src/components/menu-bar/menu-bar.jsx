@@ -77,6 +77,8 @@ import sharedMessages from '../../lib/shared-messages';
 
 import Switch from "react-switch";
 import { setUploadMode, setRealtimeMode } from '../../reducers/program-mode';
+import { openConnectionModal } from '../../reducers/modals';
+import { clearConnectionModalPeripheralName } from '../../reducers/connection-modal';
 
 const ariaMessages = defineMessages({
     language: {
@@ -178,9 +180,11 @@ class MenuBar extends React.Component {
     }
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyPress);
+        this.props.vm.on('PERIPHERAL_DISCONNECTED', this.props.onDisconnect);
     }
     componentWillUnmount () {
         document.removeEventListener('keydown', this.handleKeyPress);
+        this.props.vm.removeListener('PERIPHERAL_DISCONNECTED', this.props.onDisconnect);
     }
     handleClickNew () {
         // if the project is dirty, and user owns the project, we will autosave.
@@ -585,6 +589,20 @@ class MenuBar extends React.Component {
                         ) : [])}
                     </div>
                 </div>
+                <div
+                    className={classNames(styles.menuBarItem, styles.hoverable)}
+                    onMouseUp={this.props.extensionId ? (this.props.onOpenConnectionModal) : null}
+                >
+                    <div className={classNames(styles.serialportMenu)}>
+                        {this.props.peripheralName ? (this.props.peripheralName) : (
+                            <FormattedMessage
+                                defaultMessage="No connection"
+                                description="Text for menubar connection button"
+                                id="gui.menuBar.noConnection"
+                            />)}
+                    </div>
+                </div>
+                <Divider className={classNames(styles.menuBarItem, styles.divider)} />
                 <div className={styles.programModeGroup}>
                     <div className={styles.menuBarItem}>
                         <Switch
@@ -837,7 +855,11 @@ MenuBar.propTypes = {
     vm: PropTypes.instanceOf(VM).isRequired,
     isRealtimeMode: PropTypes.bool,
     onSetUploadMode: PropTypes.func,
-    onsetRealtimeMode: PropTypes.func,
+    onSetRealtimeMode: PropTypes.func,
+    onOpenConnectionModal: PropTypes.func,
+    extensionId: PropTypes.string,
+    peripheralName: PropTypes.string,
+    onDisconnect: PropTypes.func.isRequired,
 };
 
 MenuBar.defaultProps = {
@@ -864,7 +886,9 @@ const mapStateToProps = (state, ownProps) => {
         userOwnsProject: ownProps.authorUsername && user &&
             (ownProps.authorUsername === user.username),
         vm: state.scratchGui.vm,
-        isRealtimeMode: state.scratchGui.programMode.isRealtimeMode
+        isRealtimeMode: state.scratchGui.programMode.isRealtimeMode,
+        extensionId: state.scratchGui.connectionModal.extensionId,
+        peripheralName: state.scratchGui.connectionModal.peripheralName
     };
 };
 
@@ -887,7 +911,9 @@ const mapDispatchToProps = dispatch => ({
     onClickSaveAsCopy: () => dispatch(saveProjectAsCopy()),
     onSeeCommunity: () => dispatch(setPlayer(true)),
     onSetUploadMode: () => dispatch(setUploadMode()),
-    onSetRealtimeMode: () => dispatch(setRealtimeMode())
+    onSetRealtimeMode: () => dispatch(setRealtimeMode()),
+    onOpenConnectionModal: () => dispatch(openConnectionModal()),
+    onDisconnect: () => { dispatch(clearConnectionModalPeripheralName()); }
 });
 
 export default compose(

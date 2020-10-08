@@ -15,7 +15,7 @@ class PeripheralTile extends React.Component {
         ]);
     }
     handleConnecting () {
-        this.props.onConnecting(this.props.peripheralId);
+        this.props.onConnecting(this.props.peripheralId, this.props.name);
     }
     render () {
         return (

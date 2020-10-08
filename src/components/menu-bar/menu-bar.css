@@ -129,6 +129,7 @@
 .divider {
     margin: 0 .5rem;
     height: 34px;
+    vertical-align: middle;
 }
 
 .author-info {

@@ -6,7 +6,8 @@ import VM from 'scratch-vm';
 import analytics from '../lib/analytics';
 import extensionData from '../lib/libraries/extensions/index.jsx';
 import {connect} from 'react-redux';
-import {closeConnectionModal} from '../reducers/modals';
+import { closeConnectionModal } from '../reducers/modals';
+import { setConnectionModalPeripheralName } from '../reducers/connection-modal';
 
 class ConnectionModal extends React.Component {
     constructor (props) {
@@ -23,7 +24,8 @@ class ConnectionModal extends React.Component {
         this.state = {
             extension: extensionData.find(ext => ext.extensionId === props.extensionId),
             phase: props.vm.getPeripheralIsConnected(props.extensionId) ?
-                PHASES.connected : PHASES.scanning
+                PHASES.connected : PHASES.scanning,
+            peripheralName: null
         };
     }
     componentDidMount () {
@@ -39,10 +41,11 @@ class ConnectionModal extends React.Component {
             phase: PHASES.scanning
         });
     }
-    handleConnecting (peripheralId) {
+    handleConnecting(peripheralId, peripheralName) {
         this.props.vm.connectPeripheral(this.props.extensionId, peripheralId);
         this.setState({
-            phase: PHASES.connecting
+            phase: PHASES.connecting,
+            peripheralName: peripheralName
         });
         analytics.event({
             category: 'extensions',
@@ -95,6 +98,7 @@ class ConnectionModal extends React.Component {
             action: 'connected',
             label: this.props.extensionId
         });
+        this.props.onConnected(this.state.peripheralName);
     }
     handleHelp () {
         window.open(this.state.extension.helpLink, '_blank');
@@ -132,6 +136,7 @@ class ConnectionModal extends React.Component {
 ConnectionModal.propTypes = {
     extensionId: PropTypes.string.isRequired,
     onCancel: PropTypes.func.isRequired,
+    onConnected: PropTypes.func.isRequired,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
@@ -140,9 +145,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onCancel: () => {
-        dispatch(closeConnectionModal());
-    }
+    onCancel: () => { dispatch(closeConnectionModal()); },
+    onConnected: (peripheralName) => { dispatch(setConnectionModalPeripheralName(peripheralName)); }
 });
 
 export default connect(

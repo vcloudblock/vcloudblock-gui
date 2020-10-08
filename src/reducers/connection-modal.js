@@ -1,7 +1,10 @@
 const SET_ID = 'scratch-gui/connection-modal/setId';
+const SET_NAME = 'scratch-gui/connection-modal/setName';
+const CLEAR_NAME = 'scratch-gui/connection-modal/clearName';
 
 const initialState = {
-    extensionId: null
+    extensionId: null,
+    peripheralName: null
 };
 
 const reducer = function (state, action) {
@@ -10,6 +13,14 @@ const reducer = function (state, action) {
     case SET_ID:
         return Object.assign({}, state, {
             extensionId: action.extensionId
+        });
+    case SET_NAME:
+        return Object.assign({}, state, {
+            peripheralName: action.peripheralName
+        });
+    case CLEAR_NAME:
+        return Object.assign({}, state, {
+            peripheralName: null
         });
     default:
         return state;
@@ -23,8 +34,25 @@ const setConnectionModalExtensionId = function (extensionId) {
     };
 };
 
+const setConnectionModalPeripheralName = function (peripheralName) {
+    console.log('peripheralName: ' + peripheralName);
+    return {
+        type: SET_NAME,
+        peripheralName: peripheralName
+    };
+};
+
+const clearConnectionModalPeripheralName = function () {
+    console.log('clear peripheralName');
+    return {
+        type: CLEAR_NAME
+    };
+};
+
 export {
     reducer as default,
     initialState as connectionModalInitialState,
-    setConnectionModalExtensionId
+    setConnectionModalExtensionId,
+    setConnectionModalPeripheralName,
+    clearConnectionModalPeripheralName
 };
