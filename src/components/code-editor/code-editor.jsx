@@ -41,7 +41,7 @@ CodeEditorComponent.propTypes = {
     value: PropTypes.string,
     options: PropTypes.object,
     height: PropTypes.number,
-    width: PropTypes.number,
+    width: PropTypes.number.isRequired,
     onChange: PropTypes.func,
     editorDidMount: PropTypes.func,
     theme: PropTypes.string
@@ -51,7 +51,6 @@ CodeEditorComponent.defaultProps = {
     language: "cpp",
     theme: "vs-light",
     height: 500,
-    width: 480,
     options: {
         highlightActiveIndentGuide: false,
         cursorSmoothCaretAnimation: true,
