@@ -5,12 +5,15 @@ import bindAll from 'lodash.bindall';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl } from 'react-intl';
-import { setStageSize } from '../reducers/stage-size';
-import { STAGE_SIZE_MODES } from '../lib/layout-constants';
-
-import HardwareComponent from '../components/hardware/hardware.jsx';
 
 import VM from 'scratch-vm';
+
+import { setStageSize } from '../reducers/stage-size';
+import { STAGE_SIZE_MODES } from '../lib/layout-constants';
+import { openUploadProgress } from '../reducers/modals';
+import { showStandardAlert } from '../reducers/alerts';
+
+import HardwareComponent from '../components/hardware/hardware.jsx';
 
 class Hardware extends React.Component {
     constructor (props) {
@@ -21,11 +24,19 @@ class Hardware extends React.Component {
     }
 
     onUpload() {
+        // todo: if extension is not support upload alert extension is not support upload
         if (this.props.peripheralName) {
-            this.props.vm.uploadToPeripheral(this.props.extensionId, this.props.codeEditorValue);
+            let blocks = document.querySelector('.blocklyWorkspace .blocklyBlockCanvas');
+            if (blocks.getBBox().height == 0) {
+                this.props.onWorkspaceIsEmpty();
+            }
+            else {
+                this.props.vm.uploadToPeripheral(this.props.extensionId, this.props.codeEditorValue);
+                this.props.onOpenUploadProgress();
+            }
         }
         else {
-            // alert
+            // todo: if peripheral is not connected alert connect peripheral first
             console.log('connect device first');
         }
     }
@@ -47,7 +58,9 @@ class Hardware extends React.Component {
 Hardware.propTypes = {
     vm: PropTypes.instanceOf(VM).isRequired,
     extensionId: PropTypes.string,
-    peripheralName: PropTypes.string
+    peripheralName: PropTypes.string,
+    onOpenUploadProgress: PropTypes.func,
+    onWorkspaceIsEmpty: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
@@ -62,6 +75,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
     onSetStageLarge: () => dispatch(setStageSize(STAGE_SIZE_MODES.large)),
     onSetStageSmall: () => dispatch(setStageSize(STAGE_SIZE_MODES.small)),
+    onOpenUploadProgress: () => dispatch(openUploadProgress()),
+    onWorkspaceIsEmpty: () => dispatch(showStandardAlert('workspaceIsEmpty'))
 });
 
 export default compose(

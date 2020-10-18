@@ -22,6 +22,7 @@ const ModalComponent = props => (
         contentLabel={props.contentLabel}
         overlayClassName={styles.modalOverlay}
         onRequestClose={props.onRequestClose}
+        shouldCloseOnOverlayClick={props.shouldCloseOnOverlayClick}
     >
         <Box
             dir={props.isRtl ? 'rtl' : 'ltr'}
@@ -82,11 +83,12 @@ const ModalComponent = props => (
                             />
                         </Button>
                     ) : (
-                        <CloseButton
-                            size={CloseButton.SIZE_LARGE}
-                            onClick={props.onRequestClose}
-                        />
-                    )}
+                            props.closeButtonVisible ? (
+                                <CloseButton
+                                    size={CloseButton.SIZE_LARGE}
+                                    onClick={props.onRequestClose}
+                                />) : null
+                        )}
                 </div>
             </div>
             {props.children}
@@ -106,7 +108,14 @@ ModalComponent.propTypes = {
     headerImage: PropTypes.string,
     isRtl: PropTypes.bool,
     onHelp: PropTypes.func,
-    onRequestClose: PropTypes.func
+    onRequestClose: PropTypes.func,
+    shouldCloseOnOverlayClick: PropTypes.bool,
+    closeButtonVisible: PropTypes.bool
+};
+
+ModalComponent.defaultProps = {
+    shouldCloseOnOverlayClick: true,
+    closeButtonVisible: true,
 };
 
 export default ModalComponent;

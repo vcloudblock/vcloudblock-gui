@@ -30,6 +30,7 @@ import Cards from '../../containers/cards.jsx';
 import Alerts from '../../containers/alerts.jsx';
 import DragLayer from '../../containers/drag-layer.jsx';
 import ConnectionModal from '../../containers/connection-modal.jsx';
+import UploadProgress from '../../containers/upload-progress.jsx';
 import TelemetryModal from '../telemetry-modal/telemetry-modal.jsx';
 
 import layout, { STAGE_SIZE_MODES } from '../../lib/layout-constants';
@@ -78,6 +79,7 @@ const GUIComponent = props => {
         canUseCloud,
         children,
         connectionModalVisible,
+        uploadProgressVisible,
         costumeLibraryVisible,
         costumesTabVisible,
         enableCommunity,
@@ -189,6 +191,11 @@ const GUIComponent = props => {
                     ) : null}
                     {connectionModalVisible ? (
                         <ConnectionModal
+                            vm={vm}
+                        />
+                    ) : null}
+                    {uploadProgressVisible ? (
+                        <UploadProgress
                             vm={vm}
                         />
                     ) : null}

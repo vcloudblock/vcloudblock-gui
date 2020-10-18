@@ -225,7 +225,38 @@ const alerts = [
                 id="gui.alerts.workspaceIsEmpty"
             />
         ),
-        level: AlertLevels.WARN
+        level: AlertLevels.WARN,
+        maxDisplaySecs: 5
+    },
+    {
+        alertId: 'uploadError',
+        alertType: AlertTypes.STANDARD,
+        clearList: ['uploadError'],
+        closeButton: true,
+        content: (
+            <FormattedMessage
+                defaultMessage="Upload error"
+                description="Message indicating that upload progress is error"
+                id="gui.alerts.uploadError"
+            />
+        ),
+        level: AlertLevels.WARN,
+        maxDisplaySecs: 5
+    },
+    {
+        alertId: 'uploadSuccess',
+        alertType: AlertTypes.STANDARD,
+        clearList: ['uploadSuccess', 'uploadError'],
+        closeButton: true,
+        content: (
+            <FormattedMessage
+                defaultMessage="Upload success"
+                description="Message indicating that upload progress is success"
+                id="gui.alerts.uploadSuccess"
+            />
+        ),
+        level: AlertLevels.SUCCESS,
+        maxDisplaySecs: 5
     }
 ];
 

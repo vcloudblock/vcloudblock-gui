@@ -43,7 +43,6 @@ const setConnectionModalPeripheralName = function (peripheralName) {
 };
 
 const clearConnectionModalPeripheralName = function () {
-    console.log('clear peripheralName');
     return {
         type: CLEAR_NAME
     };

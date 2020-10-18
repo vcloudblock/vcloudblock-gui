@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import { defineMessages, FormattedMessage, intlShape } from 'react-intl';
 
 import { STAGE_SIZE_MODES } from '../../lib/layout-constants';
-
 import CodeEditor from '../../containers/code-editor.jsx'
 
 import styles from './hardware.css';
