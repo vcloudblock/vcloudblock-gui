@@ -1,5 +1,10 @@
 # scratch-gui
+This project is fork from [LLK/scratch-gui](https://github.com/LLK/scratch-gui), it's goal is to complete a program that can build upload code to hardware. Especially for arduino and microbit. At present, this core function has been realized. But still need to improve the detail function for ordinary users. 
+
+This is a fast changing and incomplete program. It's for professional developer.
+
 ## Installation
+
 1. Before build scratch-gui. You should clone these link. Run `npm install` and `npm link` in these floders. (If you are in China. You may need to use net proxy to finish the following)
 
    ```bash
