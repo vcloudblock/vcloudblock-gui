@@ -55,10 +55,11 @@ This is a fast changing and incomplete program. It's for professional developer.
 4. Clone scratch-link then install and run
 
    ```bash
-git clone https://github.com/zhengyangliu/scratch-link
-cd scratch-link
+   git clone https://github.com/zhengyangliu/scratch-link
+   cd scratch-link
    npm install
    ```
+   
 ## Running
 
 1. First start scratch-link, to provide hardware function link to scratch gui.
