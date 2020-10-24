@@ -617,7 +617,7 @@ const operators = function (isInitialSetup) {
             <block type="operator_join">
                 <value name="STRING1">
                     <shadow type="text">
-                        <field name="TEXT">${apple} </field>
+                        <field name="TEXT">${apple}</field>
                     </shadow>
                 </value>
                 <value name="STRING2">
@@ -714,6 +714,16 @@ const myBlocks = function () {
     </category>
     `;
 };
+
+const arduino = function () {
+    return `
+    <category name="Arduino" id="Arduino" colour="#00979D" secondaryColour="#00979D">
+        <block type="event_whenarduinobegin">
+        </block>
+    </category>
+    `;
+};
+
 /* eslint-enable no-unused-vars */
 
 const xmlOpen = '<xml style="display: none">';
@@ -762,6 +772,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
     const operatorsXML = moveCategory('operators') || operators(isInitialSetup, isStage, targetId);
     const variablesXML = moveCategory('data') || variables(isInitialSetup, isStage, targetId);
     const myBlocksXML = moveCategory('procedures') || myBlocks(isInitialSetup, isStage, targetId);
+    const arduinoXML = moveCategory('arduino') || arduino(isInitialSetup, isStage, targetId);
 
     const everything = [
         xmlOpen,
@@ -773,7 +784,8 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
         sensingXML, gap,
         operatorsXML, gap,
         variablesXML, gap,
-        myBlocksXML
+        myBlocksXML, gap,
+        arduinoXML
     ];
 
     for (const extensionCategory of categoriesXML) {

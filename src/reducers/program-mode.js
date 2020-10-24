@@ -3,7 +3,7 @@ const SET_REALTIME_MODE = 'scratch-gui/progran-mode/SET_REALTIME_MODE';
 
 const initialState = {
     isUplodeMode: true,
-    isRealtimeMode: false
+    isRealtimeMode: true
 };
 
 const reducer = function (state, action) {
