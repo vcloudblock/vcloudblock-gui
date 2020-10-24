@@ -3,6 +3,22 @@ This project is fork from [LLK/scratch-gui](https://github.com/LLK/scratch-gui),
 
 This is a fast changing and incomplete program. It's for professional developer.
 
+<img src="docs\1.png" alt="5" style="zoom:25%;" />
+
+<img src="docs\2.png" alt="6" style="zoom:25%;" />
+
+<img src="docs\3.png" alt="7" style="zoom:25%;" />
+
+<img src="docs\4.png" alt="1" style="zoom:25%;" />
+
+<img src="docs\5.png" alt="2" style="zoom:25%;" />
+
+<img src="docs\6.png" alt="3" style="zoom:25%;" />
+
+<img src="docs\7.png" alt="4" style="zoom:25%;" />
+
+<img src="docs\8.png" alt="4" style="zoom:25%;" />
+
 ## Installation
 
 1. Before build scratch-gui. You should clone these link. Run `npm install` and `npm link` in these floders. (If you are in China. You may need to use net proxy to finish the following)
