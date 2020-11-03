@@ -19,6 +19,8 @@ This is a fast changing and incomplete program. It's for professional developer.
 
 <img src="docs\8.png" alt="4" style="zoom:25%;" />
 
+<img src="docs\9.png" alt="4" style="zoom:25%;" />
+
 ## Installation
 
 1. Before build scratch-gui. You should clone these link. Run `npm install` and `npm link` in these floders. (If you are in China. You may need to use net proxy to finish the following)
@@ -41,9 +43,7 @@ This is a fast changing and incomplete program. It's for professional developer.
    ...
    ```
 
-2. Add some code to <u>scratch-blocks/arduino_compressed.js</u>, according to this **[Instruction](https://github.com/zhengyangliu/scratch-blocks/blob/develop/README.md)**.
-
-3. CLone and run install in scratch-gui, then link those project.
+3. Clone and run install in scratch-gui, then link those project.
 
    ```bash
    git clone https://github.com/zhengyangliu/scratch-gui
@@ -81,27 +81,6 @@ This is a fast changing and incomplete program. It's for professional developer.
 ## Project Structure Instruction
 
 ...
-
-## Development planning
-
-- Read indefinite number of extensions from a specified path. Include the info of the extensions.
-- Update toolbox by extensions.
-
-## Feature List
-
-### Little
-
-- Modify the execution program of code generation,  so that blocks' code can be generated immediately after modification, instead of waiting for the block drag to update.
-- Fix the bug. When start at upload mode, the sprite of stage won't render even if we change to realtime mode.
-- If device can not be connected, don't display original scratch link information, show the info of new  scratch-link.
-
-### Big
-
-- Load and unload extensions by click.
-- Lock block by program mode. 
-- Read indefinite number of extensions from a specified path. Include the info of the extensions.
-- Add device selection windows. Extension content list can change by this selection.
-- Update toolbox by deveice selection.
 
 ## Bug Report
 
