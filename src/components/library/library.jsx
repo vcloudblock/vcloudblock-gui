@@ -223,10 +223,13 @@ class LibraryComponent extends React.Component {
                         <LibraryItem
                             bluetoothRequired={dataItem.bluetoothRequired}
                             serialportRequired={dataItem.serialportRequired}
+                            programMode={dataItem.programMode}
+                            programLanguage={dataItem.programLanguage}
                             collaborator={dataItem.collaborator}
                             description={dataItem.description}
                             disabled={dataItem.disabled}
                             extensionId={dataItem.extensionId}
+                            deviceId={dataItem.deviceId}
                             featured={dataItem.featured}
                             hidden={dataItem.hidden}
                             iconMd5={dataItem.md5}

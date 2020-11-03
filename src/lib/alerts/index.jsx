@@ -229,6 +229,21 @@ const alerts = [
         maxDisplaySecs: 5
     },
     {
+        alertId: 'workspaceIsNotEmpty',
+        alertType: AlertTypes.STANDARD,
+        clearList: ['workspaceIsNotEmpty'],
+        closeButton: true,
+        content: (
+            <FormattedMessage
+                defaultMessage="Workspace is not empty, plese clean you workspace first"
+                description="Message indicating that workspace is not empty"
+                id="gui.alerts.workspaceIsNotEmpty"
+            />
+        ),
+        level: AlertLevels.WARN,
+        maxDisplaySecs: 5
+    },
+    {
         alertId: 'uploadError',
         alertType: AlertTypes.STANDARD,
         clearList: ['uploadError'],
@@ -257,7 +272,22 @@ const alerts = [
         ),
         level: AlertLevels.SUCCESS,
         maxDisplaySecs: 5
-    }
+    },
+    {
+        alertId: 'selectADeviceFirst',
+        alertType: AlertTypes.STANDARD,
+        clearList: ['selectADeviceFirst'],
+        closeButton: true,
+        content: (
+            <FormattedMessage
+                defaultMessage="Plese select a device first"
+                description="Message indicating that device is not selected"
+                id="gui.alerts.selectADeviceFirst"
+            />
+        ),
+        level: AlertLevels.WARN,
+        maxDisplaySecs: 5
+    },
 ];
 
 export {

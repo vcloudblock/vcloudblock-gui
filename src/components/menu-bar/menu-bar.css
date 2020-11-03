@@ -40,7 +40,42 @@
     flex-grow: 1;
 }
 
+.main-menu .menu-bar-item {
+    padding: 0 0.75rem;
+}
+
+.file-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: nowrap;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.file-menu .menu-bar-item {
+    padding: 0 0.25rem;
+}
+
+.tail-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.tail-menu .menu-bar-item {
+    padding: 0 0.75rem;
+}
+
 .scratch-logo {
+    height:  1.6rem;
+    vertical-align: middle;
+}
+
+.screen-shot-logo {
     height:  1.6rem;
     vertical-align: middle;
 }
@@ -96,16 +131,6 @@
     width: 2rem;
 }
 
-.file-group {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.file-group .menu-bar-item {
-    padding: 0 0.75rem;
-}
-
 .menu-bar-item.language-menu {
     padding: 0 0.5rem;
 }
@@ -152,22 +177,28 @@
     opacity: 0.5;
 }
 
-.account-info-group {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.account-info-group .menu-bar-item {
-    padding: 0 0.75rem;
-}
-
 .mystuff-icon {
     margin: 0 .25rem;
     height: 1rem;
 }
 
 .help-icon {
+    margin-right: 0.35rem;
+}
+
+.file-icon {
+    margin-right: 0.35rem;
+}
+
+.unconnected-icon {
+    margin-right: 0.35rem;
+}
+
+.connected-icon {
+    margin-right: 0.35rem;
+}
+
+.device-icon {
     margin-right: 0.35rem;
 }
 

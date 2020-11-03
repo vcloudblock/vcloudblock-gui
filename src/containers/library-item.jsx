@@ -114,6 +114,7 @@ class LibraryItem extends React.PureComponent {
                 serialportRequired={this.props.serialportRequired}
                 collaborator={this.props.collaborator}
                 description={this.props.description}
+                deviceId={this.props.deviceId}
                 disabled={this.props.disabled}
                 extensionId={this.props.extensionId}
                 featured={this.props.featured}
@@ -134,6 +135,8 @@ class LibraryItem extends React.PureComponent {
                 onMouseLeave={this.handleMouseLeave}
                 onPlay={this.handlePlay}
                 onStop={this.handleStop}
+                programMode={this.props.programMode}
+                programLanguage={this.props.programLanguage}
             />
         );
     }
@@ -147,6 +150,7 @@ LibraryItem.propTypes = {
         PropTypes.string,
         PropTypes.node
     ]),
+    deviceId: PropTypes.string,
     disabled: PropTypes.bool,
     extensionId: PropTypes.string,
     featured: PropTypes.bool,
@@ -170,6 +174,8 @@ LibraryItem.propTypes = {
     onMouseEnter: PropTypes.func.isRequired,
     onMouseLeave: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
+    programLanguage: PropTypes.array,
+    programMode: PropTypes.array,
     showPlayButton: PropTypes.bool
 };
 

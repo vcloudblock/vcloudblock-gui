@@ -144,7 +144,7 @@
     padding-bottom: .25rem;
 }
 
-.featured-extension-metadata {
+.featured-extension-metadata-first-row {
     width: 100%;
     padding: 0 1.25rem 1rem 1.25rem;
     display: flex;
@@ -155,11 +155,30 @@
     opacity: 0.75;
 }
 
-[dir="ltr"] .featured-extension-metadata {
+[dir="ltr"] .featured-extension-metadata-first-row {
     text-align: left;
 }
 
-[dir="rtl"] .featured-extension-metadata {
+[dir="rtl"] .featured-extension-metadata-first-row {
+    text-align: right;
+}
+
+.featured-extension-metadata-seconed-row {
+    width: 100%;
+    padding: 0 1.25rem 1rem 1.25rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    font-size: 12px;
+    color: $text-primary;
+    opacity: 0.75;
+}
+
+[dir="ltr"] .featured-extension-metadata-seconed-row {
+    text-align: left;
+}
+
+[dir="rtl"] .featured-extension-metadata-seconed-row {
     text-align: right;
 }
 
@@ -170,6 +189,18 @@
 }
 
 .featured-extension-collaboration {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.featured-extension-program-mode {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.featured-extension-program-language {
     width: 100%;
     display: flex;
     flex-direction: column;

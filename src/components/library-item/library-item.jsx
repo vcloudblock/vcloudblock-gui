@@ -11,6 +11,14 @@ import bluetoothIconURL from './bluetooth.svg';
 import serialportIconURL from './serialport.svg';
 import internetConnectionIconURL from './internet-connection.svg';
 
+import prgramModeRealtimeIconURL from './program-mode-realtime.svg';
+import prgramModeUploadIconURL from './program-mode-upload.svg';
+
+import prgramLanguageBlockIconURL from './program-language-block.svg';
+import prgramLanguageCIconURL from './program-language-c.svg';
+import prgramLanguageCppIconURL from './program-language-cpp.svg';
+import prgramLanguagePythonIconURL from './program-language-python.svg';
+
 /* eslint-disable react/prefer-stateless-function */
 class LibraryItemComponent extends React.PureComponent {
     render () {
@@ -22,7 +30,7 @@ class LibraryItemComponent extends React.PureComponent {
                     {
                         [styles.disabled]: this.props.disabled
                     },
-                    this.props.extensionId ? styles.libraryItemExtension : null,
+                    this.props.extensionId || this.props.deviceId  ? styles.libraryItemExtension : null,
                     this.props.hidden ? styles.hidden : null
                 )}
                 onClick={this.props.onClick}
@@ -51,7 +59,7 @@ class LibraryItemComponent extends React.PureComponent {
                     </div>
                 ) : null}
                 <div
-                    className={this.props.extensionId ?
+                    className={this.props.extensionId || this.props.deviceId ?
                         classNames(styles.featuredExtensionText, styles.featuredText) : styles.featuredText
                     }
                 >
@@ -60,7 +68,7 @@ class LibraryItemComponent extends React.PureComponent {
                     <span className={styles.featuredDescription}>{this.props.description}</span>
                 </div>
                 {this.props.bluetoothRequired || this.props.serialportRequired || this.props.internetConnectionRequired || this.props.collaborator ? (
-                    <div className={styles.featuredExtensionMetadata}>
+                    <div className={styles.featuredExtensionMetadataFirstRow}>
                         <div className={styles.featuredExtensionRequirement}>
                             {this.props.bluetoothRequired || this.props.serialportRequired || this.props.internetConnectionRequired ? (
                                 <div>
@@ -101,6 +109,62 @@ class LibraryItemComponent extends React.PureComponent {
                                         className={styles.featuredExtensionMetadataDetail}
                                     >
                                         {this.props.collaborator}
+                                    </div>
+                                </div>
+                            ) : null}
+                        </div>
+                    </div>
+                ) : null}
+                {this.props.programMode || this.props.programLanguage ? (
+                    <div className={styles.featuredExtensionMetadataSeconedRow}>
+                        <div className={styles.featuredExtensionProgramMode}>
+                            {this.props.programMode ? (
+                                <div>
+                                    <div>
+                                        <FormattedMessage
+                                            defaultMessage="Program mode"
+                                            description="Label for device program mode"
+                                            id="gui.extensionLibrary.programMode"
+                                        />
+                                    </div>
+                                    <div
+                                        className={styles.featuredExtensionMetadataDetail}
+                                    >
+                                        {this.props.programMode.includes('realtime') ? (
+                                            <img src={prgramModeRealtimeIconURL} />
+                                        ) : null}
+                                        {this.props.programMode.includes('upload') ? (
+                                            <img src={prgramModeUploadIconURL} />
+                                        ) : null}
+                                    </div>
+                                </div>
+                            ) : null}
+                        </div>
+                        <div className={styles.featuredExtensionProgramLanguage}>
+                            {this.props.programLanguage ? (
+                                <div>
+                                    <div>
+                                        <FormattedMessage
+                                            defaultMessage="Program language"
+                                            description="Label for device program language"
+                                            id="gui.extensionLibrary.programLanguage"
+                                        />
+                                    </div>
+                                    <div
+                                        className={styles.featuredExtensionMetadataDetail}
+                                    >
+                                        {this.props.programLanguage.includes('block') ? (
+                                            <img src={prgramLanguageBlockIconURL} />
+                                        ) : null}
+                                        {this.props.programLanguage.includes('c') ? (
+                                            <img src={prgramLanguageCIconURL} />
+                                        ) : null}
+                                        {this.props.programLanguage.includes('cpp') ? (
+                                            <img src={prgramLanguageCppIconURL} />
+                                        ) : null}
+                                        {this.props.programLanguage.includes('python') ? (
+                                            <img src={prgramLanguagePythonIconURL} />
+                                        ) : null}
                                     </div>
                                 </div>
                             ) : null}
@@ -161,6 +225,7 @@ LibraryItemComponent.propTypes = {
     ]),
     disabled: PropTypes.bool,
     extensionId: PropTypes.string,
+    deviceId: PropTypes.string,
     featured: PropTypes.bool,
     hidden: PropTypes.bool,
     iconURL: PropTypes.string,

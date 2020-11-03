@@ -5,6 +5,7 @@ import ConnectionModalComponent, {PHASES} from '../components/connection-modal/c
 import VM from 'scratch-vm';
 import analytics from '../lib/analytics';
 import extensionData from '../lib/libraries/extensions/index.jsx';
+import deviceData from '../lib/libraries/devices/index.jsx';
 import {connect} from 'react-redux';
 import { closeConnectionModal } from '../reducers/modals';
 import { setConnectionModalPeripheralName } from '../reducers/connection-modal';
@@ -22,7 +23,7 @@ class ConnectionModal extends React.Component {
             'handleHelp'
         ]);
         this.state = {
-            extension: extensionData.find(ext => ext.extensionId === props.extensionId),
+            extension: extensionData.find(ext => ext.extensionId === props.extensionId) || deviceData.find(ext => ext.deviceId === props.extensionId),
             phase: props.vm.getPeripheralIsConnected(props.extensionId) ?
                 PHASES.connected : PHASES.scanning,
             peripheralName: null
