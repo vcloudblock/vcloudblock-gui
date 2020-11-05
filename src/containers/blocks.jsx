@@ -212,6 +212,7 @@ class Blocks extends React.Component {
         this.detachVM();
         this.workspace.dispose();
         clearTimeout(this.toolboxUpdateTimeout);
+        clearTimeout(this.updateDeviceToolboxTimeout);
     }
     requestToolboxUpdate () {
         clearTimeout(this.toolboxUpdateTimeout);
@@ -239,8 +240,9 @@ class Blocks extends React.Component {
         }
     }
     updateToolbox () {
-        this.props.onToolboxWillUpdate();
         this.toolboxUpdateTimeout = false;
+
+        this.props.onToolboxWillUpdate();
 
         const categoryId = this.workspace.toolbox_.getSelectedCategoryId();
         const offset = this.workspace.toolbox_.getCategoryScrollOffset();
@@ -377,7 +379,7 @@ class Blocks extends React.Component {
             const targetCostumes = target.getCostumes();
             const targetSounds = target.getSounds();
             const dynamicBlocksXML = this.props.vm.runtime.getBlocksXML(target, this.props.isRealtimeMode ? 'realtime' : 'upload');
-            return makeToolboxXML(false, target.isStage, target.id, dynamicBlocksXML,
+            return makeToolboxXML(false, this.props.deviceId, target.isStage, target.id, dynamicBlocksXML, this.props.isRealtimeMode,
                 targetCostumes[targetCostumes.length - 1].name,
                 stageCostumes[stageCostumes.length - 1].name,
                 targetSounds.length > 0 ? targetSounds[targetSounds.length - 1].name : ''
@@ -510,7 +512,17 @@ class Blocks extends React.Component {
             defineBlocks(categoryInfo.blocks);
         });
 
-        // Update the toolbox with new blocks if possible
+        // Update the toolbox with new blocks if possible, use timeout to let props update first
+        this.requestUpdateDeviceToolbox();
+    }
+    requestUpdateDeviceToolbox () {
+        clearTimeout(this.updateDeviceToolboxTimeout);
+        this.updateDeviceToolboxTimeout = setTimeout(() => {
+            this.UpdateDeviceToolbox();
+        }, 0);
+    }
+    UpdateDeviceToolbox () {
+        this.updateDeviceToolboxTimeout = false;
         const toolboxXML = this.getToolboxXML();
         if (toolboxXML) {
             this.props.updateToolboxState(toolboxXML);
@@ -618,6 +630,7 @@ class Blocks extends React.Component {
             anyModalVisible,
             canUseCloud,
             customProceduresVisible,
+            deviceId,
             deviceLibraryVisible,
             extensionLibraryVisible,
             options,
@@ -695,6 +708,7 @@ Blocks.propTypes = {
     anyModalVisible: PropTypes.bool,
     canUseCloud: PropTypes.bool,
     customProceduresVisible: PropTypes.bool,
+    deviceId: PropTypes.string,
     deviceLibraryVisible: PropTypes.bool,
     extensionLibraryVisible: PropTypes.bool,
     isRealtimeMode: PropTypes.bool,
@@ -782,6 +796,7 @@ const mapStateToProps = state => ({
         Object.keys(state.scratchGui.modals).some(key => state.scratchGui.modals[key]) ||
         state.scratchGui.mode.isFullScreen
     ),
+    deviceId: state.scratchGui.device.deviceId,
     deviceLibraryVisible: state.scratchGui.modals.deviceLibrary,
     extensionLibraryVisible: state.scratchGui.modals.extensionLibrary,
     isRealtimeMode: state.scratchGui.programMode.isRealtimeMode,
