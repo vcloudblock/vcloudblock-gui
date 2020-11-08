@@ -665,6 +665,8 @@ class Blocks extends React.Component {
             onRequestCloseExtensionLibrary,
             onRequestCloseDeviceLibrary,
             onRequestCloseCustomProcedures,
+            onSetUploadMode,
+            onSetRealtimeMode,
             onSetSupportSwitchMode,
             toolboxXML,
             updateMetrics: updateMetricsProp,
