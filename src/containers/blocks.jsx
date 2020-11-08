@@ -30,7 +30,8 @@ import {activateCustomProcedures, deactivateCustomProcedures} from '../reducers/
 import {setConnectionModalExtensionId} from '../reducers/connection-modal';
 import {updateMetrics} from '../reducers/workspace-metrics';
 import {setCodeEditorValue} from '../reducers/code';
-import {setDeviceId, setDeviceName } from '../reducers/device';
+import {setDeviceId, setDeviceName} from '../reducers/device';
+import {setUploadMode, setRealtimeMode, setSupportSwitchMode} from '../reducers/program-mode';
 
 import {
     activateTab,
@@ -545,6 +546,20 @@ class Blocks extends React.Component {
     }
     handleDeviceSelected (categoryId) {
         const device = deviceData.find(ext => ext.deviceId === categoryId);
+        const supportUploadMode = device.programMode.includes('upload');
+        const supportRealtimeMode = device.programMode.includes('realtime');
+
+        if (!(supportUploadMode && supportRealtimeMode)) {
+            if (supportUploadMode) {
+                this.props.onSetUploadMode();
+            } else {
+                this.props.onSetRealtimeMode();
+            }
+            this.props.onSetSupportSwitchMode(false);
+        } else {
+            this.props.onSetSupportSwitchMode(true);
+        }
+
         if (device && device.launchPeripheralConnectionFlow) {
             this.props.onDeviceSelected(device.deviceId, device.name);
             this.handleConnectionModalStart(categoryId);
@@ -650,6 +665,7 @@ class Blocks extends React.Component {
             onRequestCloseExtensionLibrary,
             onRequestCloseDeviceLibrary,
             onRequestCloseCustomProcedures,
+            onSetSupportSwitchMode,
             toolboxXML,
             updateMetrics: updateMetricsProp,
             workspaceMetrics,
@@ -748,6 +764,9 @@ Blocks.propTypes = {
         comments: PropTypes.bool,
         collapse: PropTypes.bool
     }),
+    onSetUploadMode: PropTypes.func,
+    onSetRealtimeMode: PropTypes.func,
+    onSetSupportSwitchMode: PropTypes.func,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
     toolboxXML: PropTypes.string,
     updateMetrics: PropTypes.func,
@@ -846,7 +865,10 @@ const mapDispatchToProps = dispatch => ({
     },
     setCodeEditorValue: (value) => {
         dispatch(setCodeEditorValue(value));
-    }
+    },
+    onSetUploadMode: () => dispatch(setUploadMode()),
+    onSetRealtimeMode: () => dispatch(setRealtimeMode()),
+    onSetSupportSwitchMode: state => dispatch(setSupportSwitchMode(state))
 });
 
 export default errorBoundaryHOC('Blocks')(

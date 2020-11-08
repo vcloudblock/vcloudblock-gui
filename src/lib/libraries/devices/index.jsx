@@ -89,7 +89,7 @@ export default [
             />
         ),
         baseToolBoxXml: arduinoBaseToolBox,
-        programMode: ['realtime', 'upload'],
+        programMode: ['upload'],
         programLanguage: ['block', 'c', 'cpp'],
         helpLink: 'https://store.arduino.cc/usa/arduino-nano'
     },
