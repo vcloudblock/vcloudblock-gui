@@ -26,12 +26,12 @@ This is a fast changing and incomplete program. It's for professional developer.
 1. Before build scratch-gui. You should clone these link. Run `npm install` and `npm link` in these floders. (If you are in China. You may need to use net proxy to finish the following)
 
    ```bash
-   git clone https://github.com/zhengyangliu/saveSvgAsPng
-   git clone https://github.com/zhengyangliu/scratch-audio
-   git clone https://github.com/zhengyangliu/scratch-blocks
-   git clone https://github.com/zhengyangliu/scratch-l10n
-   git clone https://github.com/zhengyangliu/scratch-render
-   git clone https://github.com/zhengyangliu/scratch-vm
+   git clone https://github.com/ScratchHW/saveSvgAsPng
+   git clone https://github.com/ScratchHW/scratch-audio
+   git clone https://github.com/ScratchHW/scratch-blocks
+   git clone https://github.com/ScratchHW/scratch-l10n
+   git clone https://github.com/ScratchHW/scratch-render
+   git clone https://github.com/ScratchHW/scratch-vm
    cd saveSvgAsPng
    npm install
    npm link
@@ -46,7 +46,7 @@ This is a fast changing and incomplete program. It's for professional developer.
 3. Clone and run install in scratch-gui, then link those project.
 
    ```bash
-   git clone https://github.com/zhengyangliu/scratch-gui
+   git clone https://github.com/ScratchHW/scratch-gui
    cd scratch-gui
    npm install
    npm link save-svg-as-png scratch-audio scratch-blocks scratch-l10n scratch-render scratch-vm
@@ -55,7 +55,7 @@ This is a fast changing and incomplete program. It's for professional developer.
 4. Clone scratch-link then install and run
 
    ```bash
-   git clone https://github.com/zhengyangliu/scratch-link
+   git clone https://github.com/ScratchHW/scratch-link
    cd scratch-link
    npm install
    ```
