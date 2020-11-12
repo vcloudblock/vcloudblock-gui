@@ -5,7 +5,7 @@ const SET_SUPPORT_SWITCH_MODE = 'scratch-gui/progran-mode/SET_SUPPORT_SWITCH_MOD
 const initialState = {
     isUplodeMode: false,
     isRealtimeMode: true,
-    isSupportSwitchMode: true
+    isSupportSwitchMode: false
 };
 
 const reducer = function (state, action) {
