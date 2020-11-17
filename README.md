@@ -40,7 +40,7 @@ This is a fast changing and incomplete program. It's for professional developer.
    npm install
    npm link
    cd ..
-   ...
+   ...Repeat the above steps
    ```
 
 3. Clone and run install in scratch-gui, then link those project.
@@ -52,7 +52,7 @@ This is a fast changing and incomplete program. It's for professional developer.
    npm link save-svg-as-png scratch-audio scratch-blocks scratch-l10n scratch-render scratch-vm
    ```
 
-4. Clone scratch-link then install and run
+4. Clone scratch-link then install.
 
    ```bash
    git clone https://github.com/ScratchHW/scratch-link
@@ -60,23 +60,38 @@ This is a fast changing and incomplete program. It's for professional developer.
    npm install
    ```
    
+4. Clone scratch-extension-server then install.
+
+   ```bash
+   git clone https://github.com/ScratchHW/scratch-extension-server
+   cd scratch-extension-server
+   npm install
+   ```
+
 ## Running
 
 1. First start scratch-link, to provide hardware function link to scratch gui.
 
    ```bash
    cd scratch-link
-   npm run start
+   npm start
    ```
 
-2. Start  scratch-gui
+2. Start scratch-extension-server.
+
+   ```
+   cd scratch-extension-server
+   npm start
+   ```
+
+3. Start  scratch-gui
 
    ```bash
    cd scratch-gui
    npm run start-open
    ```
 
-3. After webpack build finish, you should see a browser page pop up. Have fun.
+4. After webpack build finish, you should see a browser page pop up. Have fun.
 
 ## Project Structure Instruction
 
