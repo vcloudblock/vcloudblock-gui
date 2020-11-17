@@ -4,22 +4,18 @@ import {FormattedMessage} from 'react-intl';
 import arduinoBaseToolBox from './baseToolbox/arduino';
 
 import arduinoUnoIconURL from './arduinoUno/arduinoUno.png';
-import arduinoUnoInsetIconURL from './arduinoUno/arduinoUno-small.svg';
 import arduinoUnoConnectionIconURLL from './arduinoUno/arduinoUno-illustration.svg';
 import arduinoUnoConnectionSmallIconURL from './arduinoUno/arduinoUno-small.svg';
 
 import arduinoNanoIconURL from './arduinoNano/arduinoNano.png';
-import arduinoNanoInsetIconURL from './arduinoNano/arduinoNano-small.svg';
 import arduinoNanoConnectionIconURLL from './arduinoNano/arduinoNano-illustration.svg';
 import arduinoNanoConnectionSmallIconURL from './arduinoNano/arduinoNano-small.svg';
 
 import arduinoLeonardoIconURL from './arduinoLeonardo/arduinoLeonardo.png';
-import arduinoLeonardoInsetIconURL from './arduinoLeonardo/arduinoLeonardo-small.svg';
 import arduinoLeonardoConnectionIconURLL from './arduinoLeonardo/arduinoLeonardo-illustration.svg';
 import arduinoLeonardoConnectionSmallIconURL from './arduinoLeonardo/arduinoLeonardo-small.svg';
 
 import arduinoMega2560IconURL from './arduinoMega2560/arduinoMega2560.png';
-import arduinoMega2560InsetIconURL from './arduinoMega2560/arduinoMega2560-small.svg';
 import arduinoMega2560ConnectionIconURLL from './arduinoMega2560/arduinoMega2560-illustration.svg';
 import arduinoMega2560ConnectionSmallIconURL from './arduinoMega2560/arduinoMega2560-small.svg';
 
@@ -29,12 +25,12 @@ export default [
         name: 'Arduino Uno',
         deviceId: 'arduinoUno',
         collaborator: 'arduino',
+        type: 'arduino',
         iconURL: arduinoUnoIconURL,
-        insetIconURL: arduinoUnoInsetIconURL,
         description: (
             <FormattedMessage
                 defaultMessage="The best board to get started with electronics and coding."
-                description="Description for the 'Arduino Uno' device"
+                description="Description for the Arduino Uno device"
                 id="gui.device.arduinoUno.description"
             />
         ),
@@ -63,12 +59,12 @@ export default [
         name: 'Arduino Nano',
         deviceId: 'arduinoNano',
         collaborator: 'arduino',
+        type: 'arduino',
         iconURL: arduinoNanoIconURL,
-        insetIconURL: arduinoNanoInsetIconURL,
         description: (
             <FormattedMessage
                 defaultMessage="The classic Arduino Nano is the smallest board to build your projects with."
-                description="Description for the 'Arduino Nano' device"
+                description="Description for the Arduino Nano device"
                 id="gui.device.arduinoNano.description"
             />
         ),
@@ -97,12 +93,12 @@ export default [
         name: 'Arduino Leonardo',
         deviceId: 'arduinoLeonardo',
         collaborator: 'arduino',
+        type: 'arduino',
         iconURL: arduinoLeonardoIconURL,
-        insetIconURL: arduinoLeonardoInsetIconURL,
         description: (
             <FormattedMessage
                 defaultMessage="The classic Arduino board that can act as a mouse or keyboard."
-                description="Description for the 'Arduino Leonardo' device"
+                description="Description for the Arduino Leonardo device"
                 id="gui.device.arduinoLeonardo.description"
             />
         ),
@@ -131,12 +127,12 @@ export default [
         name: 'Arduino Mega 2560',
         deviceId: 'arduinoMega2560',
         collaborator: 'arduino',
+        type: 'arduino',
         iconURL: arduinoMega2560IconURL,
-        insetIconURL: arduinoMega2560InsetIconURL,
         description: (
             <FormattedMessage
                 defaultMessage="The 8-bit board with 54 digital pins, 16 analog inputs, and 4 serial ports."
-                description="Description for the 'Arduino Mega 2560' device"
+                description="Description for the Arduino Mega 2560 device"
                 id="gui.device.arduinoMega2560.description"
             />
         ),

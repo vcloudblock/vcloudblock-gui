@@ -110,6 +110,7 @@ class LibraryItem extends React.PureComponent {
             this.props.iconRawURL;
         return (
             <LibraryItemComponent
+                author={this.props.author}
                 bluetoothRequired={this.props.bluetoothRequired}
                 serialportRequired={this.props.serialportRequired}
                 collaborator={this.props.collaborator}
@@ -137,12 +138,14 @@ class LibraryItem extends React.PureComponent {
                 onStop={this.handleStop}
                 programMode={this.props.programMode}
                 programLanguage={this.props.programLanguage}
+                version={this.props.version}
             />
         );
     }
 }
 
 LibraryItem.propTypes = {
+    author: PropTypes.string,
     bluetoothRequired: PropTypes.bool,
     serialportRequired: PropTypes.bool,
     collaborator: PropTypes.string,
@@ -176,7 +179,8 @@ LibraryItem.propTypes = {
     onSelect: PropTypes.func.isRequired,
     programLanguage: PropTypes.array,
     programMode: PropTypes.array,
-    showPlayButton: PropTypes.bool
+    showPlayButton: PropTypes.bool,
+    version: PropTypes.string
 };
 
 export default injectIntl(LibraryItem);

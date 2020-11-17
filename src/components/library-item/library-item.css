@@ -188,6 +188,18 @@
     flex-direction: column;
 }
 
+.featured-extension-author {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.featured-extension-version {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 .featured-extension-collaboration {
     width: 100%;
     display: flex;
@@ -207,6 +219,18 @@
 }
 
 .featured-extension-metadata-detail {
+    height: 100%;
+    padding-top: 0.4rem;
+    font-weight: bold;
+}
+
+.featured-extension-author-detail {
+    height: 100%;
+    padding-top: 0.4rem;
+    font-weight: bold;
+}
+
+.featured-extension-version-detail {
     height: 100%;
     padding-top: 0.4rem;
     font-weight: bold;

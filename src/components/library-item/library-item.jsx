@@ -115,6 +115,46 @@ class LibraryItemComponent extends React.PureComponent {
                         </div>
                     </div>
                 ) : null}
+                {this.props.author || this.props.version ? (
+                    <div className={styles.featuredExtensionMetadataFirstRow}>
+                        <div className={styles.featuredExtensionVersion}>
+                            {this.props.version ? (
+                                <div>
+                                    <div>
+                                        <FormattedMessage
+                                            defaultMessage="Version"
+                                            description="Label for extension version"
+                                            id="gui.extensionLibrary.version"
+                                        />
+                                    </div>
+                                    <div
+                                        className={styles.featuredExtensionVersionDetail}
+                                    >
+                                        {this.props.version}
+                                    </div>
+                                </div>
+                            ) : null}
+                        </div>
+                        <div className={styles.featuredExtensionAuthor}>
+                            {this.props.author ? (
+                                <div>
+                                    <div>
+                                        <FormattedMessage
+                                            defaultMessage="Author"
+                                            description="Label for extension arthur"
+                                            id="gui.extensionLibrary.arthur"
+                                        />
+                                    </div>
+                                    <div
+                                        className={styles.featuredExtensionAuthorDetail}
+                                    >
+                                        {this.props.author}
+                                    </div>
+                                </div>
+                            ) : null}
+                        </div>
+                    </div>
+                ): null}
                 {this.props.programMode || this.props.programLanguage ? (
                     <div className={styles.featuredExtensionMetadataSeconedRow}>
                         <div className={styles.featuredExtensionProgramMode}>
@@ -217,6 +257,7 @@ class LibraryItemComponent extends React.PureComponent {
 
 
 LibraryItemComponent.propTypes = {
+    author: PropTypes.string,
     bluetoothRequired: PropTypes.bool,
     collaborator: PropTypes.string,
     description: PropTypes.oneOfType([
@@ -244,7 +285,8 @@ LibraryItemComponent.propTypes = {
     onMouseLeave: PropTypes.func.isRequired,
     onPlay: PropTypes.func.isRequired,
     onStop: PropTypes.func.isRequired,
-    showPlayButton: PropTypes.bool
+    showPlayButton: PropTypes.bool,
+    version: PropTypes.string
 };
 
 LibraryItemComponent.defaultProps = {

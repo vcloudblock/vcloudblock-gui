@@ -221,6 +221,7 @@ class LibraryComponent extends React.Component {
                 >
                     {this.state.loaded ? this.getFilteredData().map((dataItem, index) => (
                         <LibraryItem
+                            author={dataItem.author}
                             bluetoothRequired={dataItem.bluetoothRequired}
                             serialportRequired={dataItem.serialportRequired}
                             programMode={dataItem.programMode}
@@ -245,6 +246,7 @@ class LibraryComponent extends React.Component {
                             onMouseEnter={this.handleMouseEnter}
                             onMouseLeave={this.handleMouseLeave}
                             onSelect={this.handleSelect}
+                            version={dataItem.version}
                         />
                     )) : (
                         <div className={styles.spinnerWrapper}>
