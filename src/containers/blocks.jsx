@@ -528,7 +528,12 @@ class Blocks extends React.Component {
             this.props.updateToolboxState(toolboxXML);
         }
     }
-    handleDeviceAdded(categoryInfoArray) {
+    handleDeviceAdded(info) {
+        const { device, categoryInfoArray } = info;
+
+        const dev = deviceData.find(ext => ext.deviceId === device);
+        this.props.onDeviceSelected(dev.deviceId, dev.name);
+
         categoryInfoArray.forEach((categoryInfo) => {
             const defineBlocks = blockInfoArray => {
                 if (blockInfoArray && blockInfoArray.length > 0) {
@@ -615,7 +620,6 @@ class Blocks extends React.Component {
         }
 
         if (device && device.launchPeripheralConnectionFlow) {
-            this.props.onDeviceSelected(device.deviceId, device.name);
             this.handleConnectionModalStart(categoryId);
         }
 
