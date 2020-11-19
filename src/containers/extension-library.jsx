@@ -7,8 +7,6 @@ import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 
-import {addDeviceExtension} from '../reducers/device-extension';
-
 import extensionLibraryContent from '../lib/libraries/extensions/index.jsx';
 
 import LibraryComponent from '../components/library/library.jsx';
@@ -35,35 +33,22 @@ const messages = defineMessages({
 const LEGO_TAG = {tag: 'lego', intlLabel: messages.legoTag};
 const tagListPrefix = [LEGO_TAG];
 
-const localExtensionsUrl = 'http://127.0.0.1:20120/';
-
 class ExtensionLibrary extends React.PureComponent {
     constructor (props) {
         super(props);
         bindAll(this, [
-            'handleItemSelect',
-            'isDeviceExtensionAdded'
+            'handleItemSelect'
         ]);
         this.state = {
-            localExtensions: []
+            deviceExtensions: []
         }
     }
 
     componentDidMount() {
-        fetch(localExtensionsUrl)
-            .then(response => response.json())
-            .then(data => {
-                var localExt = [];
-                data.forEach(ext => localExt.push(ext));
-                this.setState({ localExtensions: localExt });
-            });
-    }
-
-    isDeviceExtensionAdded(id) {
-        const extId = this.props.deviceExtension.map(ext => {
-            return ext.id;
-        });
-        return extId.includes(id);
+        if (this.props.deviceId) {
+            this.props.vm.extensionManager.getLocalDeviceExtensionsList().then(data => this.setState({ deviceExtensions: data }));
+            this.props.vm.extensionManager.getRemoteDeviceExtensionsList().then(data => this.setState({ deviceExtensions: data }))
+        }
     }
 
     handleItemSelect (item) {
@@ -71,19 +56,14 @@ class ExtensionLibrary extends React.PureComponent {
 
         if (this.props.deviceId) {
             if (id && !item.disabled) {
-                if (this.isDeviceExtensionAdded(id)) {
-                    console.log('DeviceExtensionAdded');
-                    // todo onCategorySelected()?
+                if (this.props.vm.extensionManager.isDeviceExtensionLoaded(id)) {
+                    console.log('DeviceExtension has added');
+                    // todo onCategorySelected()
                 } else {
-                    const toolboxUrl = localExtensionsUrl + item.toolbox;
-                    const blockUrl = localExtensionsUrl + item.blocks;
-                    const generatorUrl = localExtensionsUrl + item.generator;
-
-                    fetch(toolboxUrl)
-                        .then(response => response.text())
-                        .then(data => {
-                            this.props.onAddDeviceExtension(id, data, blockUrl, generatorUrl);
-                        });
+                    this.props.vm.extensionManager.loadDeviceExtension(id).then(() => {
+                         // todo onCategorySelected()
+                        // todo allert extension add successfull
+                    });
                 }
             }
         } else {
@@ -107,10 +87,10 @@ class ExtensionLibrary extends React.PureComponent {
         var extensionLibraryThumbnailData = [];
 
         if (this.props.deviceId) {
-            extensionLibraryThumbnailData = this.state.localExtensions.filter(extension => {
+            extensionLibraryThumbnailData = this.state.deviceExtensions.filter(extension => {
                 return extension.supportDevice.includes(this.props.deviceId);
             }).map(extension => ({
-                rawURL: localExtensionsUrl + extension.iconURL || extensionIcon,
+                rawURL: extension.iconURL || extensionIcon,
                 ...extension
             }));
         } else {
@@ -136,10 +116,8 @@ class ExtensionLibrary extends React.PureComponent {
 }
 
 ExtensionLibrary.propTypes = {
-    deviceExtension: PropTypes.array,
     deviceId: PropTypes.string,
     intl: intlShape.isRequired,
-    onAddDeviceExtension: PropTypes.func,
     onCategorySelected: PropTypes.func,
     onRequestClose: PropTypes.func,
     visible: PropTypes.bool,
@@ -148,15 +126,11 @@ ExtensionLibrary.propTypes = {
 
 const mapStateToProps = state => {
     return {
-        deviceExtension: state.scratchGui.deviceExtension.deviceExtension,
         deviceId: state.scratchGui.device.deviceId
     };
 };
 
 const mapDispatchToProps = dispatch => ({
-    onAddDeviceExtension: (id, xml, blocksUrl, generatorUrl) => {
-        dispatch(addDeviceExtension(id, xml, blocksUrl, generatorUrl));
-    },
 });
 
 export default compose(

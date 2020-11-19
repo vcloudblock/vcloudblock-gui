@@ -30,7 +30,6 @@ import throttle from 'redux-throttle';
 import programModeReducer, {programModeInitialState} from './program-mode';
 import codeReducer, {codeInitialState} from './code';
 import deviceReducer, {deviceInitialState} from './device';
-import deviceExtensionReducer, {deviceExtensionInitialState} from './device-extension';
 
 import decks from '../lib/libraries/decks/index.jsx';
 
@@ -46,7 +45,6 @@ const guiInitialState = {
     connectionModal: connectionModalInitialState,
     customProcedures: customProceduresInitialState,
     device: deviceInitialState,
-    deviceExtension: deviceExtensionInitialState,
     editorTab: editorTabInitialState,
     mode: modeInitialState,
     hoveredTarget: hoveredTargetInitialState,
@@ -149,7 +147,6 @@ const guiReducer = combineReducers({
     connectionModal: connectionModalReducer,
     customProcedures: customProceduresReducer,
     device: deviceReducer,
-    deviceExtension: deviceExtensionReducer,
     editorTab: editorTabReducer,
     mode: modeReducer,
     hoveredTarget: hoveredTargetReducer,

@@ -63,6 +63,7 @@ class Blocks extends React.Component {
             'handleCategorySelected',
             'handleConnectionModalStart',
             'handleDeviceAdded',
+            'handleDeviceExtensionAdded',
             'handleDeviceSelected',
             'handleDrop',
             'handleExtensionAdded',
@@ -78,7 +79,6 @@ class Blocks extends React.Component {
             'onScriptGlowOff',
             'onBlockGlowOn',
             'onBlockGlowOff',
-            'onDeviceExtionsUpdate',
             'onProgramModeUpdate',
             'onTargetsUpdate',
             'onVisualReport',
@@ -135,10 +135,6 @@ class Blocks extends React.Component {
         // This is used in componentDidUpdate to control should update toolbox xml.
         this._programMode = this.props.isRealtimeMode;
 
-        // Store the device extension's length.
-        // This is used in componentDidUpdate to control should run onDeviceExtionsUpdate().
-        this._deviceExtensionLength = this.props.deviceExtension.length;
-
         // Store the device extension's xml.
         this._deviceExteionXml = [];
 
@@ -171,8 +167,7 @@ class Blocks extends React.Component {
             this.props.locale !== nextProps.locale ||
             this.props.anyModalVisible !== nextProps.anyModalVisible ||
             this.props.stageSize !== nextProps.stageSize ||
-            this.props.isRealtimeMode !== nextProps.isRealtimeMode ||
-            this.props.deviceExtension.length !== nextProps.deviceExtension.length
+            this.props.isRealtimeMode !== nextProps.isRealtimeMode
         );
     }
     componentDidUpdate (prevProps) {
@@ -184,10 +179,6 @@ class Blocks extends React.Component {
         // If program mode changed, call functio to update the toolbox
         if (this.props.isRealtimeMode !== this._programMode) {
             this.onProgramModeUpdate();
-        }
-
-        if (this.props.deviceExtension.length !== this._deviceExtensionLength) {
-            this.onDeviceExtionsUpdate();
         }
 
         // Only rerender the toolbox when the blocks are visible and the xml is
@@ -253,42 +244,6 @@ class Blocks extends React.Component {
             this.props.updateToolboxState(toolboxXML);
         }
     }
-    onDeviceExtionsUpdate() {
-        this._deviceExtensionLength = this.props.deviceExtension.length;
-
-        const deviceBlocksUrl = this.props.deviceExtension.map(ext => {
-            return ext.blocksUrl;
-        });
-        deviceBlocksUrl.forEach(url => {
-            let blocksScript = require("scriptjs");
-
-            blocksScript(url, url.toString());
-            blocksScript.ready(url.toString(), () => {
-                this.ScratchBlocks = defaultsDeep(this.ScratchBlocks, addBlocks(this.ScratchBlocks));
-                this.requestToolboxUpdate();
-            });
-        });
-
-        const deviceGeneratorUrl = this.props.deviceExtension.map(ext => {
-            return ext.generatorUrl;
-        });
-        deviceGeneratorUrl.forEach(url => {
-            let blocksScript = require("scriptjs");
-
-            blocksScript(url, url.toString());
-            blocksScript.ready(url.toString(), () => {
-                this.ScratchBlocks = defaultsDeep(this.ScratchBlocks, addGenerator(this.ScratchBlocks));
-            })
-        });
-
-        this._deviceExteionXml = this.props.deviceExtension.map(ext => {
-            return ext.xml;
-        });
-        const toolboxXML = this.getToolboxXML();
-        if (toolboxXML) {
-            this.props.updateToolboxState(toolboxXML);
-        }
-    }
     updateToolbox () {
         this.toolboxUpdateTimeout = false;
 
@@ -342,6 +297,7 @@ class Blocks extends React.Component {
         this.props.vm.addListener('targetsUpdate', this.onTargetsUpdate);
         this.props.vm.addListener('EXTENSION_ADDED', this.handleExtensionAdded);
         this.props.vm.addListener('DEVICE_ADDED', this.handleDeviceAdded);
+        this.props.vm.addListener('DEVICE_EXTENSION_ADDED', this.handleDeviceExtensionAdded);
         this.props.vm.addListener('BLOCKSINFO_UPDATE', this.handleBlocksInfoUpdate);
         this.props.vm.addListener('PERIPHERAL_CONNECTED', this.handleStatusButtonUpdate);
         this.props.vm.addListener('PERIPHERAL_DISCONNECTED', this.handleStatusButtonUpdate);
@@ -358,6 +314,7 @@ class Blocks extends React.Component {
         this.props.vm.removeListener('targetsUpdate', this.onTargetsUpdate);
         this.props.vm.removeListener('EXTENSION_ADDED', this.handleExtensionAdded);
         this.props.vm.removeListener('DEVICE_ADDED', this.handleDeviceAdded);
+        this.props.vm.removeListener('DEVICE_EXTENSION_ADDED', this.handleDeviceExtensionAdded);
         this.props.vm.removeListener('BLOCKSINFO_UPDATE', this.handleBlocksInfoUpdate);
         this.props.vm.removeListener('PERIPHERAL_CONNECTED', this.handleStatusButtonUpdate);
         this.props.vm.removeListener('PERIPHERAL_DISCONNECTED', this.handleStatusButtonUpdate);
@@ -586,6 +543,28 @@ class Blocks extends React.Component {
             this.props.updateToolboxState(toolboxXML);
         }
     }
+    handleDeviceExtensionAdded(data) {
+        const { toolboxXML, blockUrl, generatorUrl } = data;
+
+        const $script = require("scriptjs");
+
+        $script(blockUrl, blockUrl.toString());
+        $script.ready(blockUrl.toString(), () => {
+            this.ScratchBlocks = defaultsDeep(this.ScratchBlocks, addBlocks(this.ScratchBlocks));
+            this.requestToolboxUpdate();
+        });
+
+        $script(generatorUrl, generatorUrl.toString());
+        $script.ready(generatorUrl.toString(), () => {
+            this.ScratchBlocks = defaultsDeep(this.ScratchBlocks, addGenerator(this.ScratchBlocks));
+        })
+
+        this._deviceExteionXml.push(toolboxXML);
+        const xml = this.getToolboxXML();
+        if (xml) {
+            this.props.updateToolboxState(xml);
+        }
+    }
     handleBlocksInfoUpdate (categoryInfo) {
         // @todo Later we should replace this to avoid all the warnings from redefining blocks.
         this.handleExtensionAdded(categoryInfo);
@@ -703,7 +682,6 @@ class Blocks extends React.Component {
             anyModalVisible,
             canUseCloud,
             customProceduresVisible,
-            deviceExtension,
             deviceId,
             deviceLibraryVisible,
             extensionLibraryVisible,
@@ -785,7 +763,6 @@ Blocks.propTypes = {
     anyModalVisible: PropTypes.bool,
     canUseCloud: PropTypes.bool,
     customProceduresVisible: PropTypes.bool,
-    deviceExtension: PropTypes.array,
     deviceId: PropTypes.string,
     deviceLibraryVisible: PropTypes.bool,
     extensionLibraryVisible: PropTypes.bool,
@@ -877,7 +854,6 @@ const mapStateToProps = state => ({
         Object.keys(state.scratchGui.modals).some(key => state.scratchGui.modals[key]) ||
         state.scratchGui.mode.isFullScreen
     ),
-    deviceExtension: state.scratchGui.deviceExtension.deviceExtension,
     deviceId: state.scratchGui.device.deviceId,
     deviceLibraryVisible: state.scratchGui.modals.deviceLibrary,
     extensionLibraryVisible: state.scratchGui.modals.extensionLibrary,
