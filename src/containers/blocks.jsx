@@ -64,6 +64,7 @@ class Blocks extends React.Component {
             'handleConnectionModalStart',
             'handleDeviceAdded',
             'handleDeviceExtensionAdded',
+            'handleDeviceExtensionRemoved',
             'handleDeviceSelected',
             'handleDrop',
             'handleExtensionAdded',
@@ -134,9 +135,6 @@ class Blocks extends React.Component {
         // Store the programmode.
         // This is used in componentDidUpdate to control should update toolbox xml.
         this._programMode = this.props.isRealtimeMode;
-
-        // Store the device extension's xml.
-        this._deviceExteionXml = [];
 
         // we actually never want the workspace to enable "refresh toolbox" - this basically re-renders the
         // entire toolbox every time we reset the workspace.  We call updateToolbox as a part of
@@ -217,7 +215,7 @@ class Blocks extends React.Component {
         this.detachVM();
         this.workspace.dispose();
         clearTimeout(this.toolboxUpdateTimeout);
-        clearTimeout(this.updateDeviceToolboxTimeout);
+        clearTimeout(this.getXMLAndUpdateToolboxTimeout);
     }
     requestToolboxUpdate () {
         clearTimeout(this.toolboxUpdateTimeout);
@@ -296,6 +294,7 @@ class Blocks extends React.Component {
         this.props.vm.addListener('workspaceUpdate', this.onWorkspaceUpdate);
         this.props.vm.addListener('targetsUpdate', this.onTargetsUpdate);
         this.props.vm.addListener('EXTENSION_ADDED', this.handleExtensionAdded);
+        this.props.vm.addListener('DEVICE_EXTENSION_REMOVED', this.handleDeviceExtensionRemoved);
         this.props.vm.addListener('DEVICE_ADDED', this.handleDeviceAdded);
         this.props.vm.addListener('DEVICE_EXTENSION_ADDED', this.handleDeviceExtensionAdded);
         this.props.vm.addListener('BLOCKSINFO_UPDATE', this.handleBlocksInfoUpdate);
@@ -315,6 +314,7 @@ class Blocks extends React.Component {
         this.props.vm.removeListener('EXTENSION_ADDED', this.handleExtensionAdded);
         this.props.vm.removeListener('DEVICE_ADDED', this.handleDeviceAdded);
         this.props.vm.removeListener('DEVICE_EXTENSION_ADDED', this.handleDeviceExtensionAdded);
+        this.props.vm.removeListener('DEVICE_EXTENSION_REMOVED', this.handleDeviceExtensionRemoved);
         this.props.vm.removeListener('BLOCKSINFO_UPDATE', this.handleBlocksInfoUpdate);
         this.props.vm.removeListener('PERIPHERAL_CONNECTED', this.handleStatusButtonUpdate);
         this.props.vm.removeListener('PERIPHERAL_DISCONNECTED', this.handleStatusButtonUpdate);
@@ -386,9 +386,6 @@ class Blocks extends React.Component {
             const targetCostumes = target.getCostumes();
             const targetSounds = target.getSounds();
             var dynamicBlocksXML = this.props.vm.runtime.getBlocksXML(target, this.props.isRealtimeMode ? 'realtime' : 'upload');
-            for (const item of this._deviceExteionXml) {
-                dynamicBlocksXML.push({ xml: item });
-            }
             return makeToolboxXML(false, this.props.deviceId, target.isStage, target.id, dynamicBlocksXML, this.props.isRealtimeMode,
                 targetCostumes[targetCostumes.length - 1].name,
                 stageCostumes[stageCostumes.length - 1].name,
@@ -528,23 +525,23 @@ class Blocks extends React.Component {
         });
 
         // Update the toolbox with new blocks if possible, use timeout to let props update first
-        this.requestUpdateDeviceToolbox();
+        this.requestGetXMLAndUpdateToolbox();
     }
-    requestUpdateDeviceToolbox () {
-        clearTimeout(this.updateDeviceToolboxTimeout);
-        this.updateDeviceToolboxTimeout = setTimeout(() => {
-            this.UpdateDeviceToolbox();
+    requestGetXMLAndUpdateToolbox () {
+        clearTimeout(this.getXMLAndUpdateToolboxTimeout);
+        this.getXMLAndUpdateToolboxTimeout = setTimeout(() => {
+            this.getXMLAndUpdateToolbox();
         }, 0);
     }
-    UpdateDeviceToolbox () {
-        this.updateDeviceToolboxTimeout = false;
+    getXMLAndUpdateToolbox () {
+        this.getXMLAndUpdateToolboxTimeout = false;
         const toolboxXML = this.getToolboxXML();
         if (toolboxXML) {
             this.props.updateToolboxState(toolboxXML);
         }
     }
     handleDeviceExtensionAdded(data) {
-        const { toolboxXML, blockUrl, generatorUrl } = data;
+        const { blockUrl, generatorUrl } = data;
 
         const $script = require("scriptjs");
 
@@ -559,16 +556,20 @@ class Blocks extends React.Component {
             this.ScratchBlocks = defaultsDeep(this.ScratchBlocks, addGenerator(this.ScratchBlocks));
         })
 
-        this._deviceExteionXml.push(toolboxXML);
-        const xml = this.getToolboxXML();
-        if (xml) {
-            this.props.updateToolboxState(xml);
+        const toolboxXML = this.getToolboxXML();
+        if (toolboxXML) {
+            this.props.updateToolboxState(toolboxXML);
+        }
+    }
+    handleDeviceExtensionRemoved(deviceExtensionId) {
+        const toolboxXML = this.getToolboxXML();
+        if (toolboxXML) {
+            this.props.updateToolboxState(toolboxXML);
         }
     }
     handleBlocksInfoUpdate (categoryInfo) {
         // @todo Later we should replace this to avoid all the warnings from redefining blocks.
         this.handleExtensionAdded(categoryInfo);
-        this.handleDeviceAdded(categoryInfo);
     }
     handleCategorySelected (categoryId) {
         const extension = extensionData.find(ext => ext.extensionId === categoryId);

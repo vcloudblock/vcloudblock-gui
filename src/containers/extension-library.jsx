@@ -37,6 +37,7 @@ class ExtensionLibrary extends React.PureComponent {
     constructor (props) {
         super(props);
         bindAll(this, [
+            'updateDeviceExtensions',
             'handleItemSelect'
         ]);
         this.state = {
@@ -46,9 +47,14 @@ class ExtensionLibrary extends React.PureComponent {
 
     componentDidMount() {
         if (this.props.deviceId) {
-            this.props.vm.extensionManager.getLocalDeviceExtensionsList().then(data => this.setState({ deviceExtensions: data }));
-            this.props.vm.extensionManager.getRemoteDeviceExtensionsList().then(data => this.setState({ deviceExtensions: data }))
+            this.updateDeviceExtensions();
         }
+    }
+
+    updateDeviceExtensions() {
+        // Todo exclude the same item.
+        this.props.vm.extensionManager.getLocalDeviceExtensionsList().then(data => this.setState({ deviceExtensions: data }));
+        this.props.vm.extensionManager.getRemoteDeviceExtensionsList().then(data => this.setState({ deviceExtensions: data }));
     }
 
     handleItemSelect (item) {
@@ -57,12 +63,13 @@ class ExtensionLibrary extends React.PureComponent {
         if (this.props.deviceId) {
             if (id && !item.disabled) {
                 if (this.props.vm.extensionManager.isDeviceExtensionLoaded(id)) {
-                    console.log('DeviceExtension has added');
-                    // todo onCategorySelected()
+                    this.props.vm.extensionManager.unloadDeviceExtension(id).then(() => {
+                        this.updateDeviceExtensions();
+                    })
+
                 } else {
                     this.props.vm.extensionManager.loadDeviceExtension(id).then(() => {
-                         // todo onCategorySelected()
-                        // todo allert extension add successfull
+                        this.updateDeviceExtensions();
                     });
                 }
             }
@@ -102,10 +109,12 @@ class ExtensionLibrary extends React.PureComponent {
 
         return (
             <LibraryComponent
+                autoClose={this.props.deviceId ? false : true}
                 data={extensionLibraryThumbnailData}
                 filterable={true}
                 tags={tagListPrefix}
                 id="extensionLibrary"
+                isUnloadble={this.props.deviceId ? true : false}
                 title={this.props.intl.formatMessage(messages.extensionTitle)}
                 visible={this.props.visible}
                 onItemSelected={this.handleItemSelect}

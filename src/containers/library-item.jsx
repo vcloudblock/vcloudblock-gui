@@ -23,18 +23,33 @@ class LibraryItem extends React.PureComponent {
         ]);
         this.state = {
             iconIndex: 0,
-            isRotatingIcon: false
+            isRotatingIcon: false,
+            isProcessing: false
         };
     }
     componentWillUnmount () {
         clearInterval(this.intervalId);
+    }
+    componentDidUpdate(prevProps) {
+        if (this.props.isLoaded !== prevProps.isLoaded) {
+            this.setState({
+                isProcessing: false
+            });
+        }
     }
     handleBlur (id) {
         this.handleMouseLeave(id);
     }
     handleClick (e) {
         if (!this.props.disabled) {
-            this.props.onSelect(this.props.id);
+            if (!this.state.isProcessing) {
+                if (this.props.isUnloadble) {
+                    this.setState({
+                        isProcessing: true
+                    })
+                }
+                this.props.onSelect(this.props.id);
+            }
         }
         e.preventDefault();
     }
@@ -125,7 +140,10 @@ class LibraryItem extends React.PureComponent {
                 id={this.props.id}
                 insetIconURL={this.props.insetIconURL}
                 internetConnectionRequired={this.props.internetConnectionRequired}
+                isLoaded={this.props.isLoaded}
+                isUnloadble={this.props.isUnloadble}
                 isPlaying={this.props.isPlaying}
+                isProcessing={this.state.isProcessing}
                 name={this.props.name}
                 showPlayButton={this.props.showPlayButton}
                 onBlur={this.handleBlur}
@@ -169,6 +187,8 @@ LibraryItem.propTypes = {
     id: PropTypes.number.isRequired,
     insetIconURL: PropTypes.string,
     internetConnectionRequired: PropTypes.bool,
+    isLoaded: PropTypes.bool,
+    isUnloadble: PropTypes.bool,
     isPlaying: PropTypes.bool,
     name: PropTypes.oneOfType([
         PropTypes.string,
@@ -181,6 +201,10 @@ LibraryItem.propTypes = {
     programMode: PropTypes.array,
     showPlayButton: PropTypes.bool,
     version: PropTypes.string
+};
+
+LibraryItem.defaultProps = {
+    isLoaded: false
 };
 
 export default injectIntl(LibraryItem);

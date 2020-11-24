@@ -141,8 +141,8 @@ class LibraryItemComponent extends React.PureComponent {
                                     <div>
                                         <FormattedMessage
                                             defaultMessage="Author"
-                                            description="Label for extension arthur"
-                                            id="gui.extensionLibrary.arthur"
+                                            description="Label for extension author"
+                                            id="gui.extensionLibrary.author"
                                         />
                                     </div>
                                     <div
@@ -211,6 +211,41 @@ class LibraryItemComponent extends React.PureComponent {
                         </div>
                     </div>
                 ) : null}
+                {this.props.isUnloadble ? (
+                    <div className={styles.featuredExtensionMetadataTailRow}>
+                        {this.props.isProcessing ? (
+                            <div className={classNames(styles.featuredExtensionLoadState, styles.featuredExtensionLoading)}>
+                                <div>
+                                    <FormattedMessage
+                                        defaultMessage="Processing..."
+                                        description="Label to indicate that device extension is Processing"
+                                        id="gui.extensionLibrary.Processing"
+                                    />
+                                </div>
+                            </div>
+                        ) : (
+                            <div className={classNames(styles.featuredExtensionLoadState, this.props.isLoaded ? styles.featuredExtensionLoaded : null)}>
+                                {this.props.isLoaded ? (
+                                    <div>
+                                        <FormattedMessage
+                                            defaultMessage="Loaded"
+                                            description="Label to indicate that device extension is loaded"
+                                            id="gui.extensionLibrary.loaded"
+                                        />
+                                    </div>
+                                ) : (
+                                        <div>
+                                            <FormattedMessage
+                                                defaultMessage="Not loaded"
+                                                description="Label to indicate that device extension is not loaded"
+                                                id="gui.extensionLibrary.notLoaded"
+                                            />
+                                        </div>
+                                    )}
+                            </div>
+                        )}
+                    </div>
+                ) : null}
             </div>
         ) : (
             <Box
@@ -272,7 +307,10 @@ LibraryItemComponent.propTypes = {
     iconURL: PropTypes.string,
     insetIconURL: PropTypes.string,
     internetConnectionRequired: PropTypes.bool,
+    isLoaded: PropTypes.bool,
+    isUnloadble: PropTypes.bool,
     isPlaying: PropTypes.bool,
+    isProcessing: PropTypes.bool,
     name: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.node

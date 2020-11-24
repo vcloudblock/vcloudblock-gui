@@ -64,7 +64,9 @@ class LibraryComponent extends React.Component {
         }
     }
     handleSelect (id) {
-        this.handleClose();
+        if (this.props.autoClose) {
+            this.handleClose();
+        }
         this.props.onItemSelected(this.getFilteredData()[id]);
     }
     handleClose () {
@@ -239,6 +241,8 @@ class LibraryComponent extends React.Component {
                             id={index}
                             insetIconURL={dataItem.insetIconURL}
                             internetConnectionRequired={dataItem.internetConnectionRequired}
+                            isLoaded={dataItem.isLoaded}
+                            isUnloadble={this.props.isUnloadble}
                             isPlaying={this.state.playingItem === index}
                             key={typeof dataItem.name === 'string' ? dataItem.name : dataItem.rawURL}
                             name={dataItem.name}
@@ -263,6 +267,7 @@ class LibraryComponent extends React.Component {
 }
 
 LibraryComponent.propTypes = {
+    autoClose: PropTypes.bool,
     data: PropTypes.arrayOf(
         /* eslint-disable react/no-unused-prop-types, lines-around-comment */
         // An item in the library
@@ -280,6 +285,7 @@ LibraryComponent.propTypes = {
     filterable: PropTypes.bool,
     id: PropTypes.string.isRequired,
     intl: intlShape.isRequired,
+    isUnloadble: PropTypes.bool,
     onItemMouseEnter: PropTypes.func,
     onItemMouseLeave: PropTypes.func,
     onItemSelected: PropTypes.func,
@@ -291,6 +297,8 @@ LibraryComponent.propTypes = {
 };
 
 LibraryComponent.defaultProps = {
+    autoClose: true,
+    isUnloadble: false,
     filterable: true,
     showPlayButton: false
 };
