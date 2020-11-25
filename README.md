@@ -29,6 +29,8 @@ EN: [https://scratchhw.github.io/wiki/](https://scratchhw.github.io/wiki/)
 
 中文: [https://scratchhw.github.io/wiki-zh/](https://scratchhw.github.io/wiki-zh/)
 
+Gitee中文镜像: [https://scratch-hw.gitee.io/wiki-zh/](https://scratch-hw.gitee.io/wiki-zh/)
+
 ## Contact me
 
 China QQ group number: 933484739
