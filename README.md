@@ -23,7 +23,11 @@ This is a fast changing and incomplete program. It's for professional developer.
 
 ## Getting Start
 
-Follow the wiki: [https://scratchhw.github.io/wiki/](https://scratchhw.github.io/wiki/)
+Follow the wiki: 
+
+EN: [https://scratchhw.github.io/wiki/](https://scratchhw.github.io/wiki/)
+
+中文: [https://scratchhw.github.io/wiki-zh/](https://scratchhw.github.io/wiki-zh/)
 
 ## Contact me
 
