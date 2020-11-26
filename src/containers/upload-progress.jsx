@@ -19,7 +19,7 @@ const messages = defineMessages({
     uploadErrorMessage: {
         defaultMessage: 'Upload error',
         description: 'Prompt for upload error',
-        id: 'gui.uploadProgress.uploadError'
+        id: 'gui.uploadProgress.uploadErrorMessage'
     }
 });
 

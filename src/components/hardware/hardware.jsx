@@ -17,18 +17,18 @@ import uploadIcon from './icon--upload.svg';
 const messages = defineMessages({
     uploadMessage: {
         defaultMessage: 'upload',
-        description: 'Button to change stage size to large',
-        id: 'gui.hardware.uploadButtonPic'
+        description: 'Button to upload program',
+        id: 'gui.hardware.uploadButton'
     },
     largeStageSizeMessage: {
         defaultMessage: 'Switch to large stage',
         description: 'Button to upload code to device alt',
-        id: 'gui.stageHeader.stageSizeLarge'
+        id: 'gui.stageHeader.codeStageSizeLarge'
     },
     smallStageSizeMessage: {
         defaultMessage: 'Switch to small stage',
         description: 'Button to change stage size to small',
-        id: 'gui.stageHeader.stageSizeSmall'
+        id: 'gui.stageHeader.codeStageSizeSmall'
     }
 });
 
