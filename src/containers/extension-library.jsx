@@ -66,10 +66,12 @@ class ExtensionLibrary extends React.PureComponent {
                     this.props.vm.extensionManager.unloadDeviceExtension(id).then(() => {
                         this.updateDeviceExtensions();
                     })
-
                 } else {
                     this.props.vm.extensionManager.loadDeviceExtension(id).then(() => {
                         this.updateDeviceExtensions();
+                    }).catch(err => {
+                        // TODO add a alet device extension load failed. and change the state to bar to failed state
+                        console.log('err = ' + err);
                     });
                 }
             }

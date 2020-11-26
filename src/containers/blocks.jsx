@@ -540,28 +540,16 @@ class Blocks extends React.Component {
             this.props.updateToolboxState(toolboxXML);
         }
     }
-    handleDeviceExtensionAdded(data) {
-        const { blockUrl, generatorUrl } = data;
-
-        const $script = require("scriptjs");
-
-        $script(blockUrl, blockUrl.toString());
-        $script.ready(blockUrl.toString(), () => {
-            this.ScratchBlocks = defaultsDeep(this.ScratchBlocks, addBlocks(this.ScratchBlocks));
-            this.requestToolboxUpdate();
-        });
-
-        $script(generatorUrl, generatorUrl.toString());
-        $script.ready(generatorUrl.toString(), () => {
-            this.ScratchBlocks = defaultsDeep(this.ScratchBlocks, addGenerator(this.ScratchBlocks));
-        })
+    handleDeviceExtensionAdded() {
+        this.ScratchBlocks = defaultsDeep(this.ScratchBlocks, addBlocks(this.ScratchBlocks), addGenerator(this.ScratchBlocks));
+        this.requestToolboxUpdate();
 
         const toolboxXML = this.getToolboxXML();
         if (toolboxXML) {
             this.props.updateToolboxState(toolboxXML);
         }
     }
-    handleDeviceExtensionRemoved(deviceExtensionId) {
+    handleDeviceExtensionRemoved() {
         const toolboxXML = this.getToolboxXML();
         if (toolboxXML) {
             this.props.updateToolboxState(toolboxXML);
