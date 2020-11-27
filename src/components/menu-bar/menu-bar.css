@@ -273,6 +273,7 @@
   height: 100%;
   vertical-align: middle;
   padding-right: 2rem;
+  white-space: nowrap;
 }
 
 .program-mode-switch .mode-switch-upload {
@@ -282,4 +283,5 @@
   height: 100%;
   vertical-align: middle;
   padding-left: 2rem;
+  white-space: nowrap;
 }
