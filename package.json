@@ -8,7 +8,7 @@
     "clean": "rimraf ./build && mkdirp build && rimraf ./dist && mkdirp dist",
     "deploy": "touch build/.nojekyll && gh-pages -t -d build -m \"Build for $(git log --pretty=format:%H -n1) [skip ci]\"",
     "prune": "./prune-gh-pages.sh",
-    "i18n:push": "tx-push-src scratch-editor interface translations/en.json",
+    "i18n:push": "tx-push-src scratch-editor-2 interface translations/en.json",
     "i18n:src": "rimraf ./translations/messages/src && babel src > tmp.js && rimraf tmp.js && build-i18n-src ./translations/messages/src ./translations/ && npm run i18n:push",
     "start": "webpack-dev-server",
     "start-open": "webpack-dev-server --open --host 127.0.0.1",
