@@ -488,6 +488,20 @@ class Blocks extends React.Component {
         const dev = deviceData.find(ext => ext.deviceId === device);
         this.props.onDeviceSelected(dev.deviceId, dev.name);
 
+        const supportUploadMode = dev.programMode.includes('upload');
+        const supportRealtimeMode = dev.programMode.includes('realtime');
+
+        if (!(supportUploadMode && supportRealtimeMode)) {
+            if (supportUploadMode) {
+                this.props.onSetUploadMode();
+            } else {
+                this.props.onSetRealtimeMode();
+            }
+            this.props.onSetSupportSwitchMode(false);
+        } else {
+            this.props.onSetSupportSwitchMode(true);
+        }
+
         categoryInfoArray.forEach((categoryInfo) => {
             const defineBlocks = blockInfoArray => {
                 if (blockInfoArray && blockInfoArray.length > 0) {
@@ -571,21 +585,8 @@ class Blocks extends React.Component {
     }
     handleDeviceSelected (categoryId) {
         const device = deviceData.find(ext => ext.deviceId === categoryId);
-        const supportUploadMode = device.programMode.includes('upload');
-        const supportRealtimeMode = device.programMode.includes('realtime');
 
         // TODO: set device type to redux, and change workspaceToCode function.
-
-        if (!(supportUploadMode && supportRealtimeMode)) {
-            if (supportUploadMode) {
-                this.props.onSetUploadMode();
-            } else {
-                this.props.onSetRealtimeMode();
-            }
-            this.props.onSetSupportSwitchMode(false);
-        } else {
-            this.props.onSetSupportSwitchMode(true);
-        }
 
         if (device && device.launchPeripheralConnectionFlow) {
             this.handleConnectionModalStart(categoryId);
