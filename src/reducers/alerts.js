@@ -1,6 +1,7 @@
 import alertsData from '../lib/alerts/index.jsx';
 import {AlertTypes, AlertLevels} from '../lib/alerts/index.jsx';
 import extensionData from '../lib/libraries/extensions/index.jsx';
+import deviceData from '../lib/libraries/devices/index.jsx';
 
 const SHOW_ALERT = 'scratch-gui/alerts/SHOW_ALERT';
 const SHOW_EXTENSION_ALERT = 'scratch-gui/alerts/SHOW_EXTENSION_ALERT';
@@ -79,7 +80,7 @@ const reducer = function (state, action) {
     case SHOW_EXTENSION_ALERT: {
         const extensionId = action.data.extensionId;
         if (extensionId) {
-            const extension = extensionData.find(ext => ext.extensionId === extensionId);
+            const extension = extensionData.find(ext => ext.extensionId === extensionId) || deviceData.find(dev => dev.deviceId === extensionId);
             if (extension) {
                 const newList = state.alertsList.slice();
                 const newAlert = {
