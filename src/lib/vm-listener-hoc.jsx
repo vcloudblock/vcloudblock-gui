@@ -10,7 +10,7 @@ import {updateBlockDrag} from '../reducers/block-drag';
 import {updateMonitors} from '../reducers/monitors';
 import {setProjectChanged, setProjectUnchanged} from '../reducers/project-changed';
 import {setRunningState, setTurboState, setStartedState} from '../reducers/vm-status';
-import {showExtensionAlert} from '../reducers/alerts';
+import {showExtensionAlert, showExtensionRealtimeAlert, showExtensionRealtimeSuccess} from '../reducers/alerts';
 import {updateMicIndicator} from '../reducers/mic-indicator';
 
 /*
@@ -45,6 +45,8 @@ const vmListenerHOC = function (WrappedComponent) {
             this.props.vm.on('RUNTIME_STARTED', this.props.onRuntimeStarted);
             this.props.vm.on('PROJECT_START', this.props.onGreenFlag);
             this.props.vm.on('PERIPHERAL_CONNECTION_LOST_ERROR', this.props.onShowExtensionAlert);
+            this.props.vm.on('PERIPHERAL_REALTIME_CONNECTION_LOST_ERROR', this.props.onShowExtensionRealtimeAlert);
+            this.props.vm.on('PERIPHERAL_REALTIME_CONNECT_SUCCESS', this.props.onShowExtensionRealtimeSuccess);
             this.props.vm.on('MIC_LISTENING', this.props.onMicListeningUpdate);
 
         }
@@ -68,6 +70,8 @@ const vmListenerHOC = function (WrappedComponent) {
         }
         componentWillUnmount () {
             this.props.vm.removeListener('PERIPHERAL_CONNECTION_LOST_ERROR', this.props.onShowExtensionAlert);
+            this.props.vm.removeListener('PERIPHERAL_REALTIME_CONNECTION_LOST_ERROR', this.props.onShowExtensionRealtimeAlert);
+            this.props.vm.removeListener('PERIPHERAL_REALTIME_CONNECT_SUCCESS', this.props.onShowExtensionRealtimeSuccess);
             if (this.props.attachKeyboardEvents) {
                 document.removeEventListener('keydown', this.handleKeyDown);
                 document.removeEventListener('keyup', this.handleKeyUp);
@@ -135,6 +139,8 @@ const vmListenerHOC = function (WrappedComponent) {
                 onTurboModeOff,
                 onTurboModeOn,
                 onShowExtensionAlert,
+                onShowExtensionRealtimeAlert,
+                onShowExtensionRealtimeSuccess,
                 /* eslint-enable no-unused-vars */
                 ...props
             } = this.props;
@@ -155,6 +161,8 @@ const vmListenerHOC = function (WrappedComponent) {
         onProjectSaved: PropTypes.func.isRequired,
         onRuntimeStarted: PropTypes.func.isRequired,
         onShowExtensionAlert: PropTypes.func.isRequired,
+        onShowExtensionRealtimeAlert: PropTypes.func.isRequired,
+        onShowExtensionRealtimeSuccess: PropTypes.func.isRequired,
         onTargetsUpdate: PropTypes.func.isRequired,
         onTurboModeOff: PropTypes.func.isRequired,
         onTurboModeOn: PropTypes.func.isRequired,
@@ -199,6 +207,12 @@ const vmListenerHOC = function (WrappedComponent) {
         onTurboModeOff: () => dispatch(setTurboState(false)),
         onShowExtensionAlert: data => {
             dispatch(showExtensionAlert(data));
+        },
+        onShowExtensionRealtimeAlert: data => {
+            dispatch(showExtensionRealtimeAlert(data));
+        },
+        onShowExtensionRealtimeSuccess: data => {
+            dispatch(showExtensionRealtimeSuccess(data));
         },
         onMicListeningUpdate: listening => {
             dispatch(updateMicIndicator(listening));

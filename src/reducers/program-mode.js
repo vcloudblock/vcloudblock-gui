@@ -3,7 +3,6 @@ const SET_REALTIME_MODE = 'scratch-gui/progran-mode/SET_REALTIME_MODE';
 const SET_SUPPORT_SWITCH_MODE = 'scratch-gui/progran-mode/SET_SUPPORT_SWITCH_MODE';
 
 const initialState = {
-    isUplodeMode: false,
     isRealtimeMode: true,
     isSupportSwitchMode: false
 };
@@ -13,12 +12,10 @@ const reducer = function (state, action) {
     switch (action.type) {
     case SET_UPLOAD_MODE:
         return Object.assign({}, state, {
-            isUplodeMode: true,
             isRealtimeMode: false
         });
     case SET_REALTIME_MODE:
         return Object.assign({}, state, {
-            isUplodeMode: false,
             isRealtimeMode: true
         });
     case SET_SUPPORT_SWITCH_MODE:

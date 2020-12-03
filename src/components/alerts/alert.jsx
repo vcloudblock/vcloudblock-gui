@@ -19,6 +19,7 @@ const AlertComponent = ({
     content,
     closeButton,
     extensionName,
+    extensionMessage,
     iconSpinner,
     iconURL,
     level,
@@ -52,6 +53,9 @@ const AlertComponent = ({
         )}
         <div className={styles.alertMessage}>
             {extensionName ? (
+                extensionMessage ? (
+                    extensionMessage
+                ):(
                 <FormattedMessage
                     defaultMessage="Scratch lost connection to {extensionName}."
                     description="Message indicating that an extension peripheral has been disconnected"
@@ -62,6 +66,7 @@ const AlertComponent = ({
                         )
                     }}
                 />
+                )
             ) : content}
         </div>
         <div className={styles.alertButtons}>
@@ -121,6 +126,7 @@ AlertComponent.propTypes = {
     closeButton: PropTypes.bool,
     content: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
     extensionName: PropTypes.string,
+    extensionMessage: PropTypes.string,
     iconSpinner: PropTypes.bool,
     iconURL: PropTypes.string,
     level: PropTypes.string,

@@ -5,6 +5,8 @@ import deviceData from '../lib/libraries/devices/index.jsx';
 
 const SHOW_ALERT = 'scratch-gui/alerts/SHOW_ALERT';
 const SHOW_EXTENSION_ALERT = 'scratch-gui/alerts/SHOW_EXTENSION_ALERT';
+const SHOW_EXTENSION_REALTIME_ALERT = 'scratch-gui/alerts/SHOW_EXTENSION_REALTIME_ALERT';
+const SHOW_EXTENSION_REALTIME_SUCCESS = 'scratch-gui/alerts/SHOW_EXTENSION_REALTIME_SUCCESS';
 const CLOSE_ALERT = 'scratch-gui/alerts/CLOSE_ALERT';
 const CLOSE_ALERTS_WITH_ID = 'scratch-gui/alerts/CLOSE_ALERTS_WITH_ID';
 const CLOSE_ALERT_WITH_ID = 'scratch-gui/alerts/CLOSE_ALERT_WITH_ID';
@@ -91,6 +93,54 @@ const reducer = function (state, action) {
                     iconURL: extension.connectionSmallIconURL,
                     level: AlertLevels.WARN,
                     showReconnect: true
+                };
+                newList.push(newAlert);
+
+                return Object.assign({}, state, {
+                    alertsList: newList
+                });
+            }
+        }
+        return state; // if alert not found, show nothing
+    }
+    case SHOW_EXTENSION_REALTIME_ALERT: {
+        const extensionId = action.data.extensionId;
+        if (extensionId) {
+            const extension = extensionData.find(ext => ext.extensionId === extensionId) || deviceData.find(dev => dev.deviceId === extensionId);
+            if (extension) {
+                const newList = state.alertsList.slice();
+                const newAlert = {
+                    alertType: AlertTypes.EXTENSION,
+                    closeButton: true,
+                    extensionId: extensionId,
+                    extensionName: extension.name,
+                    extensionMessage: action.data.message,
+                    iconURL: extension.connectionSmallIconURL,
+                    level: AlertLevels.WARN
+                };
+                newList.push(newAlert);
+
+                return Object.assign({}, state, {
+                    alertsList: newList
+                });
+            }
+        }
+        return state; // if alert not found, show nothing
+    }
+    case SHOW_EXTENSION_REALTIME_SUCCESS: {
+        const extensionId = action.data.extensionId;
+        if (extensionId) {
+            const extension = extensionData.find(ext => ext.extensionId === extensionId) || deviceData.find(dev => dev.deviceId === extensionId);
+            if (extension) {
+                const newList = state.alertsList.slice();
+                const newAlert = {
+                    alertType: AlertTypes.EXTENSION,
+                    closeButton: true,
+                    extensionId: extensionId,
+                    extensionName: extension.name,
+                    extensionMessage: action.data.message,
+                    iconURL: extension.connectionSmallIconURL,
+                    level: AlertLevels.SUCCESS
                 };
                 newList.push(newAlert);
 
@@ -192,6 +242,21 @@ const showExtensionAlert = function (data) {
     };
 };
 
+const showExtensionRealtimeAlert = function (data) {
+    return {
+        type: SHOW_EXTENSION_REALTIME_ALERT,
+        data
+    };
+};
+
+const showExtensionRealtimeSuccess = function (data) {
+    return {
+        type: SHOW_EXTENSION_REALTIME_SUCCESS,
+        data
+    };
+};
+
+
 /**
  * Function to dispatch showing an alert, with optional
  * timeout to make it close/go away.
@@ -220,5 +285,7 @@ export {
     filterPopupAlerts,
     showAlertWithTimeout,
     showExtensionAlert,
+    showExtensionRealtimeAlert,
+    showExtensionRealtimeSuccess,
     showStandardAlert
 };

@@ -185,16 +185,19 @@ class MenuBar extends React.Component {
             'restoreOptionMessage',
             'handleConnectionMouseUp',
             'handleSelectDeviceMouseUp',
-            'handleProgramModeSwitchOnChange'
+            'handleProgramModeSwitchOnChange',
+            'handleProgramModeUpdate'
         ]);
     }
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyPress);
         this.props.vm.on('PERIPHERAL_DISCONNECTED', this.props.onDisconnect);
+        this.props.vm.on('PROGRAM_MODE_UPDATE', this.handleProgramModeUpdate);
     }
     componentWillUnmount () {
         document.removeEventListener('keydown', this.handleKeyPress);
         this.props.vm.removeListener('PERIPHERAL_DISCONNECTED', this.props.onDisconnect);
+        this.props.vm.removeListener('PROGRAM_MODE_UPDATE', this.handleProgramModeUpdate);
     }
     handleClickNew () {
         // if the project is dirty, and user owns the project, we will autosave.
@@ -318,9 +321,16 @@ class MenuBar extends React.Component {
     }
     handleProgramModeSwitchOnChange() {
         if (this.props.isRealtimeMode) {
-            this.props.onSetUploadMode();
+            this.props.vm.runtime.setRealtimeMode(false);
         } else {
+            this.props.vm.runtime.setRealtimeMode(true);
+        }
+    }
+    handleProgramModeUpdate(data) {
+        if (data.isRealtimeMode) {
             this.props.onSetRealtimeMode();
+        } else {
+            this.props.onSetUploadMode();
         }
     }
     render() {

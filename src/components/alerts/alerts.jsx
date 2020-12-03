@@ -22,6 +22,7 @@ const AlertsComponent = ({
                     content={a.content}
                     extensionId={a.extensionId}
                     extensionName={a.extensionName}
+                    extensionMessage={a.extensionMessage}
                     iconSpinner={a.iconSpinner}
                     iconURL={a.iconURL}
                     index={index}
