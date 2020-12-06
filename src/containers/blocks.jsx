@@ -70,7 +70,7 @@ class Blocks extends React.Component {
             'handleExtensionAdded',
             'handleStatusButtonUpdate',
             'handleOpenSoundRecorder',
-            'handleDragUpdate',
+            'handleCodeNeedUpdate',
             'handlePromptStart',
             'handlePromptCallback',
             'handlePromptClose',
@@ -300,7 +300,7 @@ class Blocks extends React.Component {
         this.props.vm.addListener('BLOCKSINFO_UPDATE', this.handleBlocksInfoUpdate);
         this.props.vm.addListener('PERIPHERAL_CONNECTED', this.handleStatusButtonUpdate);
         this.props.vm.addListener('PERIPHERAL_DISCONNECTED', this.handleStatusButtonUpdate);
-        this.props.vm.addListener('BLOCK_DRAG_UPDATE', this.handleDragUpdate);
+        this.props.vm.addListener('CODE_NEED_UPDATE', this.handleCodeNeedUpdate);
         this.props.vm.addListener('TOOLBOX_UPLOAD_FINISH', this.handleToolboxUploadFinish);
     }
     detachVM () {
@@ -318,7 +318,7 @@ class Blocks extends React.Component {
         this.props.vm.removeListener('BLOCKSINFO_UPDATE', this.handleBlocksInfoUpdate);
         this.props.vm.removeListener('PERIPHERAL_CONNECTED', this.handleStatusButtonUpdate);
         this.props.vm.removeListener('PERIPHERAL_DISCONNECTED', this.handleStatusButtonUpdate);
-        this.props.vm.removeListener('BLOCK_DRAG_UPDATE', this.handleDragUpdate);
+        this.props.vm.removeListener('CODE_NEED_UPDATE', this.handleCodeNeedUpdate);
         this.props.vm.removeListener('TOOLBOX_UPLOAD_FINISH', this.handleToolboxUploadFinish);
     }
 
@@ -629,7 +629,7 @@ class Blocks extends React.Component {
     handleToolboxUploadFinish() {
         this.props.onToolboxDidUpdate();
     }
-    handleDragUpdate (){
+    handleCodeNeedUpdate (){
         this.props.setCodeEditorValue(this.workspaceToCode());
     }
     handleOpenSoundRecorder () {
