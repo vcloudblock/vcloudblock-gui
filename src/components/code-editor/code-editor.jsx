@@ -25,7 +25,6 @@ const CodeEditorComponent = props => {
                 language={language}
                 value={value}
                 options={options}
-                height={height}
                 width={width}
                 onChange={onChange}
                 editorDidMount={editorDidMount}

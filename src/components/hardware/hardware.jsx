@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Box from '../box/box.jsx';
 import Button from '../button/button.jsx';
 import classNames from 'classnames';
-import { defineMessages, FormattedMessage, intlShape } from 'react-intl';
+import {defineMessages, FormattedMessage, intlShape} from 'react-intl';
 
-import { STAGE_SIZE_MODES } from '../../lib/layout-constants';
+import {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 import CodeEditor from '../../containers/code-editor.jsx'
 
 import styles from './hardware.css';
@@ -41,7 +41,7 @@ const HardwareComponent = props => {
         ...componentProps
     } = props;
     return (
-        <Box>
+        <Box className={styles.hardwareWrapper}>
             <Box className={styles.stageMenuWrapper}>
                 <div className={styles.uploadGroup}>
                     <div>
@@ -92,7 +92,9 @@ const HardwareComponent = props => {
                 </div>
             </Box>
             <Box className={classNames(styles.codeEditorWrapper)}>
-                <CodeEditor width={(stageSizeMode === STAGE_SIZE_MODES.large) ? 480 : 240}/>
+                <CodeEditor
+                    width={(stageSizeMode === STAGE_SIZE_MODES.large) ? 480 : 240}
+                />
             </Box>
         </Box>
     );
@@ -103,7 +105,7 @@ HardwareComponent.propTypes = {
     onUpload: PropTypes.func.isRequired,
     onSetStageLarge: PropTypes.func.isRequired,
     onSetStageSmall: PropTypes.func.isRequired,
-    stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
+    stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES))
 };
 
 HardwareComponent.defaultProps = {
