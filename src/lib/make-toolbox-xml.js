@@ -1,4 +1,4 @@
-import ScratchBlocks from 'scratch-blocks';
+import ScratchBlocks from 'scratchhw-blocks';
 import deviceData from '../lib/libraries/devices/index.jsx';
 
 const categorySeparator = '<sep gap="36"/>';

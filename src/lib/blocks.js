@@ -1,5 +1,5 @@
-import ScratchBlocks from 'scratch-blocks';
-import ArduinoGenerator from 'scratch-blocks/arduino_compressed';
+import ScratchBlocks from 'scratchhw-blocks';
+import ArduinoGenerator from 'scratchhw-blocks/arduino_compressed';
 
 /**
  * Connect scratch blocks with the vm
