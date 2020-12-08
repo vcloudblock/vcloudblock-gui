@@ -1,6 +1,6 @@
 # scratch-gui
 
-![](https://img.shields.io/travis/ScratchHW/scratch-gui)![](https://img.shields.io/github/license/ScratchHW/scratch-gui?style=plastic)
+![](https://img.shields.io/travis/ScratchHW/scratch-gui?style=plastic)![](https://img.shields.io/github/license/ScratchHW/scratch-gui?style=plastic)
 
 This project is fork from [LLK/scratch-gui](https://github.com/LLK/scratch-gui), it's goal is to complete a program that can build upload code to hardware. Especially for arduino and microbit. At present, this core function has been realized. But still need to improve the detail function for ordinary users. 
 
