@@ -7,7 +7,7 @@ import { compose } from 'redux';
 import { injectIntl } from 'react-intl';
 import { defineMessages } from 'react-intl';
 
-import VM from 'scratch-vm';
+import VM from 'scratchhw-vm';
 import analytics from '../lib/analytics';
 import extensionData from '../lib/libraries/extensions/index.jsx';
 import { closeUploadProgress } from '../reducers/modals';

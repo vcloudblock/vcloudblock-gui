@@ -7,7 +7,7 @@ import bindAll from 'lodash.bindall';
 import bowser from 'bowser';
 import React from 'react';
 
-import VM from 'scratch-vm';
+import VM from 'scratchhw-vm';
 
 import Box from '../box/box.jsx';
 import Button from '../button/button.jsx';
@@ -85,7 +85,7 @@ import unconnectedIcon from './icon--unconnected.svg';
 import connectedIcon from './icon--connected.svg';
 import fileIcon from './icon--file.svg';
 import screenshotIcon from './icon--screenshot.svg';
-import saveSvgAsPng from 'save-svg-as-png';
+import saveSvgAsPng from 'scratchhw-save-svg-as-png';
 import { showStandardAlert } from '../../reducers/alerts';
 
 const ariaMessages = defineMessages({

@@ -195,7 +195,7 @@ module.exports = [
             }]),
             new CopyWebpackPlugin([{
                 from: 'extension-worker.{js,js.map}',
-                context: 'node_modules/scratch-vm/dist/web'
+                context: 'node_modules/scratchhw-vm/dist/web'
             }])
         ])
     })
@@ -235,7 +235,7 @@ module.exports = [
                 }]),
                 new CopyWebpackPlugin([{
                     from: 'extension-worker.{js,js.map}',
-                    context: 'node_modules/scratch-vm/dist/web'
+                    context: 'node_modules/scratchhw-vm/dist/web'
                 }]),
                 // Include library JSON files for scratch-desktop to use for downloading
                 new CopyWebpackPlugin([{
