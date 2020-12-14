@@ -6,7 +6,7 @@ var webpack = require('webpack');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 // PostCss
 var autoprefixer = require('autoprefixer');
@@ -90,7 +90,7 @@ const base = {
         {
             test: /\.css$/,
             include: MONACO_DIR,
-            use: ['style-loader', 'css-loader'],
+            use: ['style-loader', 'css-loader']
         }]
     },
     optimization: {
@@ -102,9 +102,9 @@ const base = {
     },
     plugins: [
         new MonacoWebpackPlugin({
-            languages: ["c", "cpp", "python", "lua", "javascript"],
+            languages: ['c', 'cpp', 'python', 'lua', 'javascript'],
             features: ['!gotoSymbol']
-          })
+        })
     ]
 };
 

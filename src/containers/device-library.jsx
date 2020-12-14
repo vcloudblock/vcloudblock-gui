@@ -63,7 +63,7 @@ class DeviceLibrary extends React.PureComponent {
         return (
             <LibraryComponent
                 data={deviceLibraryThumbnailData}
-                filterable={true}
+                filterable
                 tags={tagListPrefix}
                 id="deviceLibrary"
                 title={this.props.intl.formatMessage(messages.deviceTitle)}
@@ -77,7 +77,7 @@ class DeviceLibrary extends React.PureComponent {
 
 DeviceLibrary.propTypes = {
     intl: intlShape.isRequired,
-    onCategorySelected: PropTypes.func,
+    onDeviceSelected: PropTypes.func,
     onRequestClose: PropTypes.func,
     visible: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired // eslint-disable-line react/no-unused-prop-types

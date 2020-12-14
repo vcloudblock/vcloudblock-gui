@@ -1,4 +1,5 @@
 import ScratchBlocks from 'scratchhw-blocks';
+// eslint-disable-next-line no-unused-vars
 import ArduinoGenerator from 'scratchhw-blocks/arduino_compressed';
 
 /**

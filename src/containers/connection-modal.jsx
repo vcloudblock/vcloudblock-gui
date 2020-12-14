@@ -7,8 +7,8 @@ import analytics from '../lib/analytics';
 import extensionData from '../lib/libraries/extensions/index.jsx';
 import deviceData from '../lib/libraries/devices/index.jsx';
 import {connect} from 'react-redux';
-import { closeConnectionModal } from '../reducers/modals';
-import { setConnectionModalPeripheralName } from '../reducers/connection-modal';
+import {closeConnectionModal} from '../reducers/modals';
+import {setConnectionModalPeripheralName} from '../reducers/connection-modal';
 
 class ConnectionModal extends React.Component {
     constructor (props) {
@@ -23,7 +23,8 @@ class ConnectionModal extends React.Component {
             'handleHelp'
         ]);
         this.state = {
-            extension: extensionData.find(ext => ext.extensionId === props.extensionId) || deviceData.find(ext => ext.deviceId === props.extensionId),
+            extension: extensionData.find(ext => ext.extensionId === props.extensionId) ||
+                deviceData.find(ext => ext.deviceId === props.extensionId),
             phase: props.vm.getPeripheralIsConnected(props.extensionId) ?
                 PHASES.connected : PHASES.scanning,
             peripheralName: null
@@ -42,7 +43,7 @@ class ConnectionModal extends React.Component {
             phase: PHASES.scanning
         });
     }
-    handleConnecting(peripheralId, peripheralName) {
+    handleConnecting (peripheralId, peripheralName) {
         this.props.vm.connectPeripheral(this.props.extensionId, peripheralId);
         this.setState({
             phase: PHASES.connecting,
@@ -146,8 +147,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onCancel: () => { dispatch(closeConnectionModal()); },
-    onConnected: (peripheralName) => { dispatch(setConnectionModalPeripheralName(peripheralName)); }
+    onCancel: () => {
+        dispatch(closeConnectionModal());
+    },
+    onConnected: peripheralName => {
+        dispatch(setConnectionModalPeripheralName(peripheralName));
+    }
 });
 
 export default connect(

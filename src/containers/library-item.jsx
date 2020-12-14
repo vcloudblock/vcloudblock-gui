@@ -27,15 +27,15 @@ class LibraryItem extends React.PureComponent {
             isProcessing: false
         };
     }
-    componentWillUnmount () {
-        clearInterval(this.intervalId);
-    }
-    componentDidUpdate(prevProps) {
+    componentWillUpdate (prevProps) {
         if (this.props.isLoaded !== prevProps.isLoaded) {
             this.setState({
                 isProcessing: false
             });
         }
+    }
+    componentWillUnmount () {
+        clearInterval(this.intervalId);
     }
     handleBlur (id) {
         this.handleMouseLeave(id);
@@ -46,7 +46,7 @@ class LibraryItem extends React.PureComponent {
                 if (this.props.isUnloadble) {
                     this.setState({
                         isProcessing: true
-                    })
+                    });
                 }
                 this.props.onSelect(this.props.id);
             }
@@ -197,8 +197,8 @@ LibraryItem.propTypes = {
     onMouseEnter: PropTypes.func.isRequired,
     onMouseLeave: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
-    programLanguage: PropTypes.array,
-    programMode: PropTypes.array,
+    programLanguage: PropTypes.arrayOf(PropTypes.string),
+    programMode: PropTypes.arrayOf(PropTypes.string),
     showPlayButton: PropTypes.bool,
     version: PropTypes.string
 };

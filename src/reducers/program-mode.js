@@ -35,7 +35,7 @@ const setRealtimeMode = () => ({
     type: SET_REALTIME_MODE
 });
 
-const setSupportSwitchMode = (state) => ({
+const setSupportSwitchMode = state => ({
     type: SET_SUPPORT_SWITCH_MODE,
     state: state
 });
@@ -45,5 +45,5 @@ export {
     initialState as programModeInitialState,
     setUploadMode,
     setRealtimeMode,
-    setSupportSwitchMode,
+    setSupportSwitchMode
 };

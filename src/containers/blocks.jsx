@@ -1,4 +1,3 @@
-/*global chrome*/
 import bindAll from 'lodash.bindall';
 import debounce from 'lodash.debounce';
 import defaultsDeep from 'lodash.defaultsdeep';
@@ -99,7 +98,7 @@ class Blocks extends React.Component {
         this.onTargetsUpdate = debounce(this.onTargetsUpdate, 100);
         this.toolboxUpdateQueue = [];
     }
-    componentDidMount() {
+    componentDidMount () {
 
         this.ScratchBlocks.FieldColourSlider.activateEyedropper_ = this.props.onActivateColorPicker;
         this.ScratchBlocks.Procedures.externalProcedureDefCallback = this.props.onActivateCustomProcedures;
@@ -235,7 +234,7 @@ class Blocks extends React.Component {
                 });
             });
     }
-    onProgramModeUpdate() {
+    onProgramModeUpdate () {
         this._programMode = this.props.isRealtimeMode;
         const toolboxXML = this.getToolboxXML();
         if (toolboxXML) {
@@ -385,8 +384,9 @@ class Blocks extends React.Component {
             const stageCostumes = stage.getCostumes();
             const targetCostumes = target.getCostumes();
             const targetSounds = target.getSounds();
-            var dynamicBlocksXML = this.props.vm.runtime.getBlocksXML(target, this.props.isRealtimeMode ? 'realtime' : 'upload');
-            return makeToolboxXML(false, this.props.deviceId, target.isStage, target.id, dynamicBlocksXML, this.props.isRealtimeMode,
+            const dynamicBlocksXML = this.props.vm.runtime.getBlocksXML(target);
+            return makeToolboxXML(false, this.props.deviceId, target.isStage, target.id, dynamicBlocksXML,
+                this.props.isRealtimeMode,
                 targetCostumes[targetCostumes.length - 1].name,
                 stageCostumes[stageCostumes.length - 1].name,
                 targetSounds.length > 0 ? targetSounds[targetSounds.length - 1].name : ''
@@ -482,8 +482,8 @@ class Blocks extends React.Component {
             this.props.updateToolboxState(toolboxXML);
         }
     }
-    handleDeviceAdded(info) {
-        const { device, categoryInfoArray } = info;
+    handleDeviceAdded (info) {
+        const {device, categoryInfoArray} = info;
 
         const dev = deviceData.find(ext => ext.deviceId === device);
         this.props.onDeviceSelected(dev.deviceId, dev.name);
@@ -491,6 +491,7 @@ class Blocks extends React.Component {
         const supportUploadMode = dev.programMode.includes('upload');
         const supportRealtimeMode = dev.programMode.includes('realtime');
 
+        // eslint-disable-next-line no-negated-condition
         if (!(supportUploadMode && supportRealtimeMode)) {
             if (supportUploadMode) {
                 this.props.onSetUploadMode();
@@ -502,7 +503,7 @@ class Blocks extends React.Component {
             this.props.onSetSupportSwitchMode(true);
         }
 
-        categoryInfoArray.forEach((categoryInfo) => {
+        categoryInfoArray.forEach(categoryInfo => {
             const defineBlocks = blockInfoArray => {
                 if (blockInfoArray && blockInfoArray.length > 0) {
                     const staticBlocksJson = [];
@@ -554,8 +555,10 @@ class Blocks extends React.Component {
             this.props.updateToolboxState(toolboxXML);
         }
     }
-    handleDeviceExtensionAdded() {
-        this.ScratchBlocks = defaultsDeep(this.ScratchBlocks, addBlocks(this.ScratchBlocks), addGenerator(this.ScratchBlocks), addMsg(this.ScratchBlocks));
+    handleDeviceExtensionAdded () {
+        // eslint-disable-next-line no-undef
+        this.ScratchBlocks = defaultsDeep(this.ScratchBlocks, addBlocks(this.ScratchBlocks),
+            addGenerator(this.ScratchBlocks), addMsg(this.ScratchBlocks)); // eslint-disable-line no-undef
         this.setLocale();
 
         const toolboxXML = this.getToolboxXML();
@@ -563,7 +566,7 @@ class Blocks extends React.Component {
             this.props.updateToolboxState(toolboxXML);
         }
     }
-    handleDeviceExtensionRemoved() {
+    handleDeviceExtensionRemoved () {
         const toolboxXML = this.getToolboxXML();
         if (toolboxXML) {
             this.props.updateToolboxState(toolboxXML);
@@ -618,19 +621,21 @@ class Blocks extends React.Component {
     handleStatusButtonUpdate () {
         this.ScratchBlocks.refreshStatusButtons(this.workspace);
     }
-    workspaceToCode(){
+    workspaceToCode () {
+        let code = null;
         try {
-            var code = this.ScratchBlocks.Arduino.workspaceToCode(this.workspace);
-        } catch(e) {
-            console.log(e.message);
+            code = this.ScratchBlocks.Arduino.workspaceToCode(this.workspace);
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.log(e.message); // todo: other way handle error
         }
         return code;
     }
-    handleToolboxUploadFinish() {
+    handleToolboxUploadFinish () {
         this.props.onToolboxDidUpdate();
     }
     handleCodeNeedUpdate (){
-        this.props.setCodeEditorValue(this.workspaceToCode());
+        this.props.onSetCodeEditorValue(this.workspaceToCode());
     }
     handleOpenSoundRecorder () {
         this.props.onOpenSoundRecorder();
@@ -692,13 +697,13 @@ class Blocks extends React.Component {
             onRequestCloseExtensionLibrary,
             onRequestCloseDeviceLibrary,
             onRequestCloseCustomProcedures,
+            onSetCodeEditorValue,
             onSetUploadMode,
             onSetRealtimeMode,
             onSetSupportSwitchMode,
             toolboxXML,
             updateMetrics: updateMetricsProp,
             workspaceMetrics,
-            setCodeEditorValue,
             ...props
         } = this.props;
         /* eslint-enable no-unused-vars */
@@ -793,6 +798,7 @@ Blocks.propTypes = {
         comments: PropTypes.bool,
         collapse: PropTypes.bool
     }),
+    onSetCodeEditorValue: PropTypes.func,
     onSetUploadMode: PropTypes.func,
     onSetRealtimeMode: PropTypes.func,
     onSetSupportSwitchMode: PropTypes.func,
@@ -859,7 +865,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onActivateColorPicker: callback => dispatch(activateColorPicker(callback)),
     onActivateCustomProcedures: (data, callback) => dispatch(activateCustomProcedures(data, callback)),
-    onDeviceSelected: (id, name)=> {
+    onDeviceSelected: (id, name) => {
         dispatch(setDeviceId(id));
         dispatch(setDeviceName(name));
     },
@@ -880,10 +886,10 @@ const mapDispatchToProps = dispatch => ({
     onRequestCloseCustomProcedures: data => {
         dispatch(deactivateCustomProcedures(data));
     },
-    onToolboxWillUpdate: ()=> {
+    onToolboxWillUpdate: () => {
         dispatch(setIsUpdating(true));
     },
-    onToolboxDidUpdate: ()=> {
+    onToolboxDidUpdate: () => {
         dispatch(setIsUpdating(false));
     },
     updateToolboxState: toolboxXML => {
@@ -892,7 +898,7 @@ const mapDispatchToProps = dispatch => ({
     updateMetrics: metrics => {
         dispatch(updateMetrics(metrics));
     },
-    setCodeEditorValue: (value) => {
+    onSetCodeEditorValue: value => {
         dispatch(setCodeEditorValue(value));
     },
     onSetUploadMode: () => dispatch(setUploadMode()),

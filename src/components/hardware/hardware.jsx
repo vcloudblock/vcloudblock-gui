@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import Box from '../box/box.jsx';
 import Button from '../button/button.jsx';
 import classNames from 'classnames';
-import {defineMessages, FormattedMessage, intlShape} from 'react-intl';
+import {defineMessages, intlShape} from 'react-intl';
 
 import {STAGE_SIZE_MODES} from '../../lib/layout-constants';
-import CodeEditor from '../../containers/code-editor.jsx'
+import CodeEditor from '../../containers/code-editor.jsx';
 
 import styles from './hardware.css';
 
@@ -37,8 +37,7 @@ const HardwareComponent = props => {
         onSetStageLarge,
         onSetStageSmall,
         onUpload,
-        stageSizeMode,
-        ...componentProps
+        stageSizeMode
     } = props;
     return (
         <Box className={styles.hardwareWrapper}>

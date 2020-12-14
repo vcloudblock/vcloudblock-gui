@@ -2,18 +2,19 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import bindAll from 'lodash.bindall';
 
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { injectIntl } from 'react-intl';
-import { defineMessages } from 'react-intl';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {injectIntl, intlShape} from 'react-intl';
+import {defineMessages} from 'react-intl';
 
 import VM from 'scratchhw-vm';
+// eslint-disable-next-line no-unused-vars
 import analytics from '../lib/analytics';
 import extensionData from '../lib/libraries/extensions/index.jsx';
-import { closeUploadProgress } from '../reducers/modals';
-import { showStandardAlert } from '../reducers/alerts';
+import {closeUploadProgress} from '../reducers/modals';
+import {showStandardAlert} from '../reducers/alerts';
 
-import UploadProgressComponent, { PHASES } from '../components/upload-progress/upload-progress.jsx';
+import UploadProgressComponent, {PHASES} from '../components/upload-progress/upload-progress.jsx';
 
 const messages = defineMessages({
     uploadErrorMessage: {
@@ -37,10 +38,10 @@ class UploadProgress extends React.Component {
             extension: extensionData.find(ext => ext.extensionId === props.extensionId),
             phase: PHASES.uploading,
             peripheralName: null,
-            text: ""
+            text: ''
         };
     }
-    componentDidMount() {
+    componentDidMount () {
         this.props.vm.on('PERIPHERAL_UPLOAD_STDOUT', this.handleStdout);
         this.props.vm.on('PERIPHERAL_UPLOAD_ERROR', this.handleUploadError);
         this.props.vm.on('PERIPHERAL_UPLOAD_SUCCESS', this.handleUploadSuccess);
@@ -50,11 +51,11 @@ class UploadProgress extends React.Component {
         this.props.vm.removeListener('PERIPHERAL_UPLOAD_ERROR', this.handleUploadError);
         this.props.vm.removeListener('PERIPHERAL_UPLOAD_SUCCESS', this.handleUploadSuccess);
     }
-    handleCancel() {
+    handleCancel () {
         this.props.oncloseUploadProgress();
     }
-    handleHelp() {
-        console.log('handleHelp');
+    handleHelp () {
+        console.log('handleHelp'); // eslint-disable-line no-console
         // window.open(this.state.extension.helpLink, '_blank');
         // analytics.event({
         //     category: 'extensions',
@@ -62,23 +63,22 @@ class UploadProgress extends React.Component {
         //     label: this.props.extensionId
         // });
     }
-    handleStdout(data) {
+    handleStdout (data) {
         this.setState({
             text: this.state.text + data.message
-        })
+        });
     }
-    handleUploadError(data) {
+    handleUploadError (data) {
         this.setState({
-            text: this.state.text + data.message + '\r\n' + this.props.intl.formatMessage(messages.uploadErrorMessage),
+            text: `${this.state.text + data.message}\r\n${this.props.intl.formatMessage(messages.uploadErrorMessage)}`,
             phase: PHASES.error
-        })
+        });
         this.props.onUploadError();
     }
-    handleUploadSuccess() {
-        console.log('handleUploadSuccess');
+    handleUploadSuccess () {
         this.setState({
             phase: PHASES.success
-        })
+        });
         this.props.onUploadSuccess();
         this.handleCancel();
     }
@@ -98,6 +98,7 @@ class UploadProgress extends React.Component {
 }
 
 UploadProgress.propTypes = {
+    intl: intlShape.isRequired,
     extensionId: PropTypes.string.isRequired,
     vm: PropTypes.instanceOf(VM).isRequired,
     oncloseUploadProgress: PropTypes.func.isRequired,

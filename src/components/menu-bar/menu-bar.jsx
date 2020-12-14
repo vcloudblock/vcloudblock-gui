@@ -11,23 +11,23 @@ import VM from 'scratchhw-vm';
 
 import Box from '../box/box.jsx';
 import Button from '../button/button.jsx';
-import CommunityButton from './community-button.jsx';
-import ShareButton from './share-button.jsx';
+import CommunityButton from './community-button.jsx'; // eslint-disable-line no-unused-vars
+import ShareButton from './share-button.jsx'; // eslint-disable-line no-unused-vars
 import {ComingSoonTooltip} from '../coming-soon/coming-soon.jsx';
 import Divider from '../divider/divider.jsx';
 import LanguageSelector from '../../containers/language-selector.jsx';
-import SaveStatus from './save-status.jsx';
+import SaveStatus from './save-status.jsx'; // eslint-disable-line no-unused-vars
 import SBFileUploader from '../../containers/sb-file-uploader.jsx';
-import ProjectWatcher from '../../containers/project-watcher.jsx';
+import ProjectWatcher from '../../containers/project-watcher.jsx'; // eslint-disable-line no-unused-vars
 import MenuBarMenu from './menu-bar-menu.jsx';
 import {MenuItem, MenuSection} from '../menu/menu.jsx';
 import ProjectTitleInput from './project-title-input.jsx';
 import AuthorInfo from './author-info.jsx';
-import AccountNav from '../../containers/account-nav.jsx';
-import LoginDropdown from './login-dropdown.jsx';
+import AccountNav from '../../containers/account-nav.jsx'; // eslint-disable-line no-unused-vars
+import LoginDropdown from './login-dropdown.jsx'; // eslint-disable-line no-unused-vars
 import SB3Downloader from '../../containers/sb3-downloader.jsx';
-import DeletionRestorer from '../../containers/deletion-restorer.jsx';
-import TurboMode from '../../containers/turbo-mode.jsx';
+import DeletionRestorer from '../../containers/deletion-restorer.jsx'; // eslint-disable-line no-unused-vars
+import TurboMode from '../../containers/turbo-mode.jsx'; // eslint-disable-line no-unused-vars
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
 
 import {openTipsLibrary} from '../../reducers/modals';
@@ -64,8 +64,8 @@ import collectMetadata from '../../lib/collect-metadata';
 import styles from './menu-bar.css';
 
 import helpIcon from '../../lib/assets/icon--tutorials.svg';
-import mystuffIcon from './icon--mystuff.png';
-import profileIcon from './icon--profile.png';
+import mystuffIcon from './icon--mystuff.png'; // eslint-disable-line no-unused-vars
+import profileIcon from './icon--profile.png'; // eslint-disable-line no-unused-vars
 import remixIcon from './icon--remix.svg';
 import dropdownCaret from './dropdown-caret.svg';
 import languageIcon from '../language-selector/language-icon.svg';
@@ -75,10 +75,10 @@ import scratchLogo from './scratch-logo.svg';
 
 import sharedMessages from '../../lib/shared-messages';
 
-import Switch from "react-switch";
-import { setUploadMode, setRealtimeMode } from '../../reducers/program-mode';
-import { openConnectionModal, openDeviceLibrary } from '../../reducers/modals';
-import { clearConnectionModalPeripheralName } from '../../reducers/connection-modal';
+import Switch from 'react-switch';
+import {setUploadMode, setRealtimeMode} from '../../reducers/program-mode';
+import {openConnectionModal, openDeviceLibrary} from '../../reducers/modals';
+import {clearConnectionModalPeripheralName} from '../../reducers/connection-modal';
 
 import deviceIcon from './icon--device.svg';
 import unconnectedIcon from './icon--unconnected.svg';
@@ -86,7 +86,7 @@ import connectedIcon from './icon--connected.svg';
 import fileIcon from './icon--file.svg';
 import screenshotIcon from './icon--screenshot.svg';
 import saveSvgAsPng from 'scratchhw-save-svg-as-png';
-import { showStandardAlert } from '../../reducers/alerts';
+import {showStandardAlert} from '../../reducers/alerts';
 
 const ariaMessages = defineMessages({
     language: {
@@ -186,7 +186,8 @@ class MenuBar extends React.Component {
             'handleConnectionMouseUp',
             'handleSelectDeviceMouseUp',
             'handleProgramModeSwitchOnChange',
-            'handleProgramModeUpdate'
+            'handleProgramModeUpdate',
+            'handleScreenshot'
         ]);
     }
     componentDidMount () {
@@ -304,36 +305,55 @@ class MenuBar extends React.Component {
         }
         }
     }
-    handleConnectionMouseUp() {
+    handleConnectionMouseUp () {
         if (this.props.deviceId) {
             this.props.onOpenConnectionModal();
         } else {
             this.props.onDeviceIsEmpty();
         }
     }
-    handleSelectDeviceMouseUp() {
-        let blocks = document.querySelector('.blocklyWorkspace .blocklyBlockCanvas');
-        if (blocks.getBBox().height == 0) {
+    handleSelectDeviceMouseUp () {
+        const blocks = document.querySelector('.blocklyWorkspace .blocklyBlockCanvas');
+        if (blocks.getBBox().height === 0) {
             this.props.onOpenDeviceLibrary();
         } else {
             this.props.onWorkspaceIsNotEmpty();
         }
     }
-    handleProgramModeSwitchOnChange() {
+    handleProgramModeSwitchOnChange () {
         if (this.props.isRealtimeMode) {
             this.props.vm.runtime.setRealtimeMode(false);
         } else {
             this.props.vm.runtime.setRealtimeMode(true);
         }
     }
-    handleProgramModeUpdate(data) {
+    handleProgramModeUpdate (data) {
         if (data.isRealtimeMode) {
             this.props.onSetRealtimeMode();
         } else {
             this.props.onSetUploadMode();
         }
     }
-    render() {
+    handleScreenshot () {
+        const blocks = document.querySelector('.blocklyWorkspace .blocklyBlockCanvas');
+        if (blocks.getBBox().height === 0) {
+            this.props.onWorkspaceIsEmpty();
+        } else {
+            const transform = blocks.getAttribute('transform');
+            const scale = parseFloat(transform.substring(transform.indexOf('scale') + 6, transform.length - 1));
+            const data = new Date();
+
+            saveSvgAsPng.saveSvgAsPng(blocks, `${this.props.projectTitle}-${data.getTime()}.png`, {
+                left: blocks.getBBox().x * scale,
+                top: blocks.getBBox().y * scale,
+                height: blocks.getBBox().height * scale,
+                width: blocks.getBBox().width * scale,
+                scale: 2 / scale,
+                encoderOptions: 1
+            });
+        }
+    }
+    render () {
         const saveNowMessage = (
             <FormattedMessage
                 defaultMessage="Save now"
@@ -362,6 +382,7 @@ class MenuBar extends React.Component {
                 id="gui.menuBar.new"
             />
         );
+        // eslint-disable-next-line no-unused-vars
         const remixButton = (
             <Button
                 className={classNames(
@@ -422,10 +443,10 @@ class MenuBar extends React.Component {
                         />
                         {
                             this.props.deviceName ? (
-                            <div>
-                                {this.props.deviceName}
-                            </div>
-                        ) : (
+                                <div>
+                                    {this.props.deviceName}
+                                </div>
+                            ) : (
                                 <FormattedMessage
                                     defaultMessage="No device selected"
                                     description="Text for menubar no device select button"
@@ -447,18 +468,18 @@ class MenuBar extends React.Component {
                                 {this.props.peripheralName}
                             </React.Fragment>
                         ) : (
-                                <React.Fragment>
-                                    <img
-                                        className={styles.unconnectedIcon}
-                                        src={unconnectedIcon}
-                                    />
-                                    <FormattedMessage
-                                        defaultMessage="Unconnected"
-                                        description="Text for menubar unconnected button"
-                                        id="gui.menuBar.noConnection"
-                                    />
-                                </React.Fragment>
-                            )}
+                            <React.Fragment>
+                                <img
+                                    className={styles.unconnectedIcon}
+                                    src={unconnectedIcon}
+                                />
+                                <FormattedMessage
+                                    defaultMessage="Unconnected"
+                                    description="Text for menubar unconnected button"
+                                    id="gui.menuBar.noConnection"
+                                />
+                            </React.Fragment>
+                        )}
                     </div>
                 </div>
                 <div className={styles.fileMenu}>
@@ -566,27 +587,9 @@ class MenuBar extends React.Component {
                     )}
                 </div>
                 <div className={styles.tailMenu}>
-                    <div className={classNames(styles.menuBarItem, styles.hoverable)}
-                        onMouseUp={() => {
-                            let blocks = document.querySelector('.blocklyWorkspace .blocklyBlockCanvas');
-                            if (blocks.getBBox().height == 0) {
-                                this.props.onWorkspaceIsEmpty();
-                            }
-                            else {
-                                let transform = blocks.getAttribute('transform');
-                                let scale = parseFloat(transform.substring(transform.indexOf('scale') + 6, transform.length - 1));
-                                let data = new Date();
-
-                                saveSvgAsPng.saveSvgAsPng(blocks, this.props.projectTitle + '-' + data.getTime() + '.png', {
-                                    left: blocks.getBBox().x * scale,
-                                    top: blocks.getBBox().y * scale,
-                                    height: blocks.getBBox().height * scale,
-                                    width: blocks.getBBox().width * scale,
-                                    scale: 2 / scale,
-                                    encoderOptions: 1,
-                                });
-                            }
-                        }}
+                    <div
+                        className={classNames(styles.menuBarItem, styles.hoverable)}
+                        onMouseUp={this.handleScreenshot}
                     >
                         <img
                             alt="Screenshot"
@@ -608,7 +611,7 @@ class MenuBar extends React.Component {
                         <FormattedMessage {...ariaMessages.tutorials} />
                     </div>
                     <Divider className={classNames(styles.divider)} />
-                    <div className={styles.menuBarItem, styles.programModeGroup}>
+                    <div className={classNames(styles.menuBarItem, styles.programModeGroup)}>
                         <Switch
                             className={styles.programModeSwitch}
                             onChange={this.handleProgramModeSwitchOnChange}
@@ -616,8 +619,10 @@ class MenuBar extends React.Component {
                             disabled={this.props.isToolboxUpdating || !this.props.isSupportSwitchMode}
                             height={25}
                             width={90}
-                            onColor={this.props.isToolboxUpdating || !this.props.isSupportSwitchMode ? "#888888" : "#008800"}
-                            offColor={this.props.isToolboxUpdating || !this.props.isSupportSwitchMode ? "#888888" : "#FF8C1A"}
+                            onColor={this.props.isToolboxUpdating ||
+                                !this.props.isSupportSwitchMode ? '#888888' : '#008800'}
+                            offColor={this.props.isToolboxUpdating ||
+                                !this.props.isSupportSwitchMode ? '#888888' : '#FF8C1A'}
                             uncheckedIcon={
                                 <div className={styles.modeSwitchRealtime}>
                                     <FormattedMessage
@@ -714,6 +719,7 @@ MenuBar.propTypes = {
     peripheralName: PropTypes.string,
     onDisconnect: PropTypes.func.isRequired,
     onWorkspaceIsEmpty: PropTypes.func.isRequired,
+    onWorkspaceIsNotEmpty: PropTypes.func.isRequired,
     onOpenDeviceLibrary: PropTypes.func,
     deviceId: PropTypes.string,
     deviceName: PropTypes.string,

@@ -165,7 +165,7 @@ export default [
             />
         ),
         featured: true
-    },
+    }
     // {
     //     name: 'micro:bit',
     //     extensionId: 'microbit',

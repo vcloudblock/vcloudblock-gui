@@ -42,19 +42,21 @@ class ExtensionLibrary extends React.PureComponent {
         ]);
         this.state = {
             deviceExtensions: []
-        }
+        };
     }
 
-    componentDidMount() {
+    componentDidMount () {
         if (this.props.deviceId) {
             this.updateDeviceExtensions();
         }
     }
 
-    updateDeviceExtensions() {
+    updateDeviceExtensions () {
         // Todo exclude the same item.
-        this.props.vm.extensionManager.getLocalDeviceExtensionsList().then(data => this.setState({ deviceExtensions: data }));
-        this.props.vm.extensionManager.getRemoteDeviceExtensionsList().then(data => this.setState({ deviceExtensions: data }));
+        this.props.vm.extensionManager.getLocalDeviceExtensionsList()
+            .then(data => this.setState({deviceExtensions: data}));
+        this.props.vm.extensionManager.getRemoteDeviceExtensionsList()
+            .then(data => this.setState({deviceExtensions: data}));
     }
 
     handleItemSelect (item) {
@@ -65,14 +67,15 @@ class ExtensionLibrary extends React.PureComponent {
                 if (this.props.vm.extensionManager.isDeviceExtensionLoaded(id)) {
                     this.props.vm.extensionManager.unloadDeviceExtension(id).then(() => {
                         this.updateDeviceExtensions();
-                    })
+                    });
                 } else {
                     this.props.vm.extensionManager.loadDeviceExtension(id).then(() => {
                         this.updateDeviceExtensions();
-                    }).catch(err => {
+                    })
+                        .catch(err => {
                         // TODO add a alet device extension load failed. and change the state to bar to failed state
-                        console.log('err = ' + err);
-                    });
+                            console.log(`err = ${err}`); // eslint-disable-line no-console
+                        });
                 }
             }
         } else {
@@ -93,12 +96,11 @@ class ExtensionLibrary extends React.PureComponent {
         }
     }
     render () {
-        var extensionLibraryThumbnailData = [];
+        let extensionLibraryThumbnailData = [];
 
         if (this.props.deviceId) {
-            extensionLibraryThumbnailData = this.state.deviceExtensions.filter(extension => {
-                return extension.supportDevice.includes(this.props.deviceId);
-            }).map(extension => ({
+            extensionLibraryThumbnailData = this.state.deviceExtensions.filter(
+                extension => extension.supportDevice.includes(this.props.deviceId)).map(extension => ({
                 rawURL: extension.iconURL || extensionIcon,
                 ...extension
             }));
@@ -111,12 +113,12 @@ class ExtensionLibrary extends React.PureComponent {
 
         return (
             <LibraryComponent
-                autoClose={this.props.deviceId ? false : true}
+                autoClose={!this.props.deviceId}
                 data={extensionLibraryThumbnailData}
-                filterable={true}
+                filterable
                 tags={tagListPrefix}
                 id="extensionLibrary"
-                isUnloadble={this.props.deviceId ? true : false}
+                isUnloadble={!!this.props.deviceId}
                 title={this.props.intl.formatMessage(messages.extensionTitle)}
                 visible={this.props.visible}
                 onItemSelected={this.handleItemSelect}
@@ -135,19 +137,13 @@ ExtensionLibrary.propTypes = {
     vm: PropTypes.instanceOf(VM).isRequired // eslint-disable-line react/no-unused-prop-types
 };
 
-const mapStateToProps = state => {
-    return {
-        deviceId: state.scratchGui.device.deviceId
-    };
-};
-
-const mapDispatchToProps = dispatch => ({
+const mapStateToProps = state => ({
+    deviceId: state.scratchGui.device.deviceId
 });
 
 export default compose(
     injectIntl,
     connect(
-        mapStateToProps,
-        mapDispatchToProps
+        mapStateToProps
     )
 )(ExtensionLibrary);

@@ -30,7 +30,7 @@ class LibraryItemComponent extends React.PureComponent {
                     {
                         [styles.disabled]: this.props.disabled
                     },
-                    this.props.extensionId || this.props.deviceId  ? styles.libraryItemExtension : null,
+                    this.props.extensionId || this.props.deviceId ? styles.libraryItemExtension : null,
                     this.props.hidden ? styles.hidden : null
                 )}
                 onClick={this.props.onClick}
@@ -67,54 +67,56 @@ class LibraryItemComponent extends React.PureComponent {
                     <br />
                     <span className={styles.featuredDescription}>{this.props.description}</span>
                 </div>
-                {this.props.bluetoothRequired || this.props.serialportRequired || this.props.internetConnectionRequired || this.props.collaborator ? (
-                    <div className={styles.featuredExtensionMetadataFirstRow}>
-                        <div className={styles.featuredExtensionRequirement}>
-                            {this.props.bluetoothRequired || this.props.serialportRequired || this.props.internetConnectionRequired ? (
-                                <div>
+                {this.props.bluetoothRequired || this.props.serialportRequired ||
+                    this.props.internetConnectionRequired || this.props.collaborator ? (
+                        <div className={styles.featuredExtensionMetadataFirstRow}>
+                            <div className={styles.featuredExtensionRequirement}>
+                                {this.props.bluetoothRequired || this.props.serialportRequired ||
+                                    this.props.internetConnectionRequired ? (
+                                        <div>
+                                            <div>
+                                                <FormattedMessage
+                                                    defaultMessage="Requires"
+                                                    description="Label for extension hardware requirements"
+                                                    id="gui.extensionLibrary.requires"
+                                                />
+                                            </div>
+                                            <div
+                                                className={styles.featuredExtensionMetadataDetail}
+                                            >
+                                                {this.props.bluetoothRequired ? (
+                                                    <img src={bluetoothIconURL} />
+                                                ) : null}
+                                                {this.props.serialportRequired ? (
+                                                    <img src={serialportIconURL} />
+                                                ) : null}
+                                                {this.props.internetConnectionRequired ? (
+                                                    <img src={internetConnectionIconURL} />
+                                                ) : null}
+                                            </div>
+                                        </div>
+                                    ) : null}
+                            </div>
+                            <div className={styles.featuredExtensionCollaboration}>
+                                {this.props.collaborator ? (
                                     <div>
-                                        <FormattedMessage
-                                            defaultMessage="Requires"
-                                            description="Label for extension hardware requirements"
-                                            id="gui.extensionLibrary.requires"
-                                        />
+                                        <div>
+                                            <FormattedMessage
+                                                defaultMessage="Collaboration with"
+                                                description="Label for extension collaboration"
+                                                id="gui.extensionLibrary.collaboration"
+                                            />
+                                        </div>
+                                        <div
+                                            className={styles.featuredExtensionMetadataDetail}
+                                        >
+                                            {this.props.collaborator}
+                                        </div>
                                     </div>
-                                    <div
-                                        className={styles.featuredExtensionMetadataDetail}
-                                    >
-                                        {this.props.bluetoothRequired ? (
-                                            <img src={bluetoothIconURL} />
-                                        ) : null}
-                                        {this.props.serialportRequired ? (
-                                            <img src={serialportIconURL} />
-                                        ) : null}
-                                        {this.props.internetConnectionRequired ? (
-                                            <img src={internetConnectionIconURL} />
-                                        ) : null}
-                                    </div>
-                                </div>
-                            ) : null}
+                                ) : null}
+                            </div>
                         </div>
-                        <div className={styles.featuredExtensionCollaboration}>
-                            {this.props.collaborator ? (
-                                <div>
-                                    <div>
-                                        <FormattedMessage
-                                            defaultMessage="Collaboration with"
-                                            description="Label for extension collaboration"
-                                            id="gui.extensionLibrary.collaboration"
-                                        />
-                                    </div>
-                                    <div
-                                        className={styles.featuredExtensionMetadataDetail}
-                                    >
-                                        {this.props.collaborator}
-                                    </div>
-                                </div>
-                            ) : null}
-                        </div>
-                    </div>
-                ) : null}
+                    ) : null}
                 {this.props.author || this.props.version ? (
                     <div className={styles.featuredExtensionMetadataFirstRow}>
                         <div className={styles.featuredExtensionVersion}>
@@ -154,7 +156,7 @@ class LibraryItemComponent extends React.PureComponent {
                             ) : null}
                         </div>
                     </div>
-                ): null}
+                ) : null}
                 {this.props.programMode || this.props.programLanguage ? (
                     <div className={styles.featuredExtensionMetadataSeconedRow}>
                         <div className={styles.featuredExtensionProgramMode}>
@@ -214,7 +216,10 @@ class LibraryItemComponent extends React.PureComponent {
                 {this.props.isUnloadble ? (
                     <div className={styles.featuredExtensionMetadataTailRow}>
                         {this.props.isProcessing ? (
-                            <div className={classNames(styles.featuredExtensionLoadState, styles.featuredExtensionLoading)}>
+                            <div
+                                className={classNames(styles.featuredExtensionLoadState,
+                                    styles.featuredExtensionLoading)}
+                            >
                                 <div>
                                     <FormattedMessage
                                         defaultMessage="Processing..."
@@ -224,7 +229,10 @@ class LibraryItemComponent extends React.PureComponent {
                                 </div>
                             </div>
                         ) : (
-                            <div className={classNames(styles.featuredExtensionLoadState, this.props.isLoaded ? styles.featuredExtensionLoaded : null)}>
+                            <div
+                                className={classNames(styles.featuredExtensionLoadState,
+                                    this.props.isLoaded ? styles.featuredExtensionLoaded : null)}
+                            >
                                 {this.props.isLoaded ? (
                                     <div>
                                         <FormattedMessage
@@ -234,14 +242,14 @@ class LibraryItemComponent extends React.PureComponent {
                                         />
                                     </div>
                                 ) : (
-                                        <div>
-                                            <FormattedMessage
-                                                defaultMessage="Not loaded"
-                                                description="Label to indicate that device extension is not loaded"
-                                                id="gui.extensionLibrary.notLoaded"
-                                            />
-                                        </div>
-                                    )}
+                                    <div>
+                                        <FormattedMessage
+                                            defaultMessage="Not loaded"
+                                            description="Label to indicate that device extension is not loaded"
+                                            id="gui.extensionLibrary.notLoaded"
+                                        />
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>
@@ -323,6 +331,9 @@ LibraryItemComponent.propTypes = {
     onMouseLeave: PropTypes.func.isRequired,
     onPlay: PropTypes.func.isRequired,
     onStop: PropTypes.func.isRequired,
+    programMode: PropTypes.arrayOf(PropTypes.string),
+    programLanguage: PropTypes.arrayOf(PropTypes.string),
+    serialportRequired: PropTypes.bool,
     showPlayButton: PropTypes.bool,
     version: PropTypes.string
 };

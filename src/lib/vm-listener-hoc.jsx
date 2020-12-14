@@ -70,8 +70,10 @@ const vmListenerHOC = function (WrappedComponent) {
         }
         componentWillUnmount () {
             this.props.vm.removeListener('PERIPHERAL_CONNECTION_LOST_ERROR', this.props.onShowExtensionAlert);
-            this.props.vm.removeListener('PERIPHERAL_REALTIME_CONNECTION_LOST_ERROR', this.props.onShowExtensionRealtimeAlert);
-            this.props.vm.removeListener('PERIPHERAL_REALTIME_CONNECT_SUCCESS', this.props.onShowExtensionRealtimeSuccess);
+            this.props.vm.removeListener('PERIPHERAL_REALTIME_CONNECTION_LOST_ERROR',
+                this.props.onShowExtensionRealtimeAlert);
+            this.props.vm.removeListener('PERIPHERAL_REALTIME_CONNECT_SUCCESS',
+                this.props.onShowExtensionRealtimeSuccess);
             if (this.props.attachKeyboardEvents) {
                 document.removeEventListener('keydown', this.handleKeyDown);
                 document.removeEventListener('keyup', this.handleKeyUp);

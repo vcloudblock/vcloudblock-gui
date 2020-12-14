@@ -719,9 +719,9 @@ const getXML = function (isInitialSetup, isStage, targetId, isRealtimeMode, cost
     const variablesXML = variables(isInitialSetup, isStage, targetId, isRealtimeMode);
     const myBlocksXML = myBlocks(isInitialSetup, isStage, targetId);
 
-    var baseToolboxXml = [];
+    let baseToolboxXml = [];
 
-    if (isRealtimeMode == true) {
+    if (isRealtimeMode === true) {
         baseToolboxXml = [
             motionXML, gap,
             looksXML, gap,

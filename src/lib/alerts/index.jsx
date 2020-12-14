@@ -288,6 +288,21 @@ const alerts = [
         level: AlertLevels.WARN,
         maxDisplaySecs: 5
     },
+    {
+        alertId: 'connectAPeripheralFirst',
+        alertType: AlertTypes.STANDARD,
+        clearList: ['connectAPeripheralFirst'],
+        closeButton: true,
+        content: (
+            <FormattedMessage
+                defaultMessage="Plese connect a peripheral first"
+                description="Message indicating that no peripheral is connected"
+                id="gui.alerts.connectAPeripheralFirst"
+            />
+        ),
+        level: AlertLevels.WARN,
+        maxDisplaySecs: 5
+    }
 ];
 
 export {

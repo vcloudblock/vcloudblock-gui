@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import MonacoEditor from "react-monaco-editor";
+import MonacoEditor from 'react-monaco-editor';
 
 import Box from '../box/box.jsx';
 
@@ -12,7 +12,6 @@ const CodeEditorComponent = props => {
         language,
         value,
         options,
-        height,
         width,
         onChange,
         editorDidMount,
@@ -38,7 +37,15 @@ const CodeEditorComponent = props => {
 CodeEditorComponent.propTypes = {
     language: PropTypes.string,
     value: PropTypes.string,
-    options: PropTypes.object,
+    options: PropTypes.shape({
+        highlightActiveIndentGuide: PropTypes.bool,
+        cursorSmoothCaretAnimation: PropTypes.bool,
+        readOnly: PropTypes.bool,
+        contextmenu: PropTypes.bool,
+        minimap: PropTypes.shape({
+            enabled: PropTypes.bool
+        })
+    }),
     height: PropTypes.number,
     width: PropTypes.number.isRequired,
     onChange: PropTypes.func,
@@ -47,8 +54,8 @@ CodeEditorComponent.propTypes = {
 };
 
 CodeEditorComponent.defaultProps = {
-    language: "cpp",
-    theme: "vs-light",
+    language: 'cpp',
+    theme: 'vs-light',
     height: 500,
     options: {
         highlightActiveIndentGuide: false,

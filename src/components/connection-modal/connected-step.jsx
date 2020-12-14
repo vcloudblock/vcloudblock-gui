@@ -22,7 +22,8 @@ const ConnectedStep = props => (
                         <img
                             className={styles.bluetoothConnectingIcon}
                             src={usbIcon}
-                        />) : (
+                        />) :
+                        (
                             <img
                                 className={styles.bluetoothConnectingIcon}
                                 src={bluetoothIcon}
@@ -71,6 +72,7 @@ const ConnectedStep = props => (
 
 ConnectedStep.propTypes = {
     connectionIconURL: PropTypes.string.isRequired,
+    isSerialport: PropTypes.bool,
     onCancel: PropTypes.func,
     onDisconnect: PropTypes.func
 };

@@ -152,16 +152,16 @@ class LibraryComponent extends React.Component {
             //     .map(String.prototype.toLowerCase.call, String.prototype.toLowerCase)
             //     .indexOf(this.state.selectedTag) !== -1
             (dataItem.tags || [])
-                    // Second argument to map sets `this`
-                    .map(String.prototype.toLowerCase.call, String.prototype.toLowerCase)
-                    .concat(dataItem.name ?
-                        (typeof dataItem.name === 'string' ?
+            // Second argument to map sets `this`
+                .map(String.prototype.toLowerCase.call, String.prototype.toLowerCase)
+                .concat(dataItem.name ?
+                    (typeof dataItem.name === 'string' ?
                         // Use the name if it is a string, else use formatMessage to get the translated name
-                            dataItem.name : this.props.intl.formatMessage(dataItem.name.props)
-                        ).toLowerCase() :
-                        null)
-                    .join('\n') // unlikely to partially match newlines
-                    .indexOf(this.state.selectedTag.toLowerCase()) !== -1
+                        dataItem.name : this.props.intl.formatMessage(dataItem.name.props)
+                    ).toLowerCase() :
+                    null)
+                .join('\n') // unlikely to partially match newlines
+                .indexOf(this.state.selectedTag.toLowerCase()) !== -1
         ));
     }
     scrollToTop () {

@@ -30,7 +30,7 @@ const updateToolbox = function (toolboxXML) {
     };
 };
 
-const setIsUpdating = (state) => ({
+const setIsUpdating = state => ({
     type: IS_UPDATING,
     state: state
 });

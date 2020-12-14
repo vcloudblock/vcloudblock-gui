@@ -724,6 +724,7 @@ const xmlClose = '</xml>';
 /**
  * @param {!boolean} isInitialSetup - Whether the toolbox is for initial setup. If the mode is "initial setup",
  * blocks with localized default parameters (e.g. ask and wait) should not be loaded. (LLK/scratch-gui#5445)
+ * @param {?string} deviceId - Current selected deivce id.
  * @param {?boolean} isStage - Whether the toolbox is for a stage-type target. This is always set to true
  * when isInitialSetup is true.
  * @param {?string} targetId - The current editing target
@@ -731,12 +732,14 @@ const xmlClose = '</xml>';
  * and other extensions: core extensions will be placed in the normal Scratch order; others will go at the bottom.
  * @property {string} id - the extension / category ID.
  * @property {string} xml - the `<category>...</category>` XML for this extension / category.
+ * @param {?boolean} isRealtimeMode - Current program mode.
  * @param {?string} costumeName - The name of the default selected costume dropdown.
  * @param {?string} backdropName - The name of the default selected backdrop dropdown.
  * @param {?string} soundName -  The name of the default selected sound dropdown.
  * @returns {string} - a ScratchBlocks-style XML document for the contents of the toolbox.
  */
-const makeToolboxXML = function (isInitialSetup, deviceId =null, isStage = true, targetId, categoriesXML = [], isRealtimeMode = true,
+const makeToolboxXML = function (isInitialSetup, deviceId = null, isStage = true, targetId, categoriesXML = [],
+    isRealtimeMode = true,
     costumeName = '', backdropName = '', soundName = '') {
     isStage = isInitialSetup || isStage;
     const gap = [categorySeparator];
@@ -755,7 +758,7 @@ const makeToolboxXML = function (isInitialSetup, deviceId =null, isStage = true,
         // return `undefined`
     };
 
-    var everything = [xmlOpen];
+    let everything = [xmlOpen];
 
     if (deviceId) {
         const device = deviceData.find(ext => ext.deviceId === deviceId);

@@ -83,12 +83,12 @@ const ModalComponent = props => (
                             />
                         </Button>
                     ) : (
-                            props.closeButtonVisible ? (
-                                <CloseButton
-                                    size={CloseButton.SIZE_LARGE}
-                                    onClick={props.onRequestClose}
-                                />) : null
-                        )}
+                        props.closeButtonVisible ? (
+                            <CloseButton
+                                size={CloseButton.SIZE_LARGE}
+                                onClick={props.onRequestClose}
+                            />) : null
+                    )}
                 </div>
             </div>
             {props.children}
@@ -115,7 +115,7 @@ ModalComponent.propTypes = {
 
 ModalComponent.defaultProps = {
     shouldCloseOnOverlayClick: true,
-    closeButtonVisible: true,
+    closeButtonVisible: true
 };
 
 export default ModalComponent;

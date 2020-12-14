@@ -82,7 +82,8 @@ const reducer = function (state, action) {
     case SHOW_EXTENSION_ALERT: {
         const extensionId = action.data.extensionId;
         if (extensionId) {
-            const extension = extensionData.find(ext => ext.extensionId === extensionId) || deviceData.find(dev => dev.deviceId === extensionId);
+            const extension = extensionData.find(ext => ext.extensionId === extensionId) ||
+                deviceData.find(dev => dev.deviceId === extensionId);
             if (extension) {
                 const newList = state.alertsList.slice();
                 const newAlert = {
@@ -106,7 +107,8 @@ const reducer = function (state, action) {
     case SHOW_EXTENSION_REALTIME_ALERT: {
         const extensionId = action.data.extensionId;
         if (extensionId) {
-            const extension = extensionData.find(ext => ext.extensionId === extensionId) || deviceData.find(dev => dev.deviceId === extensionId);
+            const extension = extensionData.find(ext => ext.extensionId === extensionId) ||
+                deviceData.find(dev => dev.deviceId === extensionId);
             if (extension) {
                 const newList = state.alertsList.slice();
                 const newAlert = {
@@ -130,7 +132,8 @@ const reducer = function (state, action) {
     case SHOW_EXTENSION_REALTIME_SUCCESS: {
         const extensionId = action.data.extensionId;
         if (extensionId) {
-            const extension = extensionData.find(ext => ext.extensionId === extensionId) || deviceData.find(dev => dev.deviceId === extensionId);
+            const extension = extensionData.find(ext => ext.extensionId === extensionId) ||
+                deviceData.find(dev => dev.deviceId === extensionId);
             if (extension) {
                 const newList = state.alertsList.slice();
                 const newAlert = {

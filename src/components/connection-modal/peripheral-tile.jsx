@@ -79,6 +79,7 @@ class PeripheralTile extends React.Component {
 
 PeripheralTile.propTypes = {
     connectionSmallIconURL: PropTypes.string,
+    isSerialport: PropTypes.bool,
     name: PropTypes.string,
     onConnecting: PropTypes.func,
     peripheralId: PropTypes.string,
