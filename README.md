@@ -1,10 +1,14 @@
 # scratchhw-gui
 
-![](https://img.shields.io/travis/ScratchHW/scratch-gui?style=plastic) ![](https://img.shields.io/github/license/ScratchHW/scratch-gui?style=plastic)
+![](https://img.shields.io/circleci/build/github/ScratchHW/scratchhw-gui/develop) ![](https://img.shields.io/github/license/ScratchHW/scratch-gui)
 
 This project is fork from [LLK/scratch-gui](https://github.com/LLK/scratch-gui), it's goal is to complete a program that can build upload code to hardware. Especially for arduino and microbit. At present, this core function has been realized. But still need to improve the detail function for ordinary users.
 
 This is a fast changing and incomplete program. It's for professional developer.
+
+## Try Scratch-HW Online
+
+Scratch-HW Online: [https://scratchhw.github.io/scratchhw-gui/develop/](https://scratchhw.github.io/scratchhw-gui/develop/)
 
 <img src="docs\1.png" alt="5" style="zoom:25%;" />
 
