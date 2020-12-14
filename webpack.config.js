@@ -205,7 +205,7 @@ module.exports = [
         defaultsDeep({}, base, {
             target: 'web',
             entry: {
-                'scratch-gui': './src/index.js'
+                'scratchhw-gui': './src/index.js'
             },
             output: {
                 libraryTarget: 'umd',

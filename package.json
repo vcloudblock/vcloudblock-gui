@@ -1,5 +1,5 @@
 {
-  "name": "scratch-gui",
+  "name": "scratchhw-gui",
   "version": "0.1.0",
   "description": "GraphicaL User Interface for creating and running Scratch 3.0 projects",
   "main": "./desktop/main.js",
@@ -21,10 +21,10 @@
   },
   "author": "Massachusetts Institute of Technology",
   "license": "BSD-3-Clause",
-  "homepage": "https://github.com/LLK/scratch-gui#readme",
+  "homepage": "https://github.com/ScratchHW/scratchhw-gui#readme",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/LLK/scratch-gui.git"
+    "url": "git+ssh://git@github.com/ScratchHW/scratchhw-gui.git"
   },
   "dependencies": {
     "ansi-to-react": "^6.0.8",
