@@ -56,7 +56,6 @@ CodeEditorComponent.propTypes = {
 CodeEditorComponent.defaultProps = {
     language: 'cpp',
     theme: 'vs-light',
-    height: 500,
     options: {
         highlightActiveIndentGuide: false,
         cursorSmoothCaretAnimation: true,
