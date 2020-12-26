@@ -48,6 +48,7 @@ class DeviceLibrary extends React.PureComponent {
             if (this.props.vm.extensionManager.isDeviceLoaded(url)) {
                 this.props.onDeviceSelected(id);
             } else {
+                this.props.onDeviceChanged();
                 this.props.vm.extensionManager.loadDeviceURL(url).then(() => {
                     this.props.onDeviceSelected(id);
                 });
@@ -77,6 +78,7 @@ class DeviceLibrary extends React.PureComponent {
 
 DeviceLibrary.propTypes = {
     intl: intlShape.isRequired,
+    onDeviceChanged: PropTypes.func,
     onDeviceSelected: PropTypes.func,
     onRequestClose: PropTypes.func,
     visible: PropTypes.bool,
