@@ -52,22 +52,29 @@ const UploadProgressComponent = props => (
                         <FormattedMessage
                             defaultMessage="Uploading"
                             description="Prompt for upload in progress"
-                            id="gui.uploadProgress.Uploading"
+                            id="gui.uploadProgress.uploading"
                         />
-                    ) : (
+                    ) : null}
+                    {props.phase === PHASES.success ? (
+                        <FormattedMessage
+                            defaultMessage="Upload success"
+                            description="Prompt for upload success"
+                            id="gui.uploadProgress.uploadSuccess"
+                        />
+                    ) : null}
+                    {props.phase === PHASES.error ? (
                         <FormattedMessage
                             defaultMessage="Upload error"
                             description="Prompt for upload error"
                             id="gui.uploadProgress.uploadError"
                         />
-                    )}
+                    ) : null}
                 </Box>
                 <button
                     className={classNames(styles.bottomAreaItem, styles.connectionButton)}
                     onClick={props.onCancel}
                     disabled={props.phase === PHASES.uploading}
                 >
-                    {/* 如果disable时按钮显示灰色，上传成功后直接自动关闭该窗口，并alert */}
                     <FormattedMessage
                         defaultMessage="Close"
                         description="Button in bottom to close after upload"

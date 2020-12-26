@@ -80,7 +80,7 @@ class UploadProgress extends React.Component {
             phase: PHASES.success
         });
         this.props.onUploadSuccess();
-        this.handleCancel();
+        // this.handleCancel();
     }
 
     render () {
