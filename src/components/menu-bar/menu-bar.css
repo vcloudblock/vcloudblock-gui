@@ -76,11 +76,21 @@
 }
 
 .screen-shot-logo {
-    height:  1.6rem;
+    height:  1.8rem;
     vertical-align: middle;
 }
 
 .scratch-logo.clickable {
+    cursor: pointer;
+}
+
+.download-firmware-logo {
+    height:  1.4rem;
+    margin-right: 0.35rem;
+    vertical-align: middle;
+}
+
+.download-firmware-logo.clickable {
     cursor: pointer;
 }
 

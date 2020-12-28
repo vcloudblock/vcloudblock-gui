@@ -2,31 +2,13 @@
 
 ![](https://img.shields.io/circleci/build/github/ScratchHW/scratchhw-gui/develop) ![](https://img.shields.io/github/license/ScratchHW/scratch-gui)
 
-This project is fork from [LLK/scratch-gui](https://github.com/LLK/scratch-gui), it's goal is to complete a program that can build upload code to hardware. Especially for arduino and microbit. At present, this core function has been realized. But still need to improve the detail function for ordinary users.
-
-This is a fast changing and incomplete program. It's for professional developer.
+#### Scratch-HW GUI is a set of React components that comprise the interface for creating and running Scratch-HW 3.0 projects
 
 ## Try Scratch-HW Online
 
 Scratch-HW Online: [https://scratchhw.github.io/scratchhw-gui/develop/](https://scratchhw.github.io/scratchhw-gui/develop/)
 
 <img src="docs\1.png" alt="5" style="zoom:25%;" />
-
-<img src="docs\2.png" alt="6" style="zoom:25%;" />
-
-<img src="docs\3.png" alt="7" style="zoom:25%;" />
-
-<img src="docs\4.png" alt="1" style="zoom:25%;" />
-
-<img src="docs\5.png" alt="2" style="zoom:25%;" />
-
-<img src="docs\6.png" alt="3" style="zoom:25%;" />
-
-<img src="docs\7.png" alt="4" style="zoom:25%;" />
-
-<img src="docs\8.png" alt="4" style="zoom:25%;" />
-
-<img src="docs\9.png" alt="4" style="zoom:25%;" />
 
 ## Getting Start
 

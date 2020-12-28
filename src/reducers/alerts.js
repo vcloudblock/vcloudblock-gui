@@ -118,7 +118,8 @@ const reducer = function (state, action) {
                     extensionName: extension.name,
                     extensionMessage: action.data.message,
                     iconURL: extension.connectionSmallIconURL,
-                    level: AlertLevels.WARN
+                    level: AlertLevels.WARN,
+                    showDownloadFirmware: true
                 };
                 newList.push(newAlert);
 

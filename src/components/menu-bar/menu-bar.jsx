@@ -30,7 +30,7 @@ import DeletionRestorer from '../../containers/deletion-restorer.jsx'; // eslint
 import TurboMode from '../../containers/turbo-mode.jsx'; // eslint-disable-line no-unused-vars
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
 
-import {openTipsLibrary} from '../../reducers/modals';
+import {openTipsLibrary, openUploadProgress} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
 import {
     autoUpdateProject,
@@ -85,6 +85,7 @@ import unconnectedIcon from './icon--unconnected.svg';
 import connectedIcon from './icon--connected.svg';
 import fileIcon from './icon--file.svg';
 import screenshotIcon from './icon--screenshot.svg';
+import downloadFirmwareIcon from './icon--download-firmware.svg';
 import saveSvgAsPng from 'scratchhw-save-svg-as-png';
 import {showStandardAlert} from '../../reducers/alerts';
 
@@ -184,6 +185,7 @@ class MenuBar extends React.Component {
             'getSaveToComputerHandler',
             'restoreOptionMessage',
             'handleConnectionMouseUp',
+            'handleDownloadFirmware',
             'handleSelectDeviceMouseUp',
             'handleProgramModeSwitchOnChange',
             'handleProgramModeUpdate',
@@ -332,6 +334,14 @@ class MenuBar extends React.Component {
             this.props.onSetRealtimeMode();
         } else {
             this.props.onSetUploadMode();
+        }
+    }
+    handleDownloadFirmware () {
+        if (this.props.peripheralName) {
+            this.props.vm.uploadFirmwareToPeripheral(this.props.extensionId);
+            this.props.onOpenUploadProgress();
+        } else {
+            this.props.onNoPeripheralIsConnected();
         }
     }
     handleScreenshot () {
@@ -600,6 +610,25 @@ class MenuBar extends React.Component {
                     </div>
                     <Divider className={classNames(styles.divider)} />
                     <div
+                        className={classNames(styles.menuBarItem, this.props.isRealtimeMode && this.props.deviceName ?
+                            styles.hoverable : styles.disabled)}
+                        onMouseUp={this.props.isRealtimeMode && this.props.deviceName ?
+                            this.handleDownloadFirmware : null}
+                    >
+                        <img
+                            alt="DownloadFirmware"
+                            className={classNames(styles.downloadFirmwareLogo)}
+                            draggable={false}
+                            src={downloadFirmwareIcon}
+                        />
+                        <FormattedMessage
+                            defaultMessage="Download firmware"
+                            description="Button to download the realtime firmware"
+                            id="gui.menuBar.downloadFirmware"
+                        />
+                    </div>
+                    <Divider className={classNames(styles.divider)} />
+                    <div
                         aria-label={this.props.intl.formatMessage(ariaMessages.tutorials)}
                         className={classNames(styles.menuBarItem, styles.hoverable)}
                         onClick={this.props.onOpenTipLibrary}
@@ -693,6 +722,7 @@ MenuBar.propTypes = {
     onClickSave: PropTypes.func,
     onClickSaveAsCopy: PropTypes.func,
     onLogOut: PropTypes.func,
+    onNoPeripheralIsConnected: PropTypes.func.isRequired,
     onOpenRegistration: PropTypes.func,
     onOpenTipLibrary: PropTypes.func,
     onProjectTelemetryEvent: PropTypes.func,
@@ -715,6 +745,7 @@ MenuBar.propTypes = {
     onSetUploadMode: PropTypes.func,
     onSetRealtimeMode: PropTypes.func,
     onOpenConnectionModal: PropTypes.func,
+    onOpenUploadProgress: PropTypes.func,
     extensionId: PropTypes.string,
     peripheralName: PropTypes.string,
     onDisconnect: PropTypes.func.isRequired,
@@ -781,7 +812,9 @@ const mapDispatchToProps = dispatch => ({
     onSetUploadMode: () => dispatch(setUploadMode()),
     onSetRealtimeMode: () => dispatch(setRealtimeMode()),
     onOpenConnectionModal: () => dispatch(openConnectionModal()),
+    onOpenUploadProgress: () => dispatch(openUploadProgress()),
     onDisconnect: () => dispatch(clearConnectionModalPeripheralName()),
+    onNoPeripheralIsConnected: () => dispatch(showStandardAlert('connectAPeripheralFirst')),
     onWorkspaceIsEmpty: () => dispatch(showStandardAlert('workspaceIsEmpty')),
     onWorkspaceIsNotEmpty: () => dispatch(showStandardAlert('workspaceIsNotEmpty')),
     onOpenDeviceLibrary: () => dispatch(openDeviceLibrary()),
