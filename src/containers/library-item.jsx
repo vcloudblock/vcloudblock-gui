@@ -11,6 +11,7 @@ class LibraryItem extends React.PureComponent {
         bindAll(this, [
             'handleBlur',
             'handleClick',
+            'handleClickLeanMore',
             'handleFocus',
             'handleKeyPress',
             'handleMouseEnter',
@@ -52,6 +53,9 @@ class LibraryItem extends React.PureComponent {
             }
         }
         e.preventDefault();
+    }
+    handleClickLeanMore (e) {
+        e.stopPropagation();
     }
     handleFocus (id) {
         if (!this.props.showPlayButton) {
@@ -144,10 +148,13 @@ class LibraryItem extends React.PureComponent {
                 isUnloadble={this.props.isUnloadble}
                 isPlaying={this.props.isPlaying}
                 isProcessing={this.state.isProcessing}
+                leanMore={this.props.leanMore}
+                manufactor={this.props.manufactor}
                 name={this.props.name}
                 showPlayButton={this.props.showPlayButton}
                 onBlur={this.handleBlur}
                 onClick={this.handleClick}
+                onClickLeanMore={this.handleClickLeanMore}
                 onFocus={this.handleFocus}
                 onKeyPress={this.handleKeyPress}
                 onMouseEnter={this.handleMouseEnter}
@@ -190,6 +197,8 @@ LibraryItem.propTypes = {
     isLoaded: PropTypes.bool,
     isUnloadble: PropTypes.bool,
     isPlaying: PropTypes.bool,
+    leanMore: PropTypes.string,
+    manufactor: PropTypes.string,
     name: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.node

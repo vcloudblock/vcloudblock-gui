@@ -23,15 +23,39 @@ const messages = defineMessages({
         description: 'Prompt for unoffical extension url',
         id: 'gui.extensionLibrary.extensionUrl'
     },
-    legoTag: {
-        id: 'gui.library.lego',
-        defaultMessage: 'Lego',
-        description: 'Lego tag to filter all lego libraries.'
+    actuatorTag: {
+        id: 'gui.library.actuatorTag',
+        defaultMessage: 'Actuator',
+        description: 'Actuator tag to filter all actuator libraries.'
+    },
+    sensorTag: {
+        id: 'gui.library.sensorTag',
+        defaultMessage: 'Sensor',
+        description: 'Sensor tag to filter all sensor libraries.'
+    },
+    displayTag: {
+        id: 'gui.library.displayTag',
+        defaultMessage: 'Display',
+        description: 'Display tag to filter all display libraries.'
+    },
+    communicationTag: {
+        id: 'gui.library.communicationTag',
+        defaultMessage: 'Communication',
+        description: 'Communication tag to filter all communication libraries.'
+    },
+    otherTag: {
+        id: 'gui.library.otherTag',
+        defaultMessage: 'Other',
+        description: 'Other tag to filter all other libraries.'
     }
 });
 
-const LEGO_TAG = {tag: 'lego', intlLabel: messages.legoTag};
-const tagListPrefix = [LEGO_TAG];
+const ACTUATOR_TAG = {tag: 'actuator', intlLabel: messages.actuatorTag};
+const SENSOR_TAG = {tag: 'sensor', intlLabel: messages.sensorTag};
+const DISPLAY_TAG = {tag: 'display', intlLabel: messages.displayTag};
+const COMMUNICATION_TAG = {tag: 'communication', intlLabel: messages.communicationTag};
+const OTHER_TAG = {tag: 'other', intlLabel: messages.otherTag};
+const tagListPrefix = [ACTUATOR_TAG, SENSOR_TAG, DISPLAY_TAG, COMMUNICATION_TAG, OTHER_TAG];
 
 class ExtensionLibrary extends React.PureComponent {
     constructor (props) {
@@ -52,11 +76,10 @@ class ExtensionLibrary extends React.PureComponent {
     }
 
     updateDeviceExtensions () {
-        // Todo exclude the same item.
         this.props.vm.extensionManager.getLocalDeviceExtensionsList()
             .then(data => this.setState({deviceExtensions: data}));
-        this.props.vm.extensionManager.getRemoteDeviceExtensionsList()
-            .then(data => this.setState({deviceExtensions: data}));
+        // this.props.vm.extensionManager.getRemoteDeviceExtensionsList()
+        //     .then(data => this.setState({deviceExtensions: data}));
     }
 
     handleItemSelect (item) {

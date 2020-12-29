@@ -147,21 +147,10 @@ class LibraryComponent extends React.Component {
             ));
         }
         return this.props.data.filter(dataItem => (
-            // dataItem.tags &&
-            // dataItem.tags
-            //     .map(String.prototype.toLowerCase.call, String.prototype.toLowerCase)
-            //     .indexOf(this.state.selectedTag) !== -1
-            (dataItem.tags || [])
-            // Second argument to map sets `this`
+            dataItem.tags &&
+            dataItem.tags
                 .map(String.prototype.toLowerCase.call, String.prototype.toLowerCase)
-                .concat(dataItem.name ?
-                    (typeof dataItem.name === 'string' ?
-                        // Use the name if it is a string, else use formatMessage to get the translated name
-                        dataItem.name : this.props.intl.formatMessage(dataItem.name.props)
-                    ).toLowerCase() :
-                    null)
-                .join('\n') // unlikely to partially match newlines
-                .indexOf(this.state.selectedTag.toLowerCase()) !== -1
+                .indexOf(this.state.selectedTag) !== -1
         ));
     }
     scrollToTop () {
@@ -245,6 +234,8 @@ class LibraryComponent extends React.Component {
                             isUnloadble={this.props.isUnloadble}
                             isPlaying={this.state.playingItem === index}
                             key={typeof dataItem.name === 'string' ? dataItem.name : dataItem.rawURL}
+                            leanMore={dataItem.leanMore}
+                            manufactor={dataItem.manufactor}
                             name={dataItem.name}
                             showPlayButton={this.props.showPlayButton}
                             onMouseEnter={this.handleMouseEnter}

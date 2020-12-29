@@ -63,12 +63,20 @@ class LibraryItemComponent extends React.PureComponent {
                         classNames(styles.featuredExtensionText, styles.featuredText) : styles.featuredText
                     }
                 >
-                    <span className={styles.libraryItemName}>{this.props.name}</span>
+                    <a
+                        className={styles.libraryItemName}
+                        href={this.props.leanMore}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        onClick={this.props.onClickLeanMore ? this.props.onClickLeanMore : null}
+                    >
+                        {this.props.name}
+                    </a>
                     <br />
                     <span className={styles.featuredDescription}>{this.props.description}</span>
                 </div>
                 {this.props.bluetoothRequired || this.props.serialportRequired ||
-                    this.props.internetConnectionRequired || this.props.collaborator ? (
+                    this.props.internetConnectionRequired || this.props.collaborator || this.props.manufactor ? (
                         <div className={styles.featuredExtensionMetadataFirstRow}>
                             <div className={styles.featuredExtensionRequirement}>
                                 {this.props.bluetoothRequired || this.props.serialportRequired ||
@@ -111,6 +119,22 @@ class LibraryItemComponent extends React.PureComponent {
                                             className={styles.featuredExtensionMetadataDetail}
                                         >
                                             {this.props.collaborator}
+                                        </div>
+                                    </div>
+                                ) : null}
+                                {this.props.manufactor ? (
+                                    <div>
+                                        <div>
+                                            <FormattedMessage
+                                                defaultMessage="Manufactor"
+                                                description="Label for device manufactor"
+                                                id="gui.extensionLibrary.manufactor"
+                                            />
+                                        </div>
+                                        <div
+                                            className={styles.featuredExtensionMetadataDetail}
+                                        >
+                                            {this.props.manufactor}
                                         </div>
                                     </div>
                                 ) : null}
@@ -211,6 +235,26 @@ class LibraryItemComponent extends React.PureComponent {
                                 </div>
                             ) : null}
                         </div>
+                    </div>
+                ) : null}
+                {this.props.leanMore ? (
+                    <div className={styles.featuredExtensionMetadataThirdRow}>
+                        {this.props.leanMore ? (
+                            <div className={styles.featuredExtensionLeanMore}>
+                                <a
+                                    href={this.props.leanMore}
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                    onClick={this.props.onClickLeanMore}
+                                >
+                                    <FormattedMessage
+                                        defaultMessage="Learn more"
+                                        description="Link text to device manufactor"
+                                        id="gui.extensionLibrary.deviceLearnMore"
+                                    />
+                                </a>
+                            </div>
+                        ) : null}
                     </div>
                 ) : null}
                 {this.props.isUnloadble ? (
@@ -319,12 +363,15 @@ LibraryItemComponent.propTypes = {
     isUnloadble: PropTypes.bool,
     isPlaying: PropTypes.bool,
     isProcessing: PropTypes.bool,
+    leanMore: PropTypes.string,
+    manufactor: PropTypes.string,
     name: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.node
     ]),
     onBlur: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired,
+    onClickLeanMore: PropTypes.func.isRequired,
     onFocus: PropTypes.func.isRequired,
     onKeyPress: PropTypes.func.isRequired,
     onMouseEnter: PropTypes.func.isRequired,

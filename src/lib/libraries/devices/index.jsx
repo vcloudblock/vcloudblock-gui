@@ -24,7 +24,8 @@ export default [
     {
         name: 'Arduino Uno',
         deviceId: 'arduinoUno',
-        collaborator: 'arduino',
+        manufactor: 'arduino.cc',
+        leanMore: 'https://store.arduino.cc/usa/arduino-uno-rev3',
         type: 'arduino',
         iconURL: arduinoUnoIconURL,
         description: (
@@ -53,12 +54,14 @@ export default [
         baseToolBoxXml: arduinoBaseToolBox,
         programMode: ['realtime', 'upload'],
         programLanguage: ['block', 'c', 'cpp'],
+        tags: ['arduino'],
         helpLink: 'https://store.arduino.cc/usa/arduino-uno-rev3'
     },
     {
         name: 'Arduino Nano',
         deviceId: 'arduinoNano',
-        collaborator: 'arduino',
+        manufactor: 'arduino.cc',
+        leanMore: 'https://store.arduino.cc/usa/arduino-nano',
         type: 'arduino',
         iconURL: arduinoNanoIconURL,
         description: (
@@ -87,12 +90,14 @@ export default [
         baseToolBoxXml: arduinoBaseToolBox,
         programMode: ['upload'],
         programLanguage: ['block', 'c', 'cpp'],
+        tags: ['arduino'],
         helpLink: 'https://store.arduino.cc/usa/arduino-nano'
     },
     {
         name: 'Arduino Leonardo',
         deviceId: 'arduinoLeonardo',
-        collaborator: 'arduino',
+        manufactor: 'arduino.cc',
+        leanMore: 'https://store.arduino.cc/usa/leonardo',
         type: 'arduino',
         iconURL: arduinoLeonardoIconURL,
         description: (
@@ -121,12 +126,14 @@ export default [
         baseToolBoxXml: arduinoBaseToolBox,
         programMode: ['realtime', 'upload'],
         programLanguage: ['block', 'c', 'cpp'],
+        tags: ['arduino'],
         helpLink: 'https://store.arduino.cc/usa/leonardo'
     },
     {
         name: 'Arduino Mega 2560',
         deviceId: 'arduinoMega2560',
-        collaborator: 'arduino',
+        manufactor: 'arduino.cc',
+        leanMore: 'https://store.arduino.cc/usa/mega-2560-r3',
         type: 'arduino',
         iconURL: arduinoMega2560IconURL,
         description: (
@@ -155,6 +162,7 @@ export default [
         baseToolBoxXml: arduinoBaseToolBox,
         programMode: ['realtime', 'upload'],
         programLanguage: ['block', 'c', 'cpp'],
+        tags: ['arduino'],
         helpLink: 'https://store.arduino.cc/usa/mega-2560-r3'
     }
 ];

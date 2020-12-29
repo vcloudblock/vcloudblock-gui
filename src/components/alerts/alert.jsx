@@ -116,7 +116,7 @@ const AlertComponent = ({
                     <FormattedMessage
                         defaultMessage="Download firmware"
                         description="Button to download the realtime firmware"
-                        id="gui.menuBar.downloadFirmware"
+                        id="gui.alerts.downloadFirmware"
                     />
                 </button>
             )}
