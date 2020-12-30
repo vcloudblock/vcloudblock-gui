@@ -30,7 +30,7 @@ import {setConnectionModalExtensionId} from '../reducers/connection-modal';
 import {updateMetrics} from '../reducers/workspace-metrics';
 import {setCodeEditorValue} from '../reducers/code';
 import {setDeviceId, setDeviceName} from '../reducers/device';
-import {setUploadMode, setRealtimeMode, setSupportSwitchMode} from '../reducers/program-mode';
+import {setSupportSwitchMode} from '../reducers/program-mode';
 
 import {
     activateTab,
