@@ -124,7 +124,7 @@ export default [
             />
         ),
         baseToolBoxXml: arduinoBaseToolBox,
-        programMode: ['realtime', 'upload'],
+        programMode: ['upload'], // due to the software serilport realtim mode is unstable
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
         helpLink: 'https://store.arduino.cc/usa/leonardo'

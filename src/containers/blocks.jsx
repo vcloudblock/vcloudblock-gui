@@ -495,9 +495,11 @@ class Blocks extends React.Component {
         // eslint-disable-next-line no-negated-condition
         if (!(supportUploadMode && supportRealtimeMode)) {
             if (supportUploadMode) {
-                this.props.onSetUploadMode();
+                this.props.vm.runtime.setRealtimeMode(false);
+                // this.props.onSetUploadMode();
             } else {
-                this.props.onSetRealtimeMode();
+                this.props.vm.runtime.setRealtimeMode(true);
+                // this.props.onSetRealtimeMode();
             }
             this.props.onSetSupportSwitchMode(false);
         } else {
@@ -703,8 +705,8 @@ class Blocks extends React.Component {
             onRequestCloseDeviceLibrary,
             onRequestCloseCustomProcedures,
             onSetCodeEditorValue,
-            onSetUploadMode,
-            onSetRealtimeMode,
+            // onSetUploadMode,
+            // onSetRealtimeMode,
             onSetSupportSwitchMode,
             toolboxXML,
             updateMetrics: updateMetricsProp,
@@ -805,8 +807,8 @@ Blocks.propTypes = {
         collapse: PropTypes.bool
     }),
     onSetCodeEditorValue: PropTypes.func,
-    onSetUploadMode: PropTypes.func,
-    onSetRealtimeMode: PropTypes.func,
+    // onSetUploadMode: PropTypes.func,
+    // onSetRealtimeMode: PropTypes.func,
     onSetSupportSwitchMode: PropTypes.func,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
     toolboxXML: PropTypes.string,
@@ -907,8 +909,8 @@ const mapDispatchToProps = dispatch => ({
     onSetCodeEditorValue: value => {
         dispatch(setCodeEditorValue(value));
     },
-    onSetUploadMode: () => dispatch(setUploadMode()),
-    onSetRealtimeMode: () => dispatch(setRealtimeMode()),
+    // onSetUploadMode: () => dispatch(setUploadMode()),
+    // onSetRealtimeMode: () => dispatch(setRealtimeMode()),
     onSetSupportSwitchMode: state => dispatch(setSupportSwitchMode(state))
 });
 
