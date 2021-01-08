@@ -223,6 +223,7 @@ class LibraryComponent extends React.Component {
                             extensionId={dataItem.extensionId}
                             deviceId={dataItem.deviceId}
                             featured={dataItem.featured}
+                            helpLink={dataItem.helpLink}
                             hidden={dataItem.hidden}
                             iconMd5={dataItem.md5}
                             iconRawURL={dataItem.rawURL}

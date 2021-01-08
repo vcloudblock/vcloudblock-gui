@@ -195,6 +195,7 @@
     flex-direction: row;
     align-items: flex-start;
     font-size: 12px;
+    margin-top:auto;
     color: $text-primary;
     opacity: 0.75;
 }
@@ -276,6 +277,29 @@
     font-weight: bold;
     text-decoration:none;
     color: $motion-primary;
+}
+
+.featured-extension-lean-more a:hover {
+    text-decoration:underline;
+}
+
+.featured-extension-help-link {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.featured-extension-help-link a{
+    height: 100%;
+    padding-top: 0.4rem;
+    font-weight: bold;
+    text-decoration:none;
+    color: $motion-primary;
+}
+
+.featured-extension-help-link a:hover{
+    text-decoration:underline;
 }
 
 .featured-extension-program-language {

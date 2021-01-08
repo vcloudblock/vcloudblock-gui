@@ -237,7 +237,7 @@ class LibraryItemComponent extends React.PureComponent {
                         </div>
                     </div>
                 ) : null}
-                {this.props.leanMore ? (
+                {this.props.leanMore || this.props.helpLink ? (
                     <div className={styles.featuredExtensionMetadataThirdRow}>
                         {this.props.leanMore ? (
                             <div className={styles.featuredExtensionLeanMore}>
@@ -249,8 +249,24 @@ class LibraryItemComponent extends React.PureComponent {
                                 >
                                     <FormattedMessage
                                         defaultMessage="Learn more"
-                                        description="Link text to device manufactor"
+                                        description="Link text for device manufactor"
                                         id="gui.extensionLibrary.deviceLearnMore"
+                                    />
+                                </a>
+                            </div>
+                        ) : null}
+                        {this.props.helpLink ? (
+                            <div className={styles.featuredExtensionHelpLink}>
+                                <a
+                                    href={this.props.helpLink}
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                    onClick={this.props.onClickLeanMore}
+                                >
+                                    <FormattedMessage
+                                        defaultMessage="Help"
+                                        description="link text for extension help"
+                                        id="gui.extensionLibrary.extensionHelp"
                                     />
                                 </a>
                             </div>
@@ -355,6 +371,7 @@ LibraryItemComponent.propTypes = {
     extensionId: PropTypes.string,
     deviceId: PropTypes.string,
     featured: PropTypes.bool,
+    helpLink: PropTypes.string,
     hidden: PropTypes.bool,
     iconURL: PropTypes.string,
     insetIconURL: PropTypes.string,

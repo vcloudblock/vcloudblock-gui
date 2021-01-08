@@ -55,13 +55,12 @@ class UploadProgress extends React.Component {
         this.props.oncloseUploadProgress();
     }
     handleHelp () {
-        console.log('handleHelp'); // eslint-disable-line no-console
-        // window.open(this.state.extension.helpLink, '_blank');
-        // analytics.event({
-        //     category: 'extensions',
-        //     action: 'help',
-        //     label: this.props.extensionId
-        // });
+        window.open(this.state.extension.helpLink, '_blank');
+        analytics.event({
+            category: 'extensions',
+            action: 'help',
+            label: this.props.extensionId
+        });
     }
     handleStdout (data) {
         this.setState({
