@@ -1,153 +1,56 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="519px" height="85px" viewBox="0 0 519 85" enable-background="new 0 0 519 85" xml:space="preserve">  <image id="image0" width="519" height="85" x="0" y="0"
-    href="data:image/png;base64,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" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1119.74 201.03">
+    <g id="图层_2" data-name="图层 2">
+        <g id="画板_1" data-name="画板 1" style="isolation:isolate">
+            <g id="OpenBlock">
+                <g id="penBlock_图像" data-name="penBlock 图像">
+                    <g id="圆角矩形_7" data-name="圆角矩形 7">
+                        <rect y="14.54" width="170.88" height="152.4" rx="36" style="fill:#fff"/>
+                    </g>
+                    <g id="芯片主体">
+                        <rect x="46.21" y="41.07" width="77.5" height="99.82" rx="7.19" style="fill:#ffab19"/>
+                        <path d="M115.9,48.88v84.19H54V48.88H115.9m.62-15.62H53.4a15,15,0,0,0-15,15V133.7a15,15,0,0,0,15,15h63.12a15,15,0,0,0,15-15V48.26a15,15,0,0,0-15-15Z" style="fill:#ffab19"/>
+                    </g>
+                    <g id="芯片圆圈">
+                        <path d="M72.06,79.61a9.2,9.2,0,1,1,9.19-9.2A9.21,9.21,0,0,1,72.06,79.61Z" style="fill:#fff"/>
+                        <path d="M72.06,69a1.38,1.38,0,1,1-1.39,1.38A1.38,1.38,0,0,1,72.06,69m0-15.62a17,17,0,1,0,17,17,17,17,0,0,0-17-17Z" style="fill:#fff"/>
+                    </g>
+                    <g id="圆角矩形_6" data-name="圆角矩形 6">
+                        <path d="M39.73,53.11H23.23a6.37,6.37,0,1,0,0,12.74h16.5a6.37,6.37,0,1,0,0-12.74Z" style="fill:#ffab19"/>
+                        <path d="M39.73,53.11H23.23a6.37,6.37,0,1,0,0,12.74h16.5a6.37,6.37,0,1,0,0-12.74Z" style="fill:#ffab19"/>
+                    </g>
+                    <g id="圆角矩形_6_拷贝" data-name="圆角矩形 6 拷贝">
+                        <path d="M39.73,95.11H23.23a6.37,6.37,0,1,0,0,12.74h16.5a6.37,6.37,0,1,0,0-12.74Z" style="fill:#ffab19"/>
+                        <path d="M39.73,95.11H23.23a6.37,6.37,0,1,0,0,12.74h16.5a6.37,6.37,0,1,0,0-12.74Z" style="fill:#ffab19"/>
+                    </g>
+                    <g id="圆角矩形_6_拷贝_2" data-name="圆角矩形 6 拷贝 2">
+                        <rect x="16.85" y="74.1" width="29.25" height="12.75" rx="6.37" style="fill:#ffab19"/>
+                        <path d="M39.73,74.1H23.23a6.38,6.38,0,0,0-6.38,6.38h0a6.38,6.38,0,0,0,6.38,6.37h16.5a6.37,6.37,0,0,0,6.37-6.37h0a6.38,6.38,0,0,0-6.37-6.38Z" style="fill:#ffab19"/>
+                    </g>
+                    <g id="圆角矩形_6_拷贝_2-2" data-name="圆角矩形 6 拷贝 2">
+                        <rect x="16.85" y="116.1" width="29.25" height="12.75" rx="6.37" style="fill:#ffab19"/>
+                        <path d="M39.73,116.1H23.23a6.38,6.38,0,0,0-6.38,6.38h0a6.38,6.38,0,0,0,6.38,6.37h16.5a6.37,6.37,0,0,0,6.37-6.37h0a6.38,6.38,0,0,0-6.37-6.38Z" style="fill:#ffab19"/>
+                    </g>
+                    <g id="圆角矩形_6-2" data-name="圆角矩形 6">
+                        <path d="M145.17,53.11h-16.5a6.37,6.37,0,1,0,0,12.74h16.5a6.37,6.37,0,1,0,0-12.74Z" style="fill:#ffab19"/>
+                        <path d="M145.17,53.11h-16.5a6.37,6.37,0,1,0,0,12.74h16.5a6.37,6.37,0,1,0,0-12.74Z" style="fill:#ffab19"/>
+                    </g>
+                    <g id="圆角矩形_6_拷贝-2" data-name="圆角矩形 6 拷贝">
+                        <path d="M145.17,95.11h-16.5a6.37,6.37,0,0,0,0,12.74h16.5a6.37,6.37,0,1,0,0-12.74Z" style="fill:#ffab19"/>
+                        <path d="M145.17,95.11h-16.5a6.37,6.37,0,0,0,0,12.74h16.5a6.37,6.37,0,1,0,0-12.74Z" style="fill:#ffab19"/>
+                    </g>
+                    <g id="圆角矩形_6_拷贝_2-3" data-name="圆角矩形 6 拷贝 2">
+                        <rect x="122.3" y="74.1" width="29.25" height="12.75" rx="6.37" style="fill:#ffab19"/>
+                        <path d="M145.17,74.1h-16.5a6.38,6.38,0,0,0-6.37,6.38h0a6.37,6.37,0,0,0,6.37,6.37h16.5a6.38,6.38,0,0,0,6.38-6.37h0a6.38,6.38,0,0,0-6.38-6.38Z" style="fill:#ffab19"/>
+                    </g>
+                    <g id="圆角矩形_6_拷贝_2-4" data-name="圆角矩形 6 拷贝 2">
+                        <rect x="122.3" y="116.1" width="29.25" height="12.75" rx="6.37" style="fill:#ffab19"/>
+                        <path d="M145.17,116.1h-16.5a6.38,6.38,0,0,0-6.37,6.38h0a6.37,6.37,0,0,0,6.37,6.37h16.5a6.38,6.38,0,0,0,6.38-6.37h0a6.38,6.38,0,0,0-6.38-6.38Z" style="fill:#ffab19"/>
+                    </g>
+                    <text transform="translate(161.19 148.7)" style="font-size:152px;fill:#ffab19;font-family:Chango-Regular, Chango">penBlock</text>
+                    <text transform="translate(161.19 148.7)" style="font-size:152px;fill:none;stroke:#fff;stroke-miterlimit:1;stroke-width:39px;font-family:Chango-Regular, Chango">penBlock</text>
+                    <text transform="translate(161.19 148.7)" style="font-size:152px;fill:#ffab19;font-family:Chango-Regular, Chango">penBlock</text>
+                </g>
+            </g>
+        </g>
+    </g>
 </svg>
