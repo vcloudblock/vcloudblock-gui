@@ -19,6 +19,14 @@ import arduinoMega2560IconURL from './arduinoMega2560/arduinoMega2560.png';
 import arduinoMega2560ConnectionIconURLL from './arduinoMega2560/arduinoMega2560-illustration.svg';
 import arduinoMega2560ConnectionSmallIconURL from './arduinoMega2560/arduinoMega2560-small.svg';
 
+import microbitIconURL from './microbit/microbit.png';
+import microbitConnectionIconURLL from './microbit/microbit-illustration.svg';
+import microbitConnectionSmallIconURL from './microbit/microbit-small.svg';
+
+import maixduinoIconURL from './maixduino/maixduino.png';
+import maixduinoConnectionIconURLL from './maixduino/maixduino-illustration.svg';
+import maixduinoConnectionSmallIconURL from './maixduino/maixduino-small.svg';
+
 // Device is a kind of specail extension
 export default [
     {
@@ -164,5 +172,77 @@ export default [
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
         helpLink: 'https://store.arduino.cc/usa/mega-2560-r3'
+    },
+    {
+        name: 'Micro:bit',
+        deviceId: 'microbit',
+        manufactor: 'microbit.org',
+        leanMore: 'https://microbit.org/',
+        type: 'microbit',
+        iconURL: microbitIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="The pocket-sized computer transforming digital skills learning."
+                description="Description for the 'micro:bit' device"
+                id="gui.device.microbit.description"
+            />
+        ),
+        featured: true,
+        disabled: true,
+        bluetoothRequired: false,
+        serialportRequired: true,
+        internetConnectionRequired: false,
+        launchPeripheralConnectionFlow: true,
+        useAutoScan: false,
+        connectionIconURL: microbitConnectionIconURLL,
+        connectionSmallIconURL: microbitConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their microbit."
+                id="gui.device.microbit.connectingMessage"
+            />
+        ),
+        // baseToolBoxXml: arduinoBaseToolBox,
+        programMode: ['realtime', 'upload'],
+        programLanguage: ['block', 'python'],
+        tags: ['microPython'],
+        helpLink: 'https://microbit.org/get-started/first-steps/introduction/'
+    },
+    {
+        name: 'Maixduino',
+        deviceId: 'maixduino',
+        manufactor: 'sipeed',
+        leanMore: 'https://www.sipeed.com/',
+        type: 'maixduino',
+        iconURL: maixduinoIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="The K210 RISC-V board with ESP32 inside"
+                description="Description for the maixduino device"
+                id="gui.device.maixduino.description"
+            />
+        ),
+        featured: true,
+        disabled: true,
+        bluetoothRequired: false,
+        serialportRequired: true,
+        internetConnectionRequired: false,
+        launchPeripheralConnectionFlow: true,
+        useAutoScan: false,
+        connectionIconURL: maixduinoConnectionIconURLL,
+        connectionSmallIconURL: maixduinoConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their maixduino."
+                id="gui.device.maixduino.connectingMessage"
+            />
+        ),
+        // baseToolBoxXml: arduinoBaseToolBox,
+        programMode: ['realtime', 'upload'],
+        programLanguage: ['block', 'python'],
+        tags: ['microPython'],
+        helpLink: 'https://maixduino.sipeed.com/'
     }
 ];

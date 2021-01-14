@@ -24,11 +24,17 @@ const messages = defineMessages({
         defaultMessage: 'Arduino',
         description: 'Arduino tag to filter all arduino devices.',
         id: 'gui.deviceLibrary.arduinoTag'
+    },
+    microPythonTag: {
+        defaultMessage: 'MicroPython',
+        description: 'Micro python tag to filter all micro python devices.',
+        id: 'gui.deviceLibrary.microPythonTag'
     }
 });
 
 const ARDUINO_TAG = {tag: 'Arduino', intlLabel: messages.arduinoTag};
-const tagListPrefix = [ARDUINO_TAG];
+const MICROPYTHON_TAG = {tag: 'MicroPython', intlLabel: messages.microPythonTag};
+const tagListPrefix = [ARDUINO_TAG, MICROPYTHON_TAG];
 
 class DeviceLibrary extends React.PureComponent {
     constructor (props) {
