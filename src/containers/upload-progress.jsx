@@ -10,7 +10,7 @@ import {defineMessages} from 'react-intl';
 import VM from 'scratchhw-vm';
 // eslint-disable-next-line no-unused-vars
 import analytics from '../lib/analytics';
-import extensionData from '../lib/libraries/extensions/index.jsx';
+import deviceData from '../lib/libraries/devices/index.jsx';
 import {closeUploadProgress} from '../reducers/modals';
 import {showStandardAlert} from '../reducers/alerts';
 
@@ -35,7 +35,7 @@ class UploadProgress extends React.Component {
             'handleUploadSuccess'
         ]);
         this.state = {
-            extension: extensionData.find(ext => ext.extensionId === props.extensionId),
+            extension: deviceData.find(dev => dev.deviceId === props.extensionId),
             phase: PHASES.uploading,
             peripheralName: null,
             text: ''
