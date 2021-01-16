@@ -1,7 +1,7 @@
 import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
-import VM from 'scratchhw-vm';
+import VM from 'openblock-vm';
 import {setVariableValue} from '../lib/variable-utils';
 import {connect} from 'react-redux';
 

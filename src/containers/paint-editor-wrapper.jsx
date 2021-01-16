@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import bindAll from 'lodash.bindall';
-import VM from 'scratchhw-vm';
+import VM from 'openblock-vm';
 import PaintEditor from 'scratch-paint';
 
 import {connect} from 'react-redux';

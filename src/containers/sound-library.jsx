@@ -2,7 +2,7 @@ import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
-import VM from 'scratchhw-vm';
+import VM from 'openblock-vm';
 import AudioEngine from 'scratch-audio';
 
 import LibraryComponent from '../components/library/library.jsx';

@@ -7,7 +7,7 @@ import bindAll from 'lodash.bindall';
 import bowser from 'bowser';
 import React from 'react';
 
-import VM from 'scratchhw-vm';
+import VM from 'openblock-vm';
 
 import Box from '../box/box.jsx';
 import Button from '../button/button.jsx';
@@ -86,7 +86,7 @@ import connectedIcon from './icon--connected.svg';
 import fileIcon from './icon--file.svg';
 import screenshotIcon from './icon--screenshot.svg';
 import downloadFirmwareIcon from './icon--download-firmware.svg';
-import saveSvgAsPng from 'scratchhw-save-svg-as-png';
+import saveSvgAsPng from 'openblock-save-svg-as-png';
 import {showStandardAlert} from '../../reducers/alerts';
 
 const ariaMessages = defineMessages({
@@ -418,7 +418,7 @@ class MenuBar extends React.Component {
                 <div className={styles.mainMenu}>
                     <div className={classNames(styles.menuBarItem)}>
                         <img
-                            alt="Scratch"
+                            alt="OpenBlock"
                             className={classNames(styles.scratchLogo, {
                                 [styles.clickable]: typeof this.props.onClickLogo !== 'undefined'
                             })}

@@ -1,6 +1,6 @@
-import ScratchBlocks from 'scratchhw-blocks';
+import ScratchBlocks from 'openblock-blocks';
 // eslint-disable-next-line no-unused-vars
-import ArduinoGenerator from 'scratchhw-blocks/arduino_compressed';
+import ArduinoGenerator from 'openblock-blocks/arduino_compressed';
 
 /**
  * Connect scratch blocks with the vm
