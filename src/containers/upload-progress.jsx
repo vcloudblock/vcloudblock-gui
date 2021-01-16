@@ -7,7 +7,7 @@ import {compose} from 'redux';
 import {injectIntl, intlShape} from 'react-intl';
 import {defineMessages} from 'react-intl';
 
-import VM from 'scratchhw-vm';
+import VM from 'openblock-vm';
 // eslint-disable-next-line no-unused-vars
 import analytics from '../lib/analytics';
 import deviceData from '../lib/libraries/devices/index.jsx';

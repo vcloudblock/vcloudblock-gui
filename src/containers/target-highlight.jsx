@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {connect} from 'react-redux';
-import VM from 'scratchhw-vm';
+import VM from 'openblock-vm';
 
 class TargetHighlight extends React.Component {
     constructor (props) {

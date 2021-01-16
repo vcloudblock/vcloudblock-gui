@@ -1,12 +1,12 @@
-# scratchhw-gui
+# openblock-gui
 
-![](https://img.shields.io/circleci/build/github/ScratchHW/scratchhw-gui/develop) ![](https://img.shields.io/github/license/ScratchHW/scratch-gui)
+![](https://img.shields.io/circleci/build/github/openblockcc/openblock-gui/develop) ![](https://img.shields.io/github/license/openblockcc/scratch-gui)
 
-#### Scratch-HW GUI is a set of React components that comprise the interface for creating and running Scratch-HW 3.0 projects
+#### OpenBlock-HW GUI is a set of React components that comprise the interface for creating and running OpenBlock projects
 
-## Try Scratch-HW Online
+## Try OpenBlock Online
 
-Scratch-HW Online: [https://scratchhw.github.io/scratchhw-gui/develop/](https://scratchhw.github.io/scratchhw-gui/develop/)
+OpenBlock Online: [https://openblockcc.github.io/openblock-gui/develop/](https://openblockcc.github.io/openblock-gui/develop/)
 
 <img src="docs\1.png" alt="5" style="zoom:25%;" />
 
@@ -14,11 +14,11 @@ Scratch-HW Online: [https://scratchhw.github.io/scratchhw-gui/develop/](https://
 
 Follow the wiki:
 
-EN: [https://scratchhw.github.io/wiki/](https://scratchhw.github.io/wiki/)
+EN: [https://openblockcc.github.io/wiki/](https://openblockcc.github.io/wiki/)
 
-中文: [https://scratchhw.github.io/wiki-zh/](https://scratchhw.github.io/wiki-zh/)
+中文: [https://openblockcc.github.io/wiki-zh/](https://openblockcc.github.io/wiki-zh/)
 
-Gitee中文镜像: [https://scratch-hw.gitee.io/wiki-zh/](https://scratch-hw.gitee.io/wiki-zh/)
+Gitee中文镜像: [https://openblockcc.gitee.io/wiki-zh/](https://openblockcc.gitee.io/wiki-zh/)
 
 ## Contact me
 

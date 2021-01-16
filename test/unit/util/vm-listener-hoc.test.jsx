@@ -1,7 +1,7 @@
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import {mount} from 'enzyme';
-import VM from 'scratchhw-vm';
+import VM from 'openblock-vm';
 
 import vmListenerHOC from '../../../src/lib/vm-listener-hoc.jsx';
 

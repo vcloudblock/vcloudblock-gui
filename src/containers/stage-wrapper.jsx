@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import VM from 'scratchhw-vm';
+import VM from 'openblock-vm';
 import {STAGE_DISPLAY_SIZES} from '../lib/layout-constants.js';
 import StageWrapperComponent from '../components/stage-wrapper/stage-wrapper.jsx';
 

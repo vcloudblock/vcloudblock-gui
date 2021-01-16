@@ -11,13 +11,13 @@ import styles from './telemetry-modal.css';
 const messages = defineMessages({
     label: {
         id: 'gui.telemetryOptIn.label',
-        defaultMessage: 'Report statistics to improve Scratch',
-        description: 'Scratch 3.0 telemetry modal label - for accessibility'
+        defaultMessage: 'Report statistics to improve OpenBlock',
+        description: 'OpenBlock telemetry modal label - for accessibility'
     },
     bodyText1: {
-        defaultMessage: 'The Scratch Team is always looking to better understand how Scratch is used around the ' +
-            'world. To help support this effort, you can allow Scratch to automatically send usage information to ' +
-            'the Scratch Team.',
+        defaultMessage: 'The OpenBlock Team is always looking to better understand how OpenBlock is used around the ' +
+            'world. To help support this effort, you can allow OpenBlock to automatically send usage information to ' +
+            'the OpenBlock Team.',
         description: 'First paragraph of body text for telemetry opt-in modal',
         id: 'gui.telemetryOptIn.body1'
     },
@@ -30,7 +30,7 @@ const messages = defineMessages({
     },
     privacyPolicyLink: {
         defaultMessage: 'Privacy Policy',
-        description: 'Link to the Scratch privacy policy',
+        description: 'Link to the OpenBlock privacy policy',
         id: 'gui.telemetryOptIn.privacyPolicyLink'
     },
     noButton: {
@@ -44,7 +44,7 @@ const messages = defineMessages({
         id: 'gui.telemetryOptIn.buttonTooltipNo'
     },
     yesButton: {
-        defaultMessage: "Yes, I'd like to help improve Scratch",
+        defaultMessage: "Yes, I'd like to help improve OpenBlock",
         description: 'Text for telemetry modal opt-in button',
         id: 'gui.telemetryOptIn.buttonTextYes'
     },

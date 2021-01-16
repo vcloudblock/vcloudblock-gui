@@ -5,7 +5,7 @@ import makeToolboxXML from '../lib/make-toolbox-xml';
 import PropTypes from 'prop-types';
 import React from 'react';
 import VMScratchBlocks from '../lib/blocks';
-import VM from 'scratchhw-vm';
+import VM from 'openblock-vm';
 
 import log from '../lib/log.js';
 import Prompt from './prompt.jsx';
@@ -469,7 +469,7 @@ class Blocks extends React.Component {
             }
         };
 
-        // scratchhw-blocks implements a menu or custom field as a special kind of block ("shadow" block)
+        // openblock-blocks implements a menu or custom field as a special kind of block ("shadow" block)
         // these actually define blocks and MUST run regardless of the UI state
         defineBlocks(
             Object.getOwnPropertyNames(categoryInfo.customFieldTypes)
@@ -533,7 +533,7 @@ class Blocks extends React.Component {
                 }
             };
 
-            // scratchhw-blocks implements a menu or custom field as a special kind of block ("shadow" block)
+            // openblock-blocks implements a menu or custom field as a special kind of block ("shadow" block)
             // these actually define blocks and MUST run regardless of the UI state
             defineBlocks(
                 Object.getOwnPropertyNames(categoryInfo.customFieldTypes)
@@ -651,7 +651,7 @@ class Blocks extends React.Component {
     /*
      * Pass along information about proposed name and variable options (scope and isCloud)
      * and additional potentially conflicting variable names from the VM
-     * to the variable validation prompt callback used in scratchhw-blocks.
+     * to the variable validation prompt callback used in openblock-blocks.
      */
     handlePromptCallback (input, variableOptions) {
         this.state.prompt.callback(
