@@ -2,6 +2,7 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import arduinoBaseToolBox from './baseToolbox/arduino';
+import microbitBaseToolBox from './baseToolbox/microbit';
 
 import arduinoUnoIconURL from './arduinoUno/arduinoUno.png';
 import arduinoUnoConnectionIconURLL from './arduinoUno/arduinoUno-illustration.svg';
@@ -178,7 +179,7 @@ export default [
         deviceId: 'microbit',
         manufactor: 'microbit.org',
         leanMore: 'https://microbit.org/',
-        type: 'microbit',
+        type: 'microPython',
         iconURL: microbitIconURL,
         description: (
             <FormattedMessage
@@ -188,7 +189,7 @@ export default [
             />
         ),
         featured: true,
-        disabled: true,
+        disabled: false,
         bluetoothRequired: false,
         serialportRequired: true,
         internetConnectionRequired: false,
@@ -203,7 +204,7 @@ export default [
                 id="gui.device.microbit.connectingMessage"
             />
         ),
-        // baseToolBoxXml: arduinoBaseToolBox,
+        baseToolBoxXml: microbitBaseToolBox,
         programMode: ['realtime', 'upload'],
         programLanguage: ['block', 'python'],
         tags: ['microPython'],
@@ -239,7 +240,7 @@ export default [
                 id="gui.device.maixduino.connectingMessage"
             />
         ),
-        // baseToolBoxXml: arduinoBaseToolBox,
+        baseToolBoxXml: arduinoBaseToolBox,
         programMode: ['realtime', 'upload'],
         programLanguage: ['block', 'python'],
         tags: ['microPython'],

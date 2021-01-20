@@ -23,6 +23,11 @@ const messages = defineMessages({
         description: 'Prompt for unoffical extension url',
         id: 'gui.extensionLibrary.extensionUrl'
     },
+    shieldTag: {
+        id: 'gui.library.shieldTag',
+        defaultMessage: 'Shield',
+        description: 'Shield tag to filter all shield libraries.'
+    },
     actuatorTag: {
         id: 'gui.library.actuatorTag',
         defaultMessage: 'Actuator',
@@ -50,12 +55,13 @@ const messages = defineMessages({
     }
 });
 
+const SHIELD_TAG = {tag: 'shield', intlLabel: messages.shieldTag};
 const ACTUATOR_TAG = {tag: 'actuator', intlLabel: messages.actuatorTag};
 const SENSOR_TAG = {tag: 'sensor', intlLabel: messages.sensorTag};
 const DISPLAY_TAG = {tag: 'display', intlLabel: messages.displayTag};
 const COMMUNICATION_TAG = {tag: 'communication', intlLabel: messages.communicationTag};
 const OTHER_TAG = {tag: 'other', intlLabel: messages.otherTag};
-const tagListPrefix = [ACTUATOR_TAG, SENSOR_TAG, DISPLAY_TAG, COMMUNICATION_TAG, OTHER_TAG];
+const tagListPrefix = [SHIELD_TAG, ACTUATOR_TAG, SENSOR_TAG, DISPLAY_TAG, COMMUNICATION_TAG, OTHER_TAG];
 
 class ExtensionLibrary extends React.PureComponent {
     constructor (props) {
