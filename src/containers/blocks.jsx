@@ -558,10 +558,9 @@ class Blocks extends React.Component {
             this.props.updateToolboxState(toolboxXML);
         }
     }
-    handleDeviceExtensionAdded () {
-        // eslint-disable-next-line no-undef
-        this.ScratchBlocks = defaultsDeep(this.ScratchBlocks, addBlocks(this.ScratchBlocks),
-            addGenerator(this.ScratchBlocks), addMsg(this.ScratchBlocks)); // eslint-disable-line no-undef
+    handleDeviceExtensionAdded (addExts) {
+        this.ScratchBlocks = defaultsDeep(this.ScratchBlocks, addExts.addBlocks(this.ScratchBlocks),
+            addExts.addGenerator(this.ScratchBlocks), addExts.addMsg(this.ScratchBlocks));
         this.setLocale();
 
         const toolboxXML = this.getToolboxXML();
