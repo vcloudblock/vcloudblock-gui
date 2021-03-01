@@ -46,6 +46,7 @@ class DeviceLibrary extends React.PureComponent {
     handleItemSelect (item) {
         const id = item.deviceId;
         let url = item.deviceURL ? item.deviceURL : id;
+        const extensions = item.extensions;
         if (!item.disabled && !id) {
             // eslint-disable-next-line no-alert
             url = prompt(this.props.intl.formatMessage(messages.deviceUrl));
@@ -56,6 +57,9 @@ class DeviceLibrary extends React.PureComponent {
             } else {
                 this.props.onDeviceChanged();
                 this.props.vm.extensionManager.loadDeviceURL(url).then(() => {
+                    this.props.vm.extensionManager.getLocalDeviceExtensionsList().then(() => {
+                        this.props.vm.installDeviceExtension(extensions);
+                    });
                     this.props.onDeviceSelected(id);
                 });
             }
