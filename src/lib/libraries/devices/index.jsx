@@ -257,7 +257,6 @@ export default [
         leanMore: 'https://www.sxyiqichuang.com/',
         type: 'arduino',
         iconURL: ironKitIconURL,
-        description: 'Yiqichuang iron kit robot',
         description: (
             <FormattedMessage
                 defaultMessage="Yiqichuang iron kit robot"

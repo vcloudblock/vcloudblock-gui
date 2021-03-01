@@ -103,7 +103,7 @@ class ExtensionLibrary extends React.PureComponent {
                     })
                         .catch(err => {
                         // TODO add a alet device extension load failed. and change the state to bar to failed state
-                            console.log(`err = ${err}`); // eslint-disable-line no-console
+                            console.error(`err = ${err}`); // eslint-disable-line no-console
                         });
                 }
             }
