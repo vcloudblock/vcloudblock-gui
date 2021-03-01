@@ -336,6 +336,9 @@ const events = function (isInitialSetup, isStage, targetId, isRealtimeMode) {
     <category name="%{BKY_CATEGORY_EVENTS}" id="events" colour="#FFD500" secondaryColour="#CC9900">
         <block type="event_whenflagclicked" ${isRealtimeMode ? `` : `disabled="true"`}/>
         <block type="event_whenmicrobitbegin" ${isRealtimeMode ? `disabled="true"` : ``}/>
+        <block type="event_whenmicrobitbuttonpressed" ${isRealtimeMode ? `disabled="true"` : ``}/>
+        <block type="event_whenmicrobitpinbeingtouched" ${isRealtimeMode ? `disabled="true"` : ``}/>
+        <block type="event_whenmicrobitgesture" ${isRealtimeMode ? `disabled="true"` : ``}/>
         <block type="event_whenkeypressed" ${isRealtimeMode ? `` : `disabled="true"`}>
         </block>
         ${isStage ? `
