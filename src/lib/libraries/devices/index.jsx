@@ -2,6 +2,7 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import arduinoBaseToolBox from './baseToolbox/arduino';
+import microbitBaseToolBox from './baseToolbox/microbit';
 
 import arduinoUnoIconURL from './arduinoUno/arduinoUno.png';
 import arduinoUnoConnectionIconURLL from './arduinoUno/arduinoUno-illustration.svg';
@@ -26,6 +27,10 @@ import microbitConnectionSmallIconURL from './microbit/microbit-small.svg';
 import maixduinoIconURL from './maixduino/maixduino.png';
 import maixduinoConnectionIconURLL from './maixduino/maixduino-illustration.svg';
 import maixduinoConnectionSmallIconURL from './maixduino/maixduino-small.svg';
+
+import ironKitIconURL from './ironKit/ironKit.png';
+import ironKitConnectionIconURLL from './ironKit/ironKit-illustration.svg';
+import ironKitConnectionSmallIconURL from './ironKit/ironKit-small.svg';
 
 // Device is a kind of specail extension
 export default [
@@ -178,7 +183,7 @@ export default [
         deviceId: 'microbit',
         manufactor: 'microbit.org',
         leanMore: 'https://microbit.org/',
-        type: 'microbit',
+        type: 'microPython',
         iconURL: microbitIconURL,
         description: (
             <FormattedMessage
@@ -188,7 +193,7 @@ export default [
             />
         ),
         featured: true,
-        disabled: true,
+        disabled: false,
         bluetoothRequired: false,
         serialportRequired: true,
         internetConnectionRequired: false,
@@ -203,7 +208,7 @@ export default [
                 id="gui.device.microbit.connectingMessage"
             />
         ),
-        // baseToolBoxXml: arduinoBaseToolBox,
+        baseToolBoxXml: microbitBaseToolBox,
         programMode: ['realtime', 'upload'],
         programLanguage: ['block', 'python'],
         tags: ['microPython'],
@@ -239,10 +244,47 @@ export default [
                 id="gui.device.maixduino.connectingMessage"
             />
         ),
-        // baseToolBoxXml: arduinoBaseToolBox,
+        baseToolBoxXml: arduinoBaseToolBox,
         programMode: ['realtime', 'upload'],
         programLanguage: ['block', 'python'],
         tags: ['microPython'],
         helpLink: 'https://maixduino.sipeed.com/'
+    },
+    {
+        name: 'IronKit',
+        deviceId: 'arduinoUno',
+        manufactor: 'YQC Robot',
+        leanMore: 'https://www.sxyiqichuang.com/',
+        type: 'arduino',
+        iconURL: ironKitIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="Yiqichuang iron kit robot"
+                description="Description for the YQC iron kit device"
+                id="gui.device.ironKit.description"
+            />
+        ),
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        serialportRequired: true,
+        internetConnectionRequired: false,
+        launchPeripheralConnectionFlow: true,
+        useAutoScan: false,
+        connectionIconURL: ironKitConnectionIconURLL,
+        connectionSmallIconURL: ironKitConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their iron kit."
+                id="gui.device.ironKit.connectingMessage"
+            />
+        ),
+        baseToolBoxXml: arduinoBaseToolBox,
+        programMode: ['realtime', 'upload'],
+        programLanguage: ['block', 'cpp'],
+        tags: ['kit'],
+        extensions: ['ironKit'],
+        helpLink: 'https://www.sxyiqichuang.com/'
     }
 ];

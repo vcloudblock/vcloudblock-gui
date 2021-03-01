@@ -29,7 +29,7 @@ import {activateCustomProcedures, deactivateCustomProcedures} from '../reducers/
 import {setConnectionModalExtensionId} from '../reducers/connection-modal';
 import {updateMetrics} from '../reducers/workspace-metrics';
 import {setCodeEditorValue} from '../reducers/code';
-import {setDeviceId, setDeviceName} from '../reducers/device';
+import {setDeviceId, setDeviceName, setDeviceType} from '../reducers/device';
 import {setSupportSwitchMode} from '../reducers/program-mode';
 
 import {
@@ -487,7 +487,7 @@ class Blocks extends React.Component {
         const {device, categoryInfoArray} = info;
 
         const dev = deviceData.find(ext => ext.deviceId === device);
-        this.props.onDeviceSelected(dev.deviceId, dev.name);
+        this.props.onDeviceSelected(dev.deviceId, dev.name, dev.type);
 
         const supportUploadMode = dev.programMode.includes('upload');
         const supportRealtimeMode = dev.programMode.includes('realtime');
@@ -558,10 +558,9 @@ class Blocks extends React.Component {
             this.props.updateToolboxState(toolboxXML);
         }
     }
-    handleDeviceExtensionAdded () {
-        // eslint-disable-next-line no-undef
-        this.ScratchBlocks = defaultsDeep(this.ScratchBlocks, addBlocks(this.ScratchBlocks),
-            addGenerator(this.ScratchBlocks), addMsg(this.ScratchBlocks)); // eslint-disable-line no-undef
+    handleDeviceExtensionAdded (addExts) {
+        this.ScratchBlocks = defaultsDeep(this.ScratchBlocks, addExts.addBlocks(this.ScratchBlocks),
+            addExts.addGenerator(this.ScratchBlocks), addExts.addMsg(this.ScratchBlocks));
         this.setLocale();
 
         const toolboxXML = this.getToolboxXML();
@@ -591,8 +590,6 @@ class Blocks extends React.Component {
     }
     handleDeviceSelected (categoryId) {
         const device = deviceData.find(ext => ext.deviceId === categoryId);
-
-        // TODO: set device type to redux, and change workspaceToCode function.
 
         if (device && device.launchPeripheralConnectionFlow) {
             this.handleConnectionModalStart(categoryId);
@@ -631,10 +628,14 @@ class Blocks extends React.Component {
     workspaceToCode () {
         let code = null;
         try {
-            code = this.ScratchBlocks.Arduino.workspaceToCode(this.workspace);
+            const deviceType = this.props.deviceType;
+            if (deviceType === 'arduino') {
+                code = this.ScratchBlocks.Arduino.workspaceToCode(this.workspace);
+            } else if (deviceType === 'microPython') {
+                code = this.ScratchBlocks.Python.workspaceToCode(this.workspace);
+            }
         } catch (e) {
-            // eslint-disable-next-line no-console
-            console.log(e.message); // todo: other way handle error
+            code = e.message;
         }
         return code;
     }
@@ -767,6 +768,7 @@ Blocks.propTypes = {
     canUseCloud: PropTypes.bool,
     customProceduresVisible: PropTypes.bool,
     deviceId: PropTypes.string,
+    deviceType: PropTypes.string,
     deviceLibraryVisible: PropTypes.bool,
     extensionLibraryVisible: PropTypes.bool,
     isRealtimeMode: PropTypes.bool,
@@ -859,6 +861,7 @@ const mapStateToProps = state => ({
         state.scratchGui.mode.isFullScreen
     ),
     deviceId: state.scratchGui.device.deviceId,
+    deviceType: state.scratchGui.device.deviceType,
     deviceLibraryVisible: state.scratchGui.modals.deviceLibrary,
     extensionLibraryVisible: state.scratchGui.modals.extensionLibrary,
     isRealtimeMode: state.scratchGui.programMode.isRealtimeMode,
@@ -873,9 +876,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onActivateColorPicker: callback => dispatch(activateColorPicker(callback)),
     onActivateCustomProcedures: (data, callback) => dispatch(activateCustomProcedures(data, callback)),
-    onDeviceSelected: (id, name) => {
+    onDeviceSelected: (id, name, type) => {
         dispatch(setDeviceId(id));
         dispatch(setDeviceName(name));
+        dispatch(setDeviceType(type));
     },
     onOpenConnectionModal: id => {
         dispatch(setConnectionModalExtensionId(id));

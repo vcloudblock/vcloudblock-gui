@@ -8,13 +8,24 @@ import CodeEditorComponent from '../components/code-editor/code-editor.jsx';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class CodeEditor extends React.Component {
+    getLanguage (type) {
+        if (type === 'arduino') {
+            return 'cpp';
+        } else if (type === 'microPython') {
+            return 'python';
+        }
+        return 'null';
+    }
+
     render () {
+        const language = this.getLanguage(this.props.deviceType);
         const {
             ...props
         } = this.props;
         return (
             <CodeEditorComponent
                 value={this.props.codeEditorValue}
+                language={language}
                 {...props}
             />
         );
@@ -22,11 +33,13 @@ class CodeEditor extends React.Component {
 }
 
 CodeEditor.propTypes = {
-    codeEditorValue: PropTypes.string
+    codeEditorValue: PropTypes.string,
+    deviceType: PropTypes.string
 };
 
 const mapStateToProps = state => ({
-    codeEditorValue: state.scratchGui.code.codeEditorValue
+    codeEditorValue: state.scratchGui.code.codeEditorValue,
+    deviceType: state.scratchGui.device.deviceType
 });
 
 export default compose(
