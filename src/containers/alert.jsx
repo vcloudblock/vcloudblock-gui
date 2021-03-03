@@ -6,8 +6,7 @@ import {connect} from 'react-redux';
 import SB3Downloader from './sb3-downloader.jsx';
 import AlertComponent from '../components/alerts/alert.jsx';
 import {openConnectionModal, openUploadProgress} from '../reducers/modals';
-import {showStandardAlert} from '../reducers/alerts';
-import {setConnectionModalExtensionId} from '../reducers/connection-modal';
+import {showAlertWithTimeout} from '../reducers/alerts';
 import {manualUpdateProject} from '../reducers/project-state';
 
 class Alert extends React.Component {
@@ -23,7 +22,7 @@ class Alert extends React.Component {
         this.props.onCloseAlert(this.props.index);
     }
     handleDownloadFirmware () {
-        if (this.props.peripheralName) {
+        if (this.props.deviceName) {
             this.props.vm.uploadFirmwareToPeripheral(this.props.extensionId);
             this.props.onOpenUploadProgress();
         } else {
@@ -32,7 +31,7 @@ class Alert extends React.Component {
         this.handleOnCloseAlert();
     }
     handleOnReconnect () {
-        this.props.onOpenConnectionModal(this.props.extensionId);
+        this.props.onOpenConnectionModal();
         this.handleOnCloseAlert();
     }
     render () {
@@ -79,16 +78,15 @@ class Alert extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    peripheralName: state.scratchGui.connectionModal.peripheralName
+    deviceName: state.scratchGui.device.deviceName
 });
 
 const mapDispatchToProps = dispatch => ({
-    onOpenConnectionModal: id => {
-        dispatch(setConnectionModalExtensionId(id));
+    onOpenConnectionModal: () => {
         dispatch(openConnectionModal());
     },
     onOpenUploadProgress: () => dispatch(openUploadProgress()),
-    onNoPeripheralIsConnected: () => dispatch(showStandardAlert('connectAPeripheralFirst')),
+    onNoPeripheralIsConnected: () => showAlertWithTimeout(dispatch, 'connectAPeripheralFirst'),
     onSaveNow: () => {
         dispatch(manualUpdateProject());
     }
@@ -110,7 +108,7 @@ Alert.propTypes = {
     onOpenUploadProgress: PropTypes.func,
     onNoPeripheralIsConnected: PropTypes.func.isRequired,
     onSaveNow: PropTypes.func,
-    peripheralName: PropTypes.string,
+    deviceName: PropTypes.string,
     showDownload: PropTypes.bool,
     showDownloadFirmware: PropTypes.bool,
     showReconnect: PropTypes.bool,

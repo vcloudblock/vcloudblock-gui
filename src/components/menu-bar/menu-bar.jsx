@@ -87,7 +87,7 @@ import fileIcon from './icon--file.svg';
 import screenshotIcon from './icon--screenshot.svg';
 import downloadFirmwareIcon from './icon--download-firmware.svg';
 import saveSvgAsPng from 'openblock-save-svg-as-png';
-import {showStandardAlert} from '../../reducers/alerts';
+import {showAlertWithTimeout} from '../../reducers/alerts';
 
 const ariaMessages = defineMessages({
     language: {
@@ -337,8 +337,8 @@ class MenuBar extends React.Component {
         }
     }
     handleDownloadFirmware () {
-        if (this.props.peripheralName) {
-            this.props.vm.uploadFirmwareToPeripheral(this.props.extensionId);
+        if (this.props.deviceId) {
+            this.props.vm.uploadFirmwareToPeripheral(this.props.deviceId);
             this.props.onOpenUploadProgress();
         } else {
             this.props.onNoPeripheralIsConnected();
@@ -746,7 +746,6 @@ MenuBar.propTypes = {
     onSetRealtimeMode: PropTypes.func,
     onOpenConnectionModal: PropTypes.func,
     onOpenUploadProgress: PropTypes.func,
-    extensionId: PropTypes.string,
     peripheralName: PropTypes.string,
     onDisconnect: PropTypes.func.isRequired,
     onWorkspaceIsEmpty: PropTypes.func.isRequired,
@@ -784,7 +783,6 @@ const mapStateToProps = (state, ownProps) => {
         userOwnsProject: ownProps.authorUsername && user &&
             (ownProps.authorUsername === user.username),
         vm: state.scratchGui.vm,
-        extensionId: state.scratchGui.connectionModal.extensionId,
         peripheralName: state.scratchGui.connectionModal.peripheralName,
         deviceId: state.scratchGui.device.deviceId,
         deviceName: state.scratchGui.device.deviceName
@@ -814,11 +812,11 @@ const mapDispatchToProps = dispatch => ({
     onOpenConnectionModal: () => dispatch(openConnectionModal()),
     onOpenUploadProgress: () => dispatch(openUploadProgress()),
     onDisconnect: () => dispatch(clearConnectionModalPeripheralName()),
-    onNoPeripheralIsConnected: () => dispatch(showStandardAlert('connectAPeripheralFirst')),
-    onWorkspaceIsEmpty: () => dispatch(showStandardAlert('workspaceIsEmpty')),
-    onWorkspaceIsNotEmpty: () => dispatch(showStandardAlert('workspaceIsNotEmpty')),
+    onNoPeripheralIsConnected: () => showAlertWithTimeout(dispatch, 'connectAPeripheralFirst'),
+    onWorkspaceIsEmpty: () => showAlertWithTimeout(dispatch, 'workspaceIsEmpty'),
+    onWorkspaceIsNotEmpty: () => showAlertWithTimeout(dispatch, 'workspaceIsNotEmpty'),
     onOpenDeviceLibrary: () => dispatch(openDeviceLibrary()),
-    onDeviceIsEmpty: () => dispatch(showStandardAlert('selectADeviceFirst'))
+    onDeviceIsEmpty: () => showAlertWithTimeout(dispatch, 'selectADeviceFirst')
 });
 
 export default compose(

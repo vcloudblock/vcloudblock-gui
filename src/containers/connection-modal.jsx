@@ -23,9 +23,9 @@ class ConnectionModal extends React.Component {
             'handleHelp'
         ]);
         this.state = {
-            extension: extensionData.find(ext => ext.extensionId === props.extensionId) ||
-                deviceData.find(ext => ext.deviceId === props.extensionId),
-            phase: props.vm.getPeripheralIsConnected(props.extensionId) ?
+            extension: extensionData.find(ext => ext.extensionId === props.deviceId) ||
+                deviceData.find(ext => ext.deviceId === props.deviceId),
+            phase: props.vm.getPeripheralIsConnected(props.deviceId) ?
                 PHASES.connected : PHASES.scanning,
             peripheralName: null
         };
@@ -44,7 +44,7 @@ class ConnectionModal extends React.Component {
         });
     }
     handleConnecting (peripheralId, peripheralName) {
-        this.props.vm.connectPeripheral(this.props.extensionId, peripheralId);
+        this.props.vm.connectPeripheral(this.props.deviceId, peripheralId);
         this.setState({
             phase: PHASES.connecting,
             peripheralName: peripheralName
@@ -52,12 +52,12 @@ class ConnectionModal extends React.Component {
         analytics.event({
             category: 'extensions',
             action: 'connecting',
-            label: this.props.extensionId
+            label: this.props.deviceId
         });
     }
     handleDisconnect () {
         try {
-            this.props.vm.disconnectPeripheral(this.props.extensionId);
+            this.props.vm.disconnectPeripheral(this.props.deviceId);
         } finally {
             this.props.onCancel();
         }
@@ -65,8 +65,8 @@ class ConnectionModal extends React.Component {
     handleCancel () {
         try {
             // If we're not connected to a peripheral, close the websocket so we stop scanning.
-            if (!this.props.vm.getPeripheralIsConnected(this.props.extensionId)) {
-                this.props.vm.disconnectPeripheral(this.props.extensionId);
+            if (!this.props.vm.getPeripheralIsConnected(this.props.deviceId)) {
+                this.props.vm.disconnectPeripheral(this.props.deviceId);
             }
         } finally {
             // Close the modal.
@@ -87,7 +87,7 @@ class ConnectionModal extends React.Component {
             analytics.event({
                 category: 'extensions',
                 action: 'connecting error',
-                label: this.props.extensionId
+                label: this.props.deviceId
             });
         }
     }
@@ -98,7 +98,7 @@ class ConnectionModal extends React.Component {
         analytics.event({
             category: 'extensions',
             action: 'connected',
-            label: this.props.extensionId
+            label: this.props.deviceId
         });
         this.props.onConnected(this.state.peripheralName);
     }
@@ -107,7 +107,7 @@ class ConnectionModal extends React.Component {
         analytics.event({
             category: 'extensions',
             action: 'help',
-            label: this.props.extensionId
+            label: this.props.deviceId
         });
     }
     render () {
@@ -118,10 +118,10 @@ class ConnectionModal extends React.Component {
                 connectionSmallIconURL={this.state.extension && this.state.extension.connectionSmallIconURL}
                 isSerialport={this.state.extension && this.state.extension.serialportRequired}
                 connectionTipIconURL={this.state.extension && this.state.extension.connectionTipIconURL}
-                extensionId={this.props.extensionId}
+                extensionId={this.props.deviceId}
                 name={this.state.extension && this.state.extension.name}
                 phase={this.state.phase}
-                title={this.props.extensionId}
+                title={this.props.deviceId}
                 useAutoScan={this.state.extension && this.state.extension.useAutoScan}
                 vm={this.props.vm}
                 onCancel={this.handleCancel}
@@ -136,14 +136,14 @@ class ConnectionModal extends React.Component {
 }
 
 ConnectionModal.propTypes = {
-    extensionId: PropTypes.string.isRequired,
+    deviceId: PropTypes.string.isRequired,
     onCancel: PropTypes.func.isRequired,
     onConnected: PropTypes.func.isRequired,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
 const mapStateToProps = state => ({
-    extensionId: state.scratchGui.connectionModal.extensionId
+    deviceId: state.scratchGui.device.deviceId
 });
 
 const mapDispatchToProps = dispatch => ({

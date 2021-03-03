@@ -252,7 +252,7 @@ export default [
     },
     {
         name: 'IronKit',
-        deviceId: 'arduinoUno',
+        deviceId: 'ironKit',
         manufactor: 'YQC Robot',
         leanMore: 'https://www.sxyiqichuang.com/',
         type: 'arduino',
