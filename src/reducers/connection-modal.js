@@ -1,4 +1,3 @@
-const SET_ID = 'scratch-gui/connection-modal/setId';
 const SET_NAME = 'scratch-gui/connection-modal/setName';
 const CLEAR_NAME = 'scratch-gui/connection-modal/clearName';
 
