@@ -11,7 +11,7 @@ import VM from 'openblock-vm';
 import {setStageSize} from '../reducers/stage-size';
 import {STAGE_SIZE_MODES} from '../lib/layout-constants';
 import {openUploadProgress} from '../reducers/modals';
-import {showStandardAlert} from '../reducers/alerts';
+import {showAlertWithTimeout} from '../reducers/alerts';
 
 import HardwareComponent from '../components/hardware/hardware.jsx';
 
@@ -29,7 +29,7 @@ class Hardware extends React.Component {
             if (blocks.getBBox().height === 0) {
                 this.props.onWorkspaceIsEmpty();
             } else {
-                this.props.vm.uploadToPeripheral(this.props.extensionId, this.props.codeEditorValue);
+                this.props.vm.uploadToPeripheral(this.props.deviceId, this.props.codeEditorValue);
                 this.props.onOpenUploadProgress();
             }
         } else {
@@ -52,7 +52,7 @@ class Hardware extends React.Component {
 
 Hardware.propTypes = {
     codeEditorValue: PropTypes.string,
-    extensionId: PropTypes.string,
+    deviceId: PropTypes.string,
     onNoPeripheralIsConnected: PropTypes.func.isRequired,
     peripheralName: PropTypes.string,
     onOpenUploadProgress: PropTypes.func,
@@ -61,18 +61,18 @@ Hardware.propTypes = {
 };
 
 const mapStateToProps = state => ({
+    deviceId: state.scratchGui.device.deviceId,
     stageSizeMode: state.scratchGui.stageSize.stageSize,
-    extensionId: state.scratchGui.connectionModal.extensionId,
     peripheralName: state.scratchGui.connectionModal.peripheralName,
     codeEditorValue: state.scratchGui.code.codeEditorValue
 });
 
 const mapDispatchToProps = dispatch => ({
-    onNoPeripheralIsConnected: () => dispatch(showStandardAlert('connectAPeripheralFirst')),
+    onNoPeripheralIsConnected: () => showAlertWithTimeout(dispatch, 'connectAPeripheralFirst'),
     onSetStageLarge: () => dispatch(setStageSize(STAGE_SIZE_MODES.large)),
     onSetStageSmall: () => dispatch(setStageSize(STAGE_SIZE_MODES.small)),
     onOpenUploadProgress: () => dispatch(openUploadProgress()),
-    onWorkspaceIsEmpty: () => dispatch(showStandardAlert('workspaceIsEmpty'))
+    onWorkspaceIsEmpty: () => showAlertWithTimeout(dispatch, 'workspaceIsEmpty')
 });
 
 export default compose(

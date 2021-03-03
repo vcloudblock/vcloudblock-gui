@@ -26,7 +26,6 @@ import {updateToolbox, setIsUpdating} from '../reducers/toolbox';
 import {activateColorPicker} from '../reducers/color-picker';
 import {closeExtensionLibrary, openSoundRecorder, openConnectionModal, closeDeviceLibrary} from '../reducers/modals';
 import {activateCustomProcedures, deactivateCustomProcedures} from '../reducers/custom-procedures';
-import {setConnectionModalExtensionId} from '../reducers/connection-modal';
 import {updateMetrics} from '../reducers/workspace-metrics';
 import {setCodeEditorValue} from '../reducers/code';
 import {setDeviceId, setDeviceName, setDeviceType} from '../reducers/device';
@@ -581,7 +580,7 @@ class Blocks extends React.Component {
     handleCategorySelected (categoryId) {
         const extension = extensionData.find(ext => ext.extensionId === categoryId);
         if (extension && extension.launchPeripheralConnectionFlow) {
-            this.handleConnectionModalStart(categoryId);
+            this.handleConnectionModalStart();
         }
 
         this.withToolboxUpdates(() => {
@@ -592,7 +591,7 @@ class Blocks extends React.Component {
         const device = deviceData.find(ext => ext.deviceId === categoryId);
 
         if (device && device.launchPeripheralConnectionFlow) {
-            this.handleConnectionModalStart(categoryId);
+            this.handleConnectionModalStart();
             this.extensionId = categoryId;
         }
 
@@ -619,8 +618,8 @@ class Blocks extends React.Component {
         p.prompt.showCloudOption = (optVarType === this.ScratchBlocks.SCALAR_VARIABLE_TYPE) && this.props.canUseCloud;
         this.setState(p);
     }
-    handleConnectionModalStart (extensionId) {
-        this.props.onOpenConnectionModal(extensionId);
+    handleConnectionModalStart () {
+        this.props.onOpenConnectionModal();
     }
     handleStatusButtonUpdate () {
         this.ScratchBlocks.refreshStatusButtons(this.workspace);
@@ -881,8 +880,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(setDeviceName(name));
         dispatch(setDeviceType(type));
     },
-    onOpenConnectionModal: id => {
-        dispatch(setConnectionModalExtensionId(id));
+    onOpenConnectionModal: () => {
         dispatch(openConnectionModal());
     },
     onOpenSoundRecorder: () => {
@@ -913,8 +911,6 @@ const mapDispatchToProps = dispatch => ({
     onSetCodeEditorValue: value => {
         dispatch(setCodeEditorValue(value));
     },
-    // onSetUploadMode: () => dispatch(setUploadMode()),
-    // onSetRealtimeMode: () => dispatch(setRealtimeMode()),
     onSetSupportSwitchMode: state => dispatch(setSupportSwitchMode(state))
 });
 

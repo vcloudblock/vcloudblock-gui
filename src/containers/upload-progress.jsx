@@ -12,7 +12,7 @@ import VM from 'openblock-vm';
 import analytics from '../lib/analytics';
 import deviceData from '../lib/libraries/devices/index.jsx';
 import {closeUploadProgress} from '../reducers/modals';
-import {showStandardAlert} from '../reducers/alerts';
+import {showAlertWithTimeout} from '../reducers/alerts';
 
 import UploadProgressComponent, {PHASES} from '../components/upload-progress/upload-progress.jsx';
 
@@ -35,7 +35,7 @@ class UploadProgress extends React.Component {
             'handleUploadSuccess'
         ]);
         this.state = {
-            extension: deviceData.find(dev => dev.deviceId === props.extensionId),
+            extension: deviceData.find(dev => dev.deviceId === props.deviceId),
             phase: PHASES.uploading,
             peripheralName: null,
             text: ''
@@ -59,7 +59,7 @@ class UploadProgress extends React.Component {
         analytics.event({
             category: 'extensions',
             action: 'help',
-            label: this.props.extensionId
+            label: this.props.deviceId
         });
     }
     handleStdout (data) {
@@ -97,8 +97,8 @@ class UploadProgress extends React.Component {
 }
 
 UploadProgress.propTypes = {
+    deviceId: PropTypes.string.isRequired,
     intl: intlShape.isRequired,
-    extensionId: PropTypes.string.isRequired,
     vm: PropTypes.instanceOf(VM).isRequired,
     oncloseUploadProgress: PropTypes.func.isRequired,
     onUploadError: PropTypes.func.isRequired,
@@ -106,13 +106,13 @@ UploadProgress.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    extensionId: state.scratchGui.connectionModal.extensionId
+    deviceId: state.scratchGui.device.deviceId
 });
 
 const mapDispatchToProps = dispatch => ({
     oncloseUploadProgress: () => dispatch(closeUploadProgress()),
-    onUploadError: () => dispatch(showStandardAlert('uploadError')),
-    onUploadSuccess: () => dispatch(showStandardAlert('uploadSuccess'))
+    onUploadError: () => showAlertWithTimeout(dispatch, 'uploadError'),
+    onUploadSuccess: () => showAlertWithTimeout(dispatch, 'uploadSuccess')
 });
 
 export default compose(
