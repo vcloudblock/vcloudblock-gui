@@ -7,7 +7,7 @@ import Box from '../box/box.jsx';
 import Dots from './dots.jsx';
 import helpIcon from './icons/help.svg';
 import backIcon from './icons/back.svg';
-import bluetoothIcon from './icons/bluetooth.svg';
+import usbAndBluetoothIcon from './icons/usb-and-bluetooth.svg';
 import scratchLinkIcon from './icons/scratchlink.svg';
 
 import styles from './connection-modal.css';
@@ -41,14 +41,14 @@ const UnavailableStep = props => (
                     <div className={styles.helpStepImage}>
                         <img
                             className={styles.scratchLinkIcon}
-                            src={bluetoothIcon}
+                            src={usbAndBluetoothIcon}
                         />
                     </div>
                     <div className={styles.helpStepText}>
                         <FormattedMessage
-                            defaultMessage="Check that Bluetooth is enabled"
-                            description="Message for making sure Bluetooth is enabled"
-                            id="gui.connection.unavailable.enablebluetooth"
+                            defaultMessage="Check that USB cable is connected or Bluetooth is enabled"
+                            description="Message for making sure USB cable is connected or Bluetooth is enabled"
+                            id="gui.connection.unavailable.connectUsbEnableBluetooth"
                         />
                     </div>
                 </div>
