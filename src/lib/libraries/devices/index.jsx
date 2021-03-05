@@ -12,6 +12,10 @@ import arduinoNanoIconURL from './arduinoNano/arduinoNano.png';
 import arduinoNanoConnectionIconURLL from './arduinoNano/arduinoNano-illustration.svg';
 import arduinoNanoConnectionSmallIconURL from './arduinoNano/arduinoNano-small.svg';
 
+import arduinoMiniIconURL from './arduinoMini/arduinoMini.png';
+import arduinoMiniConnectionIconURLL from './arduinoMini/arduinoMini-illustration.svg';
+import arduinoMiniConnectionSmallIconURL from './arduinoMini/arduinoMini-small.svg';
+
 import arduinoLeonardoIconURL from './arduinoLeonardo/arduinoLeonardo.png';
 import arduinoLeonardoConnectionIconURLL from './arduinoLeonardo/arduinoLeonardo-illustration.svg';
 import arduinoLeonardoConnectionSmallIconURL from './arduinoLeonardo/arduinoLeonardo-small.svg';
@@ -105,6 +109,42 @@ export default [
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
         helpLink: 'https://store.arduino.cc/usa/arduino-nano'
+    },
+    {
+        name: 'Arduino Mini',
+        deviceId: 'arduinoMini',
+        manufactor: 'arduino.cc',
+        // leanMore: 'https://store.arduino.cc/usa/arduino/boards-modules',
+        type: 'arduino',
+        iconURL: arduinoMiniIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="The classic Arduino Mini is the truly smallest board to build your projects with."
+                description="Description for the Arduino Mini device"
+                id="gui.device.arduinoMini.description"
+            />
+        ),
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        serialportRequired: true,
+        internetConnectionRequired: false,
+        launchPeripheralConnectionFlow: true,
+        useAutoScan: false,
+        connectionIconURL: arduinoMiniConnectionIconURLL,
+        connectionSmallIconURL: arduinoMiniConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their arduino."
+                id="gui.device.arduino.connectingMessage"
+            />
+        ),
+        baseToolBoxXml: arduinoBaseToolBox,
+        programMode: ['upload'],
+        programLanguage: ['block', 'c', 'cpp'],
+        tags: ['arduino']
+        // helpLink: 'https://store.arduino.cc/usa/arduino-nano'
     },
     {
         name: 'Arduino Leonardo',
@@ -254,7 +294,7 @@ export default [
         name: 'IronKit',
         deviceId: 'ironKit',
         manufactor: 'YQC Robot',
-        leanMore: 'https://www.sxyiqichuang.com/',
+        leanMore: 'https://item.taobao.com/item.htm?id=628120335101',
         type: 'arduino',
         iconURL: ironKitIconURL,
         description: (
