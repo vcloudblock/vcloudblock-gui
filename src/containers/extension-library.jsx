@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 
 import extensionLibraryContent from '../lib/libraries/extensions/index.jsx';
+import deviceData from '../lib/libraries/devices/index.jsx';
 
 import LibraryComponent from '../components/library/library.jsx';
 import extensionIcon from '../components/action-menu/icon--sprite.svg';
@@ -126,13 +127,16 @@ class ExtensionLibrary extends React.PureComponent {
     }
     render () {
         let extensionLibraryThumbnailData = [];
+        const device = deviceData.find(dev => dev.deviceId === this.props.deviceId);
 
         if (this.props.deviceId) {
             extensionLibraryThumbnailData = this.state.deviceExtensions.filter(
-                extension => extension.supportDevice.includes(this.props.deviceId)).map(extension => ({
-                rawURL: extension.iconURL || extensionIcon,
-                ...extension
-            }));
+                extension => extension.supportDevice.includes(this.props.deviceId) ||
+                    extension.supportDevice.includes(device.baseDeviceId))
+                .map(extension => ({
+                    rawURL: extension.iconURL || extensionIcon,
+                    ...extension
+                }));
         } else {
             extensionLibraryThumbnailData = extensionLibraryContent.map(extension => ({
                 rawURL: extension.iconURL || extensionIcon,

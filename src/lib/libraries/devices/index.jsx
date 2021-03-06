@@ -249,7 +249,7 @@ export default [
             />
         ),
         baseToolBoxXml: microbitBaseToolBox,
-        programMode: ['realtime', 'upload'],
+        programMode: ['upload'],
         programLanguage: ['block', 'python'],
         tags: ['microPython'],
         helpLink: 'https://microbit.org/get-started/first-steps/introduction/'
@@ -293,6 +293,7 @@ export default [
     {
         name: 'IronKit',
         deviceId: 'ironKit',
+        baseDeviceId: 'arduinoUno',
         manufactor: 'YQC Robot',
         leanMore: 'https://item.taobao.com/item.htm?id=628120335101',
         type: 'arduino',
