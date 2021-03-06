@@ -32,9 +32,14 @@ import maixduinoIconURL from './maixduino/maixduino.png';
 import maixduinoConnectionIconURLL from './maixduino/maixduino-illustration.svg';
 import maixduinoConnectionSmallIconURL from './maixduino/maixduino-small.svg';
 
+// Third party kit
 import ironKitIconURL from './ironKit/ironKit.png';
 import ironKitConnectionIconURLL from './ironKit/ironKit-illustration.svg';
 import ironKitConnectionSmallIconURL from './ironKit/ironKit-small.svg';
+
+import QDPRobotIconURL from './QDPRobot/QDPRobot.png';
+import QDPRobotConnectionIconURLL from './QDPRobot/QDPRobot-illustration.svg';
+import QDPRobotConnectionSmallIconURL from './QDPRobot/QDPRobot-small.svg';
 
 // Device is a kind of specail extension
 export default [
@@ -327,5 +332,43 @@ export default [
         tags: ['kit'],
         extensions: ['ironKit'],
         helpLink: 'https://www.sxyiqichuang.com/'
+    },
+    {
+        name: 'QDP Robot',
+        deviceId: 'QDPRobot',
+        baseDeviceId: 'arduinoUno',
+        manufactor: 'QDP Robot',
+        leanMore: 'https://qdprobot.taobao.com',
+        type: 'arduino',
+        iconURL: QDPRobotIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="QDP robot"
+                description="Description for the QDP robot device"
+                id="gui.device.QDPRobot.description"
+            />
+        ),
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        serialportRequired: true,
+        internetConnectionRequired: false,
+        launchPeripheralConnectionFlow: true,
+        useAutoScan: false,
+        connectionIconURL: QDPRobotConnectionIconURLL,
+        connectionSmallIconURL: QDPRobotConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their iron kit."
+                id="gui.device.ironKit.connectingMessage"
+            />
+        ),
+        baseToolBoxXml: arduinoBaseToolBox,
+        programMode: ['realtime', 'upload'],
+        programLanguage: ['block', 'cpp'],
+        tags: ['kit'],
+        extensions: ['QDPRobot'],
+        helpLink: 'http://www.qdprobot.com/'
     }
 ];
