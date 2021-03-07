@@ -45,6 +45,7 @@ class DeviceLibrary extends React.PureComponent {
     }
     handleItemSelect (item) {
         const id = item.deviceId;
+        const deviceType = item.type;
         let url = item.deviceURL ? item.deviceURL : id;
         const extensions = item.extensions;
         if (!item.disabled && !id) {
@@ -56,7 +57,7 @@ class DeviceLibrary extends React.PureComponent {
                 this.props.onDeviceSelected(id);
             } else {
                 this.props.onDeviceChanged();
-                this.props.vm.extensionManager.loadDeviceURL(url).then(() => {
+                this.props.vm.extensionManager.loadDeviceURL(url, deviceType).then(() => {
                     this.props.vm.extensionManager.getLocalDeviceExtensionsList().then(() => {
                         this.props.vm.installDeviceExtension(extensions);
                     });

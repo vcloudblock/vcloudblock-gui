@@ -322,8 +322,8 @@ export default [
         connectingMessage: (
             <FormattedMessage
                 defaultMessage="Connecting"
-                description="Message to help people connect to their iron kit."
-                id="gui.device.ironKit.connectingMessage"
+                description="Message to help people connect to their arduino."
+                id="gui.device.arduino.connectingMessage"
             />
         ),
         baseToolBoxXml: arduinoBaseToolBox,
@@ -360,8 +360,8 @@ export default [
         connectingMessage: (
             <FormattedMessage
                 defaultMessage="Connecting"
-                description="Message to help people connect to their iron kit."
-                id="gui.device.ironKit.connectingMessage"
+                description="Message to help people connect to their arduino."
+                id="gui.device.arduino.connectingMessage"
             />
         ),
         baseToolBoxXml: arduinoBaseToolBox,
