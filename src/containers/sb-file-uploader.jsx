@@ -84,9 +84,9 @@ class SBFileUploader extends React.Component {
     }
     getProjectTitleFromFilename (fileInputFilename) {
         if (!fileInputFilename) return '';
-        // only parse title with valid scratch project extensions
-        // (.sb, .sb2, and .sb3)
-        const matches = fileInputFilename.match(/^(.*)\.sb[23]?$/);
+        // only parse title with valid openblock project extensions
+        // (.ob)
+        const matches = fileInputFilename.match(/^(.*)\.ob?$/);
         if (!matches) return '';
         return matches[1].substring(0, 100); // truncate project title to max 100 chars
     }
@@ -156,7 +156,7 @@ class SBFileUploader extends React.Component {
     renderFileInput () {
         return (
             <input
-                accept=".sb,.sb2,.sb3"
+                accept=".ob"
                 ref={this.setFileInput}
                 style={{display: 'none'}}
                 type="file"
