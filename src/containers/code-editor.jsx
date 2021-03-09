@@ -11,7 +11,7 @@ class CodeEditor extends React.Component {
     getLanguage (type) {
         if (type === 'arduino') {
             return 'cpp';
-        } else if (type === 'microPython') {
+        } else if (type === 'microbit') {
             return 'python';
         }
         return 'null';

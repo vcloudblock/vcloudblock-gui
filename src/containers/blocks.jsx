@@ -630,7 +630,7 @@ class Blocks extends React.Component {
             const deviceType = this.props.deviceType;
             if (deviceType === 'arduino') {
                 code = this.ScratchBlocks.Arduino.workspaceToCode(this.workspace);
-            } else if (deviceType === 'microPython') {
+            } else if (deviceType === 'microbit') {
                 code = this.ScratchBlocks.Python.workspaceToCode(this.workspace);
             }
         } catch (e) {

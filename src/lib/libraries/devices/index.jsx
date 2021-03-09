@@ -228,7 +228,7 @@ export default [
         deviceId: 'microbit',
         manufactor: 'microbit.org',
         leanMore: 'https://microbit.org/',
-        type: 'microPython',
+        type: 'microbit',
         iconURL: microbitIconURL,
         description: (
             <FormattedMessage
