@@ -58,6 +58,8 @@ import {
     closeLoginMenu,
     loginMenuOpen
 } from '../../reducers/menus';
+import {setStageSize} from '../../reducers/stage-size';
+import {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 
 import collectMetadata from '../../lib/collect-metadata';
 
@@ -326,6 +328,13 @@ class MenuBar extends React.Component {
         if (this.props.isRealtimeMode) {
             this.props.vm.runtime.setRealtimeMode(false);
         } else {
+            /**
+             * The realtime stage framwork didn't support STAGE_SIZE_MODES.hide,
+             * so if the mode is hide switch to large mode.
+             *  */
+            if (this.props.stageSizeMode === STAGE_SIZE_MODES.hide) {
+                this.props.onSetStageLarge();
+            }
             this.props.vm.runtime.setRealtimeMode(true);
         }
     }
@@ -741,6 +750,7 @@ MenuBar.propTypes = {
     showComingSoon: PropTypes.bool,
     userOwnsProject: PropTypes.bool,
     username: PropTypes.string,
+    stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
     vm: PropTypes.instanceOf(VM).isRequired,
     onSetUploadMode: PropTypes.func,
     onSetRealtimeMode: PropTypes.func,
@@ -751,6 +761,7 @@ MenuBar.propTypes = {
     onWorkspaceIsEmpty: PropTypes.func.isRequired,
     onWorkspaceIsNotEmpty: PropTypes.func.isRequired,
     onOpenDeviceLibrary: PropTypes.func,
+    onSetStageLarge: PropTypes.func.isRequired,
     deviceId: PropTypes.string,
     deviceName: PropTypes.string,
     onDeviceIsEmpty: PropTypes.func
@@ -782,6 +793,7 @@ const mapStateToProps = (state, ownProps) => {
         username: user ? user.username : null,
         userOwnsProject: ownProps.authorUsername && user &&
             (ownProps.authorUsername === user.username),
+        stageSizeMode: state.scratchGui.stageSize.stageSize,
         vm: state.scratchGui.vm,
         peripheralName: state.scratchGui.connectionModal.peripheralName,
         deviceId: state.scratchGui.device.deviceId,
@@ -809,6 +821,7 @@ const mapDispatchToProps = dispatch => ({
     onSeeCommunity: () => dispatch(setPlayer(true)),
     onSetUploadMode: () => dispatch(setUploadMode()),
     onSetRealtimeMode: () => dispatch(setRealtimeMode()),
+    onSetStageLarge: () => dispatch(setStageSize(STAGE_SIZE_MODES.large)),
     onOpenConnectionModal: () => dispatch(openConnectionModal()),
     onOpenUploadProgress: () => dispatch(openUploadProgress()),
     onDisconnect: () => dispatch(clearConnectionModalPeripheralName()),
