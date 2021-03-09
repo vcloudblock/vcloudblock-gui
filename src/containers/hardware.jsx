@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import bindAll from 'lodash.bindall';
 
@@ -26,15 +25,11 @@ class Hardware extends React.Component {
     }
 }
 
-Hardware.propTypes = {
-    codeEditorValue: PropTypes.string
-};
-
 const mapStateToProps = state => ({
     stageSizeMode: state.scratchGui.stageSize.stageSize
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = () => ({
 
 });
 
