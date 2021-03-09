@@ -52,7 +52,7 @@ export default [
         iconURL: arduinoUnoIconURL,
         description: (
             <FormattedMessage
-                defaultMessage="The best board to get started with electronics and coding."
+                defaultMessage="A great board to get started with electronics and coding."
                 description="Description for the Arduino Uno device"
                 id="gui.device.arduinoUno.description"
             />
@@ -88,7 +88,7 @@ export default [
         iconURL: arduinoNanoIconURL,
         description: (
             <FormattedMessage
-                defaultMessage="The classic Arduino Nano is the smallest board to build your projects with."
+                defaultMessage="The Arduino Nano is a classic small board to build your projects with."
                 description="Description for the Arduino Nano device"
                 id="gui.device.arduinoNano.description"
             />
@@ -119,12 +119,13 @@ export default [
         name: 'Arduino Mini',
         deviceId: 'arduinoMini',
         manufactor: 'arduino.cc',
+        // Discontinued board
         // leanMore: 'https://store.arduino.cc/usa/arduino/boards-modules',
         type: 'arduino',
         iconURL: arduinoMiniIconURL,
         description: (
             <FormattedMessage
-                defaultMessage="The classic Arduino Mini is the truly smallest board to build your projects with."
+                defaultMessage="The Arduino Mini a classic smaller board to build your projects with."
                 description="Description for the Arduino Mini device"
                 id="gui.device.arduinoMini.description"
             />
@@ -228,7 +229,7 @@ export default [
         deviceId: 'microbit',
         manufactor: 'microbit.org',
         leanMore: 'https://microbit.org/',
-        type: 'microPython',
+        type: 'microbit',
         iconURL: microbitIconURL,
         description: (
             <FormattedMessage

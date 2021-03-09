@@ -13,7 +13,12 @@ const STAGE_SIZE_MODES = keyMirror({
     /**
      * The "small stage" button is pressed; the user would like a small stage.
      */
-    small: null
+    small: null,
+
+    /**
+     * The "hide stage" button is pressed; the user would like to hide stage.
+     */
+    hide: null
 });
 
 /**
@@ -34,7 +39,12 @@ const STAGE_DISPLAY_SIZES = keyMirror({
     /**
      * Small stage (ignores browser width)
      */
-    small: null
+    small: null,
+
+    /**
+     * hide stage
+     */
+    hide: null
 });
 
 // zoom level to start with

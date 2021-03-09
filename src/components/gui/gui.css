@@ -327,14 +327,3 @@ $fade-out-distance: 15px;
     width: 0;
     height: 0;
 }
-
-.hardware-wrapper {
-    display: flex;
-    flex-direction: column;
-    /* pad entire wrapper to the left and right; allow children to fill width */
-    padding-left: $space;
-    padding-right: $space;
-
-    /* this will only ever be as wide as the stage */
-    flex-basis: 0;
-}
