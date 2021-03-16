@@ -482,6 +482,7 @@ class Blocks extends React.Component {
             this.props.updateToolboxState(toolboxXML);
         }
     }
+
     handleDeviceAdded (info) {
         const {device, categoryInfoArray} = info;
 
@@ -558,8 +559,10 @@ class Blocks extends React.Component {
         }
     }
     handleDeviceExtensionAdded (addExts) {
-        this.ScratchBlocks = defaultsDeep(this.ScratchBlocks, addExts.addBlocks(this.ScratchBlocks),
-            addExts.addGenerator(this.ScratchBlocks), addExts.addMsg(this.ScratchBlocks));
+        this.ScratchBlocks = addExts.addMsg(this.ScratchBlocks);
+        this.ScratchBlocks = addExts.addGenerator(this.ScratchBlocks);
+        this.ScratchBlocks = addExts.addBlocks(this.ScratchBlocks);
+
         this.setLocale();
 
         const toolboxXML = this.getToolboxXML();

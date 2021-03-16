@@ -58,7 +58,7 @@ class DeviceLibrary extends React.PureComponent {
             } else {
                 this.props.onDeviceChanged();
                 this.props.vm.extensionManager.loadDeviceURL(url, deviceType).then(() => {
-                    this.props.vm.extensionManager.getLocalDeviceExtensionsList().then(() => {
+                    this.props.vm.extensionManager.getDeviceExtensionsList().then(() => {
                         this.props.vm.installDeviceExtension(extensions);
                     });
                     this.props.onDeviceSelected(id);

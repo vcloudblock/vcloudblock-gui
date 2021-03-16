@@ -83,10 +83,8 @@ class ExtensionLibrary extends React.PureComponent {
     }
 
     updateDeviceExtensions () {
-        this.props.vm.extensionManager.getLocalDeviceExtensionsList()
+        this.props.vm.extensionManager.getDeviceExtensionsList()
             .then(data => this.setState({deviceExtensions: data}));
-        // this.props.vm.extensionManager.getRemoteDeviceExtensionsList()
-        //     .then(data => this.setState({deviceExtensions: data}));
     }
 
     handleItemSelect (item) {
