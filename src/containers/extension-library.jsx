@@ -130,7 +130,7 @@ class ExtensionLibrary extends React.PureComponent {
         if (this.props.deviceId) {
             extensionLibraryThumbnailData = this.state.deviceExtensions.filter(
                 extension => extension.supportDevice.includes(this.props.deviceId) ||
-                    extension.supportDevice.includes(device.baseDeviceId))
+                    extension.supportDevice.includes(device.deviceExtensionsCompatible))
                 .map(extension => ({
                     rawURL: extension.iconURL || extensionIcon,
                     ...extension

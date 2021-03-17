@@ -298,8 +298,7 @@ export default [
     },
     {
         name: 'IronKit',
-        deviceId: 'ironKit',
-        baseDeviceId: 'arduinoUno',
+        deviceId: 'ironKit_arduinoUno',
         manufactor: 'YQC Robot',
         leanMore: 'https://item.taobao.com/item.htm?id=628120335101',
         type: 'arduino',
@@ -331,13 +330,13 @@ export default [
         programMode: ['realtime', 'upload'],
         programLanguage: ['block', 'cpp'],
         tags: ['kit'],
-        extensions: ['ironKit'],
+        deviceExtensions: ['ironKit'],
+        deviceExtensionsCompatible: 'arduinoUno',
         helpLink: 'https://www.sxyiqichuang.com/'
     },
     {
         name: 'QDP Robot',
-        deviceId: 'QDPRobot',
-        baseDeviceId: 'arduinoUno',
+        deviceId: 'QDPRobot_arduinoUno',
         manufactor: 'QDP Robot',
         leanMore: 'https://qdprobot.taobao.com',
         type: 'arduino',
@@ -353,6 +352,9 @@ export default [
         disabled: false,
         bluetoothRequired: false,
         serialportRequired: true,
+        pnpidList: [
+            'USB\\VID_10C4&PID_EA60' // CP2102
+        ],
         internetConnectionRequired: false,
         launchPeripheralConnectionFlow: true,
         useAutoScan: false,
@@ -369,7 +371,8 @@ export default [
         programMode: ['realtime', 'upload'],
         programLanguage: ['block', 'cpp'],
         tags: ['kit'],
-        extensions: ['QDPRobot'],
+        deviceExtensions: ['QDPRobot'],
+        deviceExtensionsCompatible: 'arduinoUno',
         helpLink: 'http://www.qdprobot.com/'
     }
 ];
