@@ -90,7 +90,7 @@
     make the change here instead of in openblock-blocks.
 */
 .blocks :global(.scratchCategoryMenuItemLabel) {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
 }
 
 .blocks :global(.blocklyMinimalBody) {
