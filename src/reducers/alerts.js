@@ -110,7 +110,9 @@ const reducer = function (state, action) {
             const extension = extensionData.find(ext => ext.extensionId === extensionId) ||
                 deviceData.find(dev => dev.deviceId === extensionId);
             if (extension) {
-                const newList = state.alertsList.slice();
+                const newList = state.alertsList.filter(curAlert => (
+                    curAlert.extensionId !== extensionId
+                ));
                 const newAlert = {
                     alertType: AlertTypes.EXTENSION,
                     closeButton: true,
@@ -136,7 +138,9 @@ const reducer = function (state, action) {
             const extension = extensionData.find(ext => ext.extensionId === extensionId) ||
                 deviceData.find(dev => dev.deviceId === extensionId);
             if (extension) {
-                const newList = state.alertsList.slice();
+                const newList = state.alertsList.filter(curAlert => (
+                    curAlert.extensionId !== extensionId
+                ));
                 const newAlert = {
                     alertType: AlertTypes.EXTENSION,
                     closeButton: true,
