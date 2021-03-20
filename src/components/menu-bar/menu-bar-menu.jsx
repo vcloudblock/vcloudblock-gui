@@ -5,15 +5,19 @@ import Menu from '../../containers/menu.jsx';
 const MenuBarMenu = ({
     children,
     className,
+    menuClassName,
     onRequestClose,
     open,
-    place = 'right'
+    place = 'right',
+    directiron = 'down'
 }) => (
     <div className={className}>
         <Menu
             open={open}
             place={place}
+            directiron={directiron}
             onRequestClose={onRequestClose}
+            className={menuClassName}
         >
             {children}
         </Menu>
@@ -23,9 +27,11 @@ const MenuBarMenu = ({
 MenuBarMenu.propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
+    menuClassName: PropTypes.string,
     onRequestClose: PropTypes.func,
     open: PropTypes.bool,
-    place: PropTypes.oneOf(['left', 'right'])
+    place: PropTypes.oneOf(['left', 'right']),
+    directiron: PropTypes.oneOf(['donw', 'up'])
 };
 
 export default MenuBarMenu;

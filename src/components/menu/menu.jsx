@@ -8,7 +8,8 @@ const MenuComponent = ({
     className = '',
     children,
     componentRef,
-    place = 'right'
+    place = 'right',
+    directiron = 'down'
 }) => (
     <ul
         className={classNames(
@@ -16,7 +17,8 @@ const MenuComponent = ({
             className,
             {
                 [styles.left]: place === 'left',
-                [styles.right]: place === 'right'
+                [styles.right]: place === 'right',
+                [styles.up]: directiron === 'up'
             }
         )}
         ref={componentRef}
@@ -29,22 +31,26 @@ MenuComponent.propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
     componentRef: PropTypes.func,
-    place: PropTypes.oneOf(['left', 'right'])
+    place: PropTypes.oneOf(['left', 'right']),
+    directiron: PropTypes.oneOf(['donw', 'up'])
 };
 
 
 const MenuItem = ({
     children,
     className,
+    bottomLine,
     onClick
 }) => (
     <li
         className={classNames(
             styles.menuItem,
             styles.hoverable,
-            className
+            className,
+            {[styles.menuSectionBottomLine]: bottomLine === true}
         )}
         onClick={onClick}
+        bottomLine={bottomLine}
     >
         {children}
     </li>
@@ -53,6 +59,7 @@ const MenuItem = ({
 MenuItem.propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
+    bottomLine: PropTypes.bool,
     onClick: PropTypes.func
 };
 

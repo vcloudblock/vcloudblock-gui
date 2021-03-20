@@ -381,7 +381,9 @@ const GUIComponent = props => {
                             />) : null
                         }
                         {((isRealtimeMode === false) && (stageSizeMode !== STAGE_SIZE_MODES.hide)) ? (
-                            <Hardware />) : null
+                            <Hardware
+                                vm={vm}
+                            />) : null
                         }
                     </Box>
                     <DragLayer />

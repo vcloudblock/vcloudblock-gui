@@ -595,7 +595,6 @@ class Blocks extends React.Component {
 
         if (device && device.launchPeripheralConnectionFlow) {
             this.handleConnectionModalStart();
-            this.extensionId = categoryId;
         }
 
         this.withToolboxUpdates(() => {
@@ -603,7 +602,7 @@ class Blocks extends React.Component {
         });
     }
     handleDeviceChanged () {
-        this.props.vm.disconnectPeripheral(this.extensionId);
+        this.props.vm.disconnectPeripheral(this.props.deviceId);
     }
     setBlocks (blocks) {
         this.blocks = blocks;
@@ -708,8 +707,6 @@ class Blocks extends React.Component {
             onRequestCloseDeviceLibrary,
             onRequestCloseCustomProcedures,
             onSetCodeEditorValue,
-            // onSetUploadMode,
-            // onSetRealtimeMode,
             onSetSupportSwitchMode,
             toolboxXML,
             updateMetrics: updateMetricsProp,

@@ -44,7 +44,11 @@ class ConnectionModal extends React.Component {
         });
     }
     handleConnecting (peripheralId, peripheralName) {
-        this.props.vm.connectPeripheral(this.props.deviceId, peripheralId);
+        if (this.props.isRealtimeMode) {
+            this.props.vm.connectPeripheral(this.props.deviceId, peripheralId);
+        } else {
+            this.props.vm.connectPeripheral(this.props.deviceId, peripheralId, parseInt(this.props.baudrate, 10));
+        }
         this.setState({
             phase: PHASES.connecting,
             peripheralName: peripheralName
@@ -136,14 +140,18 @@ class ConnectionModal extends React.Component {
 }
 
 ConnectionModal.propTypes = {
+    baudrate: PropTypes.string.isRequired,
     deviceId: PropTypes.string.isRequired,
+    isRealtimeMode: PropTypes.bool,
     onCancel: PropTypes.func.isRequired,
     onConnected: PropTypes.func.isRequired,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
 const mapStateToProps = state => ({
-    deviceId: state.scratchGui.device.deviceId
+    baudrate: state.scratchGui.hardwareConsole.baudrate,
+    deviceId: state.scratchGui.device.deviceId,
+    isRealtimeMode: state.scratchGui.programMode.isRealtimeMode
 });
 
 const mapDispatchToProps = dispatch => ({
