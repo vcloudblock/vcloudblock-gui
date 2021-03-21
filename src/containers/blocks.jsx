@@ -175,6 +175,10 @@ class Blocks extends React.Component {
 
         // If program mode changed, call functio to update the toolbox
         if (this.props.isRealtimeMode !== this._programMode) {
+            // Do not updatecode before toolbox is updated.
+            this.props.vm.removeListener('CODE_NEED_UPDATE', this.handleCodeNeedUpdate);
+            // Clear possible errors witch print in to code editor.
+            this.props.onSetCodeEditorValue('');
             this.onProgramModeUpdate();
         }
 
@@ -250,6 +254,9 @@ class Blocks extends React.Component {
         const offset = this.workspace.toolbox_.getCategoryScrollOffset();
         this.workspace.updateToolbox(this.props.toolboxXML);
         this._renderedToolboxXML = this.props.toolboxXML;
+
+        // Relisten the CODE_NEED_UPDATE event after the toolbox is updated.
+        this.props.vm.addListener('CODE_NEED_UPDATE', this.handleCodeNeedUpdate);
 
         // In order to catch any changes that mutate the toolbox during "normal runtime"
         // (variable changes/etc), re-enable toolbox refresh.
@@ -627,7 +634,7 @@ class Blocks extends React.Component {
         this.ScratchBlocks.refreshStatusButtons(this.workspace);
     }
     workspaceToCode () {
-        let code = null;
+        let code = '';
         try {
             const deviceType = this.props.deviceType;
             if (deviceType === 'arduino') {
@@ -808,8 +815,6 @@ Blocks.propTypes = {
         collapse: PropTypes.bool
     }),
     onSetCodeEditorValue: PropTypes.func,
-    // onSetUploadMode: PropTypes.func,
-    // onSetRealtimeMode: PropTypes.func,
     onSetSupportSwitchMode: PropTypes.func,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
     toolboxXML: PropTypes.string,

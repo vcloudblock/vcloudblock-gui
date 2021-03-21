@@ -77,7 +77,7 @@ class ExtensionLibrary extends React.PureComponent {
     }
 
     componentDidMount () {
-        if (this.props.deviceId) {
+        if (this.props.isRealtimeMode === false) {
             this.updateDeviceExtensions();
         }
     }
@@ -90,23 +90,7 @@ class ExtensionLibrary extends React.PureComponent {
     handleItemSelect (item) {
         const id = item.extensionId;
 
-        if (this.props.deviceId) {
-            if (id && !item.disabled) {
-                if (this.props.vm.extensionManager.isDeviceExtensionLoaded(id)) {
-                    this.props.vm.extensionManager.unloadDeviceExtension(id).then(() => {
-                        this.updateDeviceExtensions();
-                    });
-                } else {
-                    this.props.vm.extensionManager.loadDeviceExtension(id).then(() => {
-                        this.updateDeviceExtensions();
-                    })
-                        .catch(err => {
-                        // TODO add a alet device extension load failed. and change the state to bar to failed state
-                            console.error(`err = ${err}`); // eslint-disable-line no-console
-                        });
-                }
-            }
-        } else {
+        if (this.props.isRealtimeMode) {
             let url = item.extensionURL ? item.extensionURL : id;
             if (!item.disabled && !id) {
                 // eslint-disable-next-line no-alert
@@ -121,13 +105,32 @@ class ExtensionLibrary extends React.PureComponent {
                     });
                 }
             }
+        } else if (id && !item.disabled) {
+            if (this.props.vm.extensionManager.isDeviceExtensionLoaded(id)) {
+                this.props.vm.extensionManager.unloadDeviceExtension(id).then(() => {
+                    this.updateDeviceExtensions();
+                });
+            } else {
+                this.props.vm.extensionManager.loadDeviceExtension(id).then(() => {
+                    this.updateDeviceExtensions();
+                })
+                    .catch(err => {
+                        // TODO add a alet device extension load failed. and change the state to bar to failed state
+                        console.error(`err = ${err}`); // eslint-disable-line no-console
+                    });
+            }
         }
     }
     render () {
         let extensionLibraryThumbnailData = [];
         const device = deviceData.find(dev => dev.deviceId === this.props.deviceId);
 
-        if (this.props.deviceId) {
+        if (this.props.isRealtimeMode) {
+            extensionLibraryThumbnailData = extensionLibraryContent.map(extension => ({
+                rawURL: extension.iconURL || extensionIcon,
+                ...extension
+            }));
+        } else {
             extensionLibraryThumbnailData = this.state.deviceExtensions.filter(
                 extension => extension.supportDevice.includes(this.props.deviceId) ||
                     extension.supportDevice.includes(device.deviceExtensionsCompatible))
@@ -135,21 +138,16 @@ class ExtensionLibrary extends React.PureComponent {
                     rawURL: extension.iconURL || extensionIcon,
                     ...extension
                 }));
-        } else {
-            extensionLibraryThumbnailData = extensionLibraryContent.map(extension => ({
-                rawURL: extension.iconURL || extensionIcon,
-                ...extension
-            }));
         }
 
         return (
             <LibraryComponent
-                autoClose={!this.props.deviceId}
+                autoClose={this.props.isRealtimeMode}
                 data={extensionLibraryThumbnailData}
                 filterable
                 tags={tagListPrefix}
                 id="extensionLibrary"
-                isUnloadble={!!this.props.deviceId}
+                isUnloadble={!this.props.isRealtimeMode}
                 title={this.props.intl.formatMessage(messages.extensionTitle)}
                 visible={this.props.visible}
                 onItemSelected={this.handleItemSelect}
@@ -162,6 +160,7 @@ class ExtensionLibrary extends React.PureComponent {
 ExtensionLibrary.propTypes = {
     deviceId: PropTypes.string,
     intl: intlShape.isRequired,
+    isRealtimeMode: PropTypes.bool,
     onCategorySelected: PropTypes.func,
     onRequestClose: PropTypes.func,
     visible: PropTypes.bool,
@@ -169,7 +168,8 @@ ExtensionLibrary.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    deviceId: state.scratchGui.device.deviceId
+    deviceId: state.scratchGui.device.deviceId,
+    isRealtimeMode: state.scratchGui.programMode.isRealtimeMode
 });
 
 export default compose(

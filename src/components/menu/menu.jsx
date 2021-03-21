@@ -32,14 +32,14 @@ MenuComponent.propTypes = {
     className: PropTypes.string,
     componentRef: PropTypes.func,
     place: PropTypes.oneOf(['left', 'right']),
-    directiron: PropTypes.oneOf(['donw', 'up'])
+    directiron: PropTypes.oneOf(['down', 'up'])
 };
 
 
 const MenuItem = ({
     children,
     className,
-    bottomLine,
+    bottomLine = false,
     onClick
 }) => (
     <li
@@ -50,7 +50,6 @@ const MenuItem = ({
             {[styles.menuSectionBottomLine]: bottomLine === true}
         )}
         onClick={onClick}
-        bottomLine={bottomLine}
     >
         {children}
     </li>

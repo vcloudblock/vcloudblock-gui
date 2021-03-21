@@ -214,7 +214,7 @@ HardwareConsole.propTypes = {
     onSwitchAutoScroll: PropTypes.func.isRequired,
     onSwitchHexForm: PropTypes.func.isRequired,
     onSwitchPause: PropTypes.func.isRequired,
-    peripheralName: PropTypes.string.isRequired,
+    peripheralName: PropTypes.string,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 

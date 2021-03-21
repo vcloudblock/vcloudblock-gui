@@ -201,7 +201,7 @@ HardwareConsoleComponent.propTypes = {
             key: PropTypes.string.isRequired,
             value: PropTypes.shape({
                 defaultMessage: PropTypes.string.isRequired,
-                description: PropTypes.string.isRequired,
+                description: PropTypes.string,
                 id: PropTypes.string.isRequired
             })
         })),
