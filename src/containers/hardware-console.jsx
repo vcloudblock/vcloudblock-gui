@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {intlShape, injectIntl} from 'react-intl';
 import VM from 'openblock-vm';
+import iconv from 'iconv-lite';
 
 import HardwareConsoleComponent from '../components/hardware-console/hardware-console.jsx';
 
@@ -145,7 +146,14 @@ class HardwareConsole extends React.Component {
 
                 data = `${data}\r\n`;
             }
-            this.props.vm.writeToPeripheral(this.props.deviceId, data);
+
+            let buffer = null;
+            if (this.props.locale === 'zh-cn') {
+                buffer = iconv.encode(data, 'gb2312');
+            } else {
+                buffer = iconv.encode(data, 'utf-8');
+            }
+            this.props.vm.writeToPeripheral(this.props.deviceId, buffer);
         } else {
             this.props.onNoPeripheralIsConnected();
         }
