@@ -78,7 +78,7 @@ class HardwareConsole extends React.Component {
             'onReciveData'
         ]);
         this.state = {
-            consoleText: '',
+            consoleArray: new Uint8Array(0),
             dataToSend: ''
         };
     }
@@ -94,23 +94,32 @@ class HardwareConsole extends React.Component {
         this.props.vm.removeListener('PERIPHERAL_RECIVE_DATA', this.onReciveData);
     }
 
+    appendBuffer (arr1, arr2) {
+        const arr = new Uint8Array(arr1.byteLength + arr2.byteLength);
+        arr.set(arr1, 0);
+        arr.set(arr2, arr1.byteLength);
+        return arr;
+    }
+
     onReciveData (data) {
         if (this.props.isPause) {
             return;
         }
-        if (this.state.consoleText.length >= 4096) {
+
+        // If length over
+        if (this.state.consoleArray.byteLength >= 4096) {
             this.setState({
-                consoleText: this.state.consoleText.slice(data.length)
+                consoleArray: this.state.consoleArray.slice(data.byteLength)
             });
         }
         this.setState({
-            consoleText: this.state.consoleText + data
+            consoleArray: this.appendBuffer(this.state.consoleArray, data)
         });
     }
 
     handleClickClean () {
         this.setState({
-            consoleText: ''
+            consoleArray: new Uint8Array(0)
         });
     }
 
@@ -173,13 +182,14 @@ class HardwareConsole extends React.Component {
             <HardwareConsoleComponent
                 baudrate={this.props.baudrate}
                 baudrateList={baudrateList}
-                consoleText={this.state.consoleText}
+                consoleArray={this.state.consoleArray}
                 eol={this.props.eol}
                 eolList={eolList}
                 isAutoScroll={this.props.isAutoScroll}
                 isHexForm={this.props.isHexForm}
                 isPause={this.props.isPause}
                 isRtl={this.props.isRtl}
+                locale={this.props.locale}
                 onClickClean={this.handleClickClean}
                 onClickPause={this.handleClickPause}
                 onClickAutoScroll={this.handleClickAutoScroll}
@@ -208,6 +218,7 @@ HardwareConsole.propTypes = {
     isPause: PropTypes.bool.isRequired,
     intl: intlShape.isRequired,
     isRtl: PropTypes.bool,
+    locale: PropTypes.string.isRequired,
     onNoPeripheralIsConnected: PropTypes.func.isRequired,
     onSetBaudrate: PropTypes.func.isRequired,
     onSetEol: PropTypes.func.isRequired,
@@ -226,6 +237,7 @@ const mapStateToProps = state => ({
     isHexForm: state.scratchGui.hardwareConsole.isHexForm,
     isPause: state.scratchGui.hardwareConsole.isPause,
     isRtl: state.locales.isRtl,
+    locale: state.locales.locale,
     peripheralName: state.scratchGui.connectionModal.peripheralName,
     serialportMenuOpen: serialportMenuOpen(state)
 });

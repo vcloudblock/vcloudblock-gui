@@ -1,11 +1,11 @@
 import React from 'react';
 import {FormattedMessage, intlShape} from 'react-intl';
 import PropTypes from 'prop-types';
-import Box from '../box/box.jsx';
 import classNames from 'classnames';
-
 import ScrollableFeed from 'react-scrollable-feed';
+import iconv from 'iconv-lite';
 
+import Box from '../box/box.jsx';
 import MenuBarMenu from '../menu-bar/menu-bar-menu.jsx';
 import {MenuItem, MenuSection} from '../menu/menu.jsx';
 import styles from './hardware-console.css';
@@ -14,17 +14,22 @@ import settingIcon from './setting.svg';
 import pauseIcon from './pause.svg';
 import startIcon from './start.svg';
 
+const toHexForm = buffer => Array.prototype.map.call(buffer, x => (`00${x.toString(16)}`).slice(-2)).join(' ');
+const toStringGB2312 = buffer => iconv.decode(buffer, 'gb2312');
+const toStringUTF8 = buffer => iconv.decode(buffer, 'utf-8');
+
 const HardwareConsoleComponent = props => {
     const {
         baudrate,
         baudrateList,
-        consoleText,
+        consoleArray,
         eol,
         eolList,
         intl,
         isAutoScroll,
         isHexForm,
         isPause,
+        locale,
         onClickClean,
         onClickPause,
         onClickSerialportMenu,
@@ -39,13 +44,14 @@ const HardwareConsoleComponent = props => {
     } = props;
     return (
         <Box className={styles.hardwareConsoleWrapper}>
-            <Box className={styles.consoleText}>
+            <Box className={styles.consoleArray}>
                 <ScrollableFeed
                     forceScroll={isAutoScroll}
                 >
                     <span>
-                        {isHexForm ? new TextEncoder().encode(consoleText)
-                            .toString() : consoleText}
+                        {isHexForm ? toHexForm(consoleArray) :
+                            locale === 'zh-cn' ? toStringGB2312(consoleArray) : toStringUTF8(consoleArray)
+                        }
                     </span>
                 </ScrollableFeed>
             </Box>
@@ -194,7 +200,7 @@ HardwareConsoleComponent.propTypes = {
             key: PropTypes.string.isRequired,
             value: PropTypes.number.isRequired
         })),
-    consoleText: PropTypes.string.isRequired,
+    consoleArray: PropTypes.instanceOf(Uint8Array),
     eol: PropTypes.string.isRequired,
     eolList: PropTypes.arrayOf(
         PropTypes.shape({
@@ -210,6 +216,7 @@ HardwareConsoleComponent.propTypes = {
     isHexForm: PropTypes.bool.isRequired,
     isPause: PropTypes.bool.isRequired,
     isAutoScroll: PropTypes.bool.isRequired,
+    locale: PropTypes.string.isRequired,
     onClickClean: PropTypes.func.isRequired,
     onClickPause: PropTypes.func.isRequired,
     onClickAutoScroll: PropTypes.func.isRequired,
@@ -221,10 +228,6 @@ HardwareConsoleComponent.propTypes = {
     onSelectBaudrate: PropTypes.func.isRequired,
     onSelectEol: PropTypes.func.isRequired,
     serialportMenuOpen: PropTypes.bool.isRequired
-};
-
-HardwareConsoleComponent.defaultProps = {
-    consoleText: ''
 };
 
 export default HardwareConsoleComponent;
