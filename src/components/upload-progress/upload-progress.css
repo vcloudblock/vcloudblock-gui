@@ -48,7 +48,7 @@
 }
 
 .terminal-warper{
-    height: 400px;
+    height: 300px;
     background-color: $motion-light-transparent;
     margin-bottom: 20px;
 }
