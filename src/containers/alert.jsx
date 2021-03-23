@@ -23,7 +23,7 @@ class Alert extends React.Component {
     }
     handleDownloadFirmware () {
         if (this.props.deviceName) {
-            this.props.vm.uploadFirmwareToPeripheral(this.props.extensionId);
+            this.props.vm.uploadFirmwareToPeripheral(this.props.deviceId);
             this.props.onOpenUploadProgress();
         } else {
             this.props.onNoPeripheralIsConnected();
@@ -78,6 +78,7 @@ class Alert extends React.Component {
 }
 
 const mapStateToProps = state => ({
+    deviceId: state.scratchGui.device.deviceId,
     deviceName: state.scratchGui.device.deviceName
 });
 
@@ -95,7 +96,7 @@ const mapDispatchToProps = dispatch => ({
 Alert.propTypes = {
     closeButton: PropTypes.bool,
     content: PropTypes.element,
-    extensionId: PropTypes.string,
+    deviceId: PropTypes.string,
     extensionName: PropTypes.string,
     extensionMessage: PropTypes.string,
     iconSpinner: PropTypes.bool,

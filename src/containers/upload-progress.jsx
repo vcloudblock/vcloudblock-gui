@@ -96,7 +96,7 @@ class UploadProgress extends React.Component {
 }
 
 UploadProgress.propTypes = {
-    deviceData: PropTypes.instanceOf(Object).isRequired,
+    deviceData: PropTypes.object.isRequired,
     deviceId: PropTypes.string.isRequired,
     intl: intlShape.isRequired,
     vm: PropTypes.instanceOf(VM).isRequired,

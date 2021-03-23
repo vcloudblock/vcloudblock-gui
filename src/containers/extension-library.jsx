@@ -157,7 +157,7 @@ class ExtensionLibrary extends React.PureComponent {
 }
 
 ExtensionLibrary.propTypes = {
-    deviceData: PropTypes.instanceOf(Object).isRequired,
+    deviceData: PropTypes.instanceOf(Array).isRequired,
     deviceId: PropTypes.string,
     intl: intlShape.isRequired,
     isRealtimeMode: PropTypes.bool,

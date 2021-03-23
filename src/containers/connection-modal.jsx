@@ -141,7 +141,7 @@ class ConnectionModal extends React.Component {
 ConnectionModal.propTypes = {
     baudrate: PropTypes.string.isRequired,
     deviceId: PropTypes.string.isRequired,
-    deviceData: PropTypes.instanceOf(Object).isRequired,
+    deviceData: PropTypes.instanceOf(Array).isRequired,
     isRealtimeMode: PropTypes.bool,
     onCancel: PropTypes.func.isRequired,
     onConnected: PropTypes.func.isRequired,

@@ -101,7 +101,7 @@ class DeviceLibrary extends React.PureComponent {
 }
 
 DeviceLibrary.propTypes = {
-    deviceData: PropTypes.instanceOf(Object).isRequired,
+    deviceData: PropTypes.instanceOf(Array).isRequired,
     intl: intlShape.isRequired,
     onDeviceChanged: PropTypes.func,
     onDeviceSelected: PropTypes.func,

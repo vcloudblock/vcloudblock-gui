@@ -72,6 +72,7 @@ import remixIcon from './icon--remix.svg';
 import dropdownCaret from './dropdown-caret.svg';
 import languageIcon from '../language-selector/language-icon.svg';
 import aboutIcon from './icon--about.svg';
+import realtimeConnectionIcon from './icon--realtime-connection.svg';
 
 import scratchLogo from './scratch-logo.svg';
 
@@ -500,6 +501,17 @@ class MenuBar extends React.Component {
                             </React.Fragment>
                         )}
                     </div>
+                    <div
+                        className={classNames(styles.menuBarItem)}
+                    >
+                        {this.props.isRealtimeMode ? (
+                            <img
+                                className={classNames(styles.deviceRealtimeConnection,
+                                    {[styles.disabled]: !(this.props.realtimeConnection && this.props.peripheralName)})}
+                                src={realtimeConnectionIcon}
+                            />
+                        ) : null}
+                    </div>
                 </div>
                 <div className={styles.fileMenu}>
                     {this.props.canEditTitle ? (
@@ -744,6 +756,7 @@ MenuBar.propTypes = {
     onShare: PropTypes.func,
     onToggleLoginOpen: PropTypes.func,
     projectTitle: PropTypes.string,
+    realtimeConnection: PropTypes.bool.isRequired,
     renderLogin: PropTypes.func,
     sessionExists: PropTypes.bool,
     shouldSaveBeforeTransition: PropTypes.func,
@@ -789,6 +802,7 @@ const mapStateToProps = (state, ownProps) => {
         locale: state.locales.locale,
         loginMenuOpen: loginMenuOpen(state),
         projectTitle: state.scratchGui.projectTitle,
+        realtimeConnection: state.scratchGui.connectionModal.realtimeConnection,
         sessionExists: state.session && typeof state.session.session !== 'undefined',
         username: user ? user.username : null,
         userOwnsProject: ownProps.authorUsername && user &&

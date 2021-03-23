@@ -11,6 +11,7 @@ import {updateMonitors} from '../reducers/monitors';
 import {setProjectChanged, setProjectUnchanged} from '../reducers/project-changed';
 import {setRunningState, setTurboState, setStartedState} from '../reducers/vm-status';
 import {showDeviceAlert, showDeviceRealtimeAlert} from '../reducers/alerts';
+import {setRealtimeConnection} from '../reducers/connection-modal';
 import {updateMicIndicator} from '../reducers/mic-indicator';
 
 /*
@@ -134,14 +135,14 @@ const vmListenerHOC = function (WrappedComponent) {
             device.message = data.message;
             if (device) {
                 this.props.onShowDeviceRealtimeAlert(device);
+                this.props.onSetRealtimeConnection(false);
             }
         }
         handleDeviceRealtimeSuccess (data) {
             const device = this.props.deviceData.find(dev => dev.deviceId === data.deviceId);
             device.message = data.message;
             if (device) {
-                // TODO don't use alert show state on menubar.
-                // this.props.onShowDeviceRealtimeSuccess(device);
+                this.props.onSetRealtimeConnection(true);
             }
         }
         render () {
@@ -165,6 +166,7 @@ const vmListenerHOC = function (WrappedComponent) {
                 onRuntimeStarted,
                 onTurboModeOff,
                 onTurboModeOn,
+                onSetRealtimeConnection,
                 onShowDeviceAlert,
                 onShowDeviceRealtimeAlert,
                 /* eslint-enable no-unused-vars */
@@ -175,7 +177,7 @@ const vmListenerHOC = function (WrappedComponent) {
     }
     VMListener.propTypes = {
         attachKeyboardEvents: PropTypes.bool,
-        deviceData: PropTypes.instanceOf(Object).isRequired,
+        deviceData: PropTypes.instanceOf(Array).isRequired,
         onBlockDragUpdate: PropTypes.func.isRequired,
         onGreenFlag: PropTypes.func,
         onKeyDown: PropTypes.func,
@@ -187,6 +189,7 @@ const vmListenerHOC = function (WrappedComponent) {
         onProjectRunStop: PropTypes.func.isRequired,
         onProjectSaved: PropTypes.func.isRequired,
         onRuntimeStarted: PropTypes.func.isRequired,
+        onSetRealtimeConnection: PropTypes.func.isRequired,
         onShowDeviceAlert: PropTypes.func.isRequired,
         onShowDeviceRealtimeAlert: PropTypes.func.isRequired,
         onTargetsUpdate: PropTypes.func.isRequired,
@@ -237,6 +240,9 @@ const vmListenerHOC = function (WrappedComponent) {
         },
         onShowDeviceRealtimeAlert: device => {
             dispatch(showDeviceRealtimeAlert(device));
+        },
+        onSetRealtimeConnection: state => {
+            dispatch(setRealtimeConnection(state));
         },
         onMicListeningUpdate: listening => {
             dispatch(updateMicIndicator(listening));

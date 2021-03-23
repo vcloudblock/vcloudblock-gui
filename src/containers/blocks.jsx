@@ -775,7 +775,7 @@ Blocks.propTypes = {
     anyModalVisible: PropTypes.bool,
     canUseCloud: PropTypes.bool,
     customProceduresVisible: PropTypes.bool,
-    deviceData: PropTypes.instanceOf(Object).isRequired,
+    deviceData: PropTypes.instanceOf(Array).isRequired,
     deviceId: PropTypes.string,
     deviceType: PropTypes.string,
     deviceLibraryVisible: PropTypes.bool,
