@@ -5,7 +5,6 @@ import ConnectionModalComponent, {PHASES} from '../components/connection-modal/c
 import VM from 'openblock-vm';
 import analytics from '../lib/analytics';
 import extensionData from '../lib/libraries/extensions/index.jsx';
-import deviceData from '../lib/libraries/devices/index.jsx';
 import {connect} from 'react-redux';
 import {closeConnectionModal} from '../reducers/modals';
 import {setConnectionModalPeripheralName} from '../reducers/connection-modal';
@@ -24,7 +23,7 @@ class ConnectionModal extends React.Component {
         ]);
         this.state = {
             extension: extensionData.find(ext => ext.extensionId === props.deviceId) ||
-                deviceData.find(ext => ext.deviceId === props.deviceId),
+                this.props.deviceData.find(ext => ext.deviceId === props.deviceId),
             phase: props.vm.getPeripheralIsConnected(props.deviceId) ?
                 PHASES.connected : PHASES.scanning,
             peripheralName: null
@@ -142,6 +141,7 @@ class ConnectionModal extends React.Component {
 ConnectionModal.propTypes = {
     baudrate: PropTypes.string.isRequired,
     deviceId: PropTypes.string.isRequired,
+    deviceData: PropTypes.instanceOf(Object).isRequired,
     isRealtimeMode: PropTypes.bool,
     onCancel: PropTypes.func.isRequired,
     onConnected: PropTypes.func.isRequired,
@@ -150,6 +150,7 @@ ConnectionModal.propTypes = {
 
 const mapStateToProps = state => ({
     baudrate: state.scratchGui.hardwareConsole.baudrate,
+    deviceData: state.scratchGui.deviceData.deviceData,
     deviceId: state.scratchGui.device.deviceId,
     isRealtimeMode: state.scratchGui.programMode.isRealtimeMode
 });

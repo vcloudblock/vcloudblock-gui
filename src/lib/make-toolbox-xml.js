@@ -1,5 +1,4 @@
 import ScratchBlocks from 'openblock-blocks';
-import deviceData from '../lib/libraries/devices/index.jsx';
 
 const categorySeparator = '<sep gap="36"/>';
 
@@ -724,7 +723,7 @@ const xmlClose = '</xml>';
 /**
  * @param {!boolean} isInitialSetup - Whether the toolbox is for initial setup. If the mode is "initial setup",
  * blocks with localized default parameters (e.g. ask and wait) should not be loaded. (LLK/scratch-gui#5445)
- * @param {?string} deviceId - Current selected deivce id.
+ * @param {?object} device - Full data of current selected deivce.
  * @param {?boolean} isStage - Whether the toolbox is for a stage-type target. This is always set to true
  * when isInitialSetup is true.
  * @param {?string} targetId - The current editing target
@@ -738,7 +737,7 @@ const xmlClose = '</xml>';
  * @param {?string} soundName -  The name of the default selected sound dropdown.
  * @returns {string} - a ScratchBlocks-style XML document for the contents of the toolbox.
  */
-const makeToolboxXML = function (isInitialSetup, deviceId = null, isStage = true, targetId, categoriesXML = [],
+const makeToolboxXML = function (isInitialSetup, device = null, isStage = true, targetId, categoriesXML = [],
     isRealtimeMode = true,
     costumeName = '', backdropName = '', soundName = '') {
     isStage = isInitialSetup || isStage;
@@ -760,8 +759,7 @@ const makeToolboxXML = function (isInitialSetup, deviceId = null, isStage = true
 
     let everything = [xmlOpen];
 
-    if (deviceId) {
-        const device = deviceData.find(ext => ext.deviceId === deviceId);
+    if (device) {
         const baseToolboxXml = device.baseToolBoxXml(isInitialSetup, isStage, targetId, isRealtimeMode,
             costumeName, backdropName, soundName);
 

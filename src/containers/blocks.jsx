@@ -13,7 +13,6 @@ import BlocksComponent from '../components/blocks/blocks.jsx';
 import ExtensionLibrary from './extension-library.jsx';
 import DeviceLibrary from './device-library.jsx';
 import extensionData from '../lib/libraries/extensions/index.jsx';
-import deviceData from '../lib/libraries/devices/index.jsx';
 import CustomProcedures from './custom-procedures.jsx';
 import errorBoundaryHOC from '../lib/error-boundary-hoc.jsx';
 import {BLOCKS_DEFAULT_SCALE, STAGE_DISPLAY_SIZES} from '../lib/layout-constants';
@@ -392,7 +391,10 @@ class Blocks extends React.Component {
             const targetCostumes = target.getCostumes();
             const targetSounds = target.getSounds();
             const dynamicBlocksXML = this.props.vm.runtime.getBlocksXML(target);
-            return makeToolboxXML(false, this.props.deviceId, target.isStage, target.id, dynamicBlocksXML,
+
+            const device = this.props.deviceData.find(item => item.deviceId === this.props.deviceId);
+
+            return makeToolboxXML(false, device, target.isStage, target.id, dynamicBlocksXML,
                 this.props.isRealtimeMode,
                 targetCostumes[targetCostumes.length - 1].name,
                 stageCostumes[stageCostumes.length - 1].name,
@@ -493,7 +495,7 @@ class Blocks extends React.Component {
     handleDeviceAdded (info) {
         const {device, categoryInfoArray} = info;
 
-        const dev = deviceData.find(ext => ext.deviceId === device);
+        const dev = this.props.deviceData.find(ext => ext.deviceId === device);
         this.props.onDeviceSelected(dev.deviceId, dev.name, dev.type);
 
         const supportUploadMode = dev.programMode.includes('upload');
@@ -598,7 +600,7 @@ class Blocks extends React.Component {
         });
     }
     handleDeviceSelected (categoryId) {
-        const device = deviceData.find(ext => ext.deviceId === categoryId);
+        const device = this.props.deviceData.find(ext => ext.deviceId === categoryId);
 
         if (device && device.launchPeripheralConnectionFlow) {
             this.handleConnectionModalStart();
@@ -773,6 +775,7 @@ Blocks.propTypes = {
     anyModalVisible: PropTypes.bool,
     canUseCloud: PropTypes.bool,
     customProceduresVisible: PropTypes.bool,
+    deviceData: PropTypes.instanceOf(Object).isRequired,
     deviceId: PropTypes.string,
     deviceType: PropTypes.string,
     deviceLibraryVisible: PropTypes.bool,
@@ -864,6 +867,7 @@ const mapStateToProps = state => ({
         Object.keys(state.scratchGui.modals).some(key => state.scratchGui.modals[key]) ||
         state.scratchGui.mode.isFullScreen
     ),
+    deviceData: state.scratchGui.deviceData.deviceData,
     deviceId: state.scratchGui.device.deviceId,
     deviceType: state.scratchGui.device.deviceType,
     deviceLibraryVisible: state.scratchGui.modals.deviceLibrary,

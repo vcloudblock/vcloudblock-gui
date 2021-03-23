@@ -8,7 +8,6 @@ import {connect} from 'react-redux';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 
 import extensionLibraryContent from '../lib/libraries/extensions/index.jsx';
-import deviceData from '../lib/libraries/devices/index.jsx';
 
 import LibraryComponent from '../components/library/library.jsx';
 import extensionIcon from '../components/action-menu/icon--sprite.svg';
@@ -123,7 +122,7 @@ class ExtensionLibrary extends React.PureComponent {
     }
     render () {
         let extensionLibraryThumbnailData = [];
-        const device = deviceData.find(dev => dev.deviceId === this.props.deviceId);
+        const device = this.props.deviceData.find(dev => dev.deviceId === this.props.deviceId);
 
         if (this.props.isRealtimeMode) {
             extensionLibraryThumbnailData = extensionLibraryContent.map(extension => ({
@@ -158,6 +157,7 @@ class ExtensionLibrary extends React.PureComponent {
 }
 
 ExtensionLibrary.propTypes = {
+    deviceData: PropTypes.instanceOf(Object).isRequired,
     deviceId: PropTypes.string,
     intl: intlShape.isRequired,
     isRealtimeMode: PropTypes.bool,
@@ -168,6 +168,7 @@ ExtensionLibrary.propTypes = {
 };
 
 const mapStateToProps = state => ({
+    deviceData: state.scratchGui.deviceData.deviceData,
     deviceId: state.scratchGui.device.deviceId,
     isRealtimeMode: state.scratchGui.programMode.isRealtimeMode
 });

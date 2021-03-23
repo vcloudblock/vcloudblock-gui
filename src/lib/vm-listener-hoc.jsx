@@ -10,7 +10,7 @@ import {updateBlockDrag} from '../reducers/block-drag';
 import {updateMonitors} from '../reducers/monitors';
 import {setProjectChanged, setProjectUnchanged} from '../reducers/project-changed';
 import {setRunningState, setTurboState, setStartedState} from '../reducers/vm-status';
-import {showExtensionAlert, showExtensionRealtimeAlert, showExtensionRealtimeSuccess} from '../reducers/alerts';
+import {showDeviceAlert, showDeviceRealtimeAlert} from '../reducers/alerts';
 import {updateMicIndicator} from '../reducers/mic-indicator';
 
 /*
@@ -26,7 +26,10 @@ const vmListenerHOC = function (WrappedComponent) {
                 'handleKeyDown',
                 'handleKeyUp',
                 'handleProjectChanged',
-                'handleTargetsUpdate'
+                'handleTargetsUpdate',
+                'handleDeviceAlert',
+                'handleDeviceRealtimeAlert',
+                'handleDeviceRealtimeSuccess'
             ]);
             // We have to start listening to the vm here rather than in
             // componentDidMount because the HOC mounts the wrapped component,
@@ -44,9 +47,9 @@ const vmListenerHOC = function (WrappedComponent) {
             this.props.vm.on('PROJECT_CHANGED', this.handleProjectChanged);
             this.props.vm.on('RUNTIME_STARTED', this.props.onRuntimeStarted);
             this.props.vm.on('PROJECT_START', this.props.onGreenFlag);
-            this.props.vm.on('PERIPHERAL_CONNECTION_LOST_ERROR', this.props.onShowExtensionAlert);
-            this.props.vm.on('PERIPHERAL_REALTIME_CONNECTION_LOST_ERROR', this.props.onShowExtensionRealtimeAlert);
-            this.props.vm.on('PERIPHERAL_REALTIME_CONNECT_SUCCESS', this.props.onShowExtensionRealtimeSuccess);
+            this.props.vm.on('PERIPHERAL_CONNECTION_LOST_ERROR', this.handleDeviceAlert);
+            this.props.vm.on('PERIPHERAL_REALTIME_CONNECTION_LOST_ERROR', this.handleDeviceRealtimeAlert);
+            this.props.vm.on('PERIPHERAL_REALTIME_CONNECT_SUCCESS', this.handleDeviceRealtimeSuccess);
             this.props.vm.on('MIC_LISTENING', this.props.onMicListeningUpdate);
 
         }
@@ -69,11 +72,12 @@ const vmListenerHOC = function (WrappedComponent) {
             }
         }
         componentWillUnmount () {
-            this.props.vm.removeListener('PERIPHERAL_CONNECTION_LOST_ERROR', this.props.onShowExtensionAlert);
+            // TODO 在这里将 onShowExtensionAlert 的完整数据写入 而不在 redux alert中 检索设备id
+            this.props.vm.removeListener('PERIPHERAL_CONNECTION_LOST_ERROR', this.handleDeviceAlert);
             this.props.vm.removeListener('PERIPHERAL_REALTIME_CONNECTION_LOST_ERROR',
-                this.props.onShowExtensionRealtimeAlert);
+                this.handleDeviceRealtimeAlert);
             this.props.vm.removeListener('PERIPHERAL_REALTIME_CONNECT_SUCCESS',
-                this.props.onShowExtensionRealtimeSuccess);
+                this.handleDeviceRealtimeSuccess);
             if (this.props.attachKeyboardEvents) {
                 document.removeEventListener('keydown', this.handleKeyDown);
                 document.removeEventListener('keyup', this.handleKeyUp);
@@ -119,6 +123,27 @@ const vmListenerHOC = function (WrappedComponent) {
                 e.preventDefault();
             }
         }
+        handleDeviceAlert (data) {
+            const device = this.props.deviceData.find(dev => dev.deviceId === data.deviceId);
+            if (device) {
+                this.props.onShowDeviceAlert(device);
+            }
+        }
+        handleDeviceRealtimeAlert (data) {
+            const device = this.props.deviceData.find(dev => dev.deviceId === data.deviceId);
+            device.message = data.message;
+            if (device) {
+                this.props.onShowDeviceRealtimeAlert(device);
+            }
+        }
+        handleDeviceRealtimeSuccess (data) {
+            const device = this.props.deviceData.find(dev => dev.deviceId === data.deviceId);
+            device.message = data.message;
+            if (device) {
+                // TODO don't use alert show state on menubar.
+                // this.props.onShowDeviceRealtimeSuccess(device);
+            }
+        }
         render () {
             const {
                 /* eslint-disable no-unused-vars */
@@ -140,9 +165,8 @@ const vmListenerHOC = function (WrappedComponent) {
                 onRuntimeStarted,
                 onTurboModeOff,
                 onTurboModeOn,
-                onShowExtensionAlert,
-                onShowExtensionRealtimeAlert,
-                onShowExtensionRealtimeSuccess,
+                onShowDeviceAlert,
+                onShowDeviceRealtimeAlert,
                 /* eslint-enable no-unused-vars */
                 ...props
             } = this.props;
@@ -151,6 +175,7 @@ const vmListenerHOC = function (WrappedComponent) {
     }
     VMListener.propTypes = {
         attachKeyboardEvents: PropTypes.bool,
+        deviceData: PropTypes.instanceOf(Object).isRequired,
         onBlockDragUpdate: PropTypes.func.isRequired,
         onGreenFlag: PropTypes.func,
         onKeyDown: PropTypes.func,
@@ -162,9 +187,8 @@ const vmListenerHOC = function (WrappedComponent) {
         onProjectRunStop: PropTypes.func.isRequired,
         onProjectSaved: PropTypes.func.isRequired,
         onRuntimeStarted: PropTypes.func.isRequired,
-        onShowExtensionAlert: PropTypes.func.isRequired,
-        onShowExtensionRealtimeAlert: PropTypes.func.isRequired,
-        onShowExtensionRealtimeSuccess: PropTypes.func.isRequired,
+        onShowDeviceAlert: PropTypes.func.isRequired,
+        onShowDeviceRealtimeAlert: PropTypes.func.isRequired,
         onTargetsUpdate: PropTypes.func.isRequired,
         onTurboModeOff: PropTypes.func.isRequired,
         onTurboModeOn: PropTypes.func.isRequired,
@@ -179,6 +203,7 @@ const vmListenerHOC = function (WrappedComponent) {
         onGreenFlag: () => ({})
     };
     const mapStateToProps = state => ({
+        deviceData: state.scratchGui.deviceData.deviceData,
         projectChanged: state.scratchGui.projectChanged,
         // Do not emit target or project updates in fullscreen or player only mode
         // or when recording sounds (it leads to garbled recordings on low-power machines)
@@ -207,14 +232,11 @@ const vmListenerHOC = function (WrappedComponent) {
         onRuntimeStarted: () => dispatch(setStartedState(true)),
         onTurboModeOn: () => dispatch(setTurboState(true)),
         onTurboModeOff: () => dispatch(setTurboState(false)),
-        onShowExtensionAlert: data => {
-            dispatch(showExtensionAlert(data));
+        onShowDeviceAlert: device => {
+            dispatch(showDeviceAlert(device));
         },
-        onShowExtensionRealtimeAlert: data => {
-            dispatch(showExtensionRealtimeAlert(data));
-        },
-        onShowExtensionRealtimeSuccess: data => {
-            dispatch(showExtensionRealtimeSuccess(data));
+        onShowDeviceRealtimeAlert: device => {
+            dispatch(showDeviceRealtimeAlert(device));
         },
         onMicListeningUpdate: listening => {
             dispatch(updateMicIndicator(listening));

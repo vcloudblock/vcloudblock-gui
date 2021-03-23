@@ -2,9 +2,13 @@ import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
 import VM from 'openblock-vm';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 
-import deviceLibraryContent from '../lib/libraries/devices/index.jsx';
+import {setDeviceData} from '../reducers/device-data';
+
+import {makeDeviceLibrary} from '../lib/libraries/devices/index.jsx';
 
 import LibraryComponent from '../components/library/library.jsx';
 import deviceIcon from '../components/action-menu/icon--sprite.svg';
@@ -43,6 +47,14 @@ class DeviceLibrary extends React.PureComponent {
             'handleItemSelect'
         ]);
     }
+    componentDidMount () {
+        this.props.vm.extensionManager.getDeviceList().then(data => {
+            if (data) {
+                this.props.onSetDeviceData(makeDeviceLibrary(data));
+            }
+        });
+    }
+
     handleItemSelect (item) {
         const id = item.deviceId;
         const deviceType = item.type;
@@ -66,8 +78,9 @@ class DeviceLibrary extends React.PureComponent {
             }
         }
     }
+
     render () {
-        const deviceLibraryThumbnailData = deviceLibraryContent.map(device => ({
+        const deviceLibraryThumbnailData = this.props.deviceData.map(device => ({
             rawURL: device.iconURL || deviceIcon,
             ...device
         }));
@@ -88,12 +101,28 @@ class DeviceLibrary extends React.PureComponent {
 }
 
 DeviceLibrary.propTypes = {
+    deviceData: PropTypes.instanceOf(Object).isRequired,
     intl: intlShape.isRequired,
     onDeviceChanged: PropTypes.func,
     onDeviceSelected: PropTypes.func,
     onRequestClose: PropTypes.func,
+    onSetDeviceData: PropTypes.func.isRequired,
     visible: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired // eslint-disable-line react/no-unused-prop-types
 };
 
-export default injectIntl(DeviceLibrary);
+const mapStateToProps = state => ({
+    deviceData: state.scratchGui.deviceData.deviceData
+});
+
+const mapDispatchToProps = dispatch => ({
+    onSetDeviceData: data => dispatch(setDeviceData(data))
+});
+
+export default compose(
+    injectIntl,
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )
+)(DeviceLibrary);

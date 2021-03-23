@@ -1,12 +1,9 @@
 import alertsData from '../lib/alerts/index.jsx';
 import {AlertTypes, AlertLevels} from '../lib/alerts/index.jsx';
-import extensionData from '../lib/libraries/extensions/index.jsx';
-import deviceData from '../lib/libraries/devices/index.jsx';
 
 const SHOW_ALERT = 'scratch-gui/alerts/SHOW_ALERT';
-const SHOW_EXTENSION_ALERT = 'scratch-gui/alerts/SHOW_EXTENSION_ALERT';
-const SHOW_EXTENSION_REALTIME_ALERT = 'scratch-gui/alerts/SHOW_EXTENSION_REALTIME_ALERT';
-const SHOW_EXTENSION_REALTIME_SUCCESS = 'scratch-gui/alerts/SHOW_EXTENSION_REALTIME_SUCCESS';
+const SHOW_DEVICE_ALERT = 'scratch-gui/alerts/SHOW_DEVICE_ALERT';
+const SHOW_DEVICE_REALTIME_ALERT = 'scratch-gui/alerts/SHOW_DEVICE_REALTIME_ALERT';
 const CLOSE_ALERT = 'scratch-gui/alerts/CLOSE_ALERT';
 const CLOSE_ALERTS_WITH_ID = 'scratch-gui/alerts/CLOSE_ALERTS_WITH_ID';
 const CLOSE_ALERT_WITH_ID = 'scratch-gui/alerts/CLOSE_ALERT_WITH_ID';
@@ -79,85 +76,42 @@ const reducer = function (state, action) {
         }
         return state; // if alert not found, show nothing
     }
-    case SHOW_EXTENSION_ALERT: {
-        const extensionId = action.data.extensionId;
-        if (extensionId) {
-            const extension = extensionData.find(ext => ext.extensionId === extensionId) ||
-                deviceData.find(dev => dev.deviceId === extensionId);
-            if (extension) {
-                const newList = state.alertsList.slice();
-                const newAlert = {
-                    alertType: AlertTypes.EXTENSION,
-                    closeButton: true,
-                    extensionId: extensionId,
-                    extensionName: extension.name,
-                    iconURL: extension.connectionSmallIconURL,
-                    level: AlertLevels.WARN,
-                    showReconnect: true
-                };
-                newList.push(newAlert);
+    case SHOW_DEVICE_ALERT: {
+        const newList = state.alertsList.slice();
+        const newAlert = {
+            alertType: AlertTypes.EXTENSION,
+            closeButton: true,
+            extensionId: action.device.deviceId,
+            extensionName: action.device.name,
+            iconURL: action.device.connectionSmallIconURL,
+            level: AlertLevels.WARN,
+            showReconnect: true
+        };
+        newList.push(newAlert);
 
-                return Object.assign({}, state, {
-                    alertsList: newList
-                });
-            }
-        }
-        return state; // if alert not found, show nothing
+        return Object.assign({}, state, {
+            alertsList: newList
+        });
     }
-    case SHOW_EXTENSION_REALTIME_ALERT: {
-        const extensionId = action.data.extensionId;
-        if (extensionId) {
-            const extension = extensionData.find(ext => ext.extensionId === extensionId) ||
-                deviceData.find(dev => dev.deviceId === extensionId);
-            if (extension) {
-                const newList = state.alertsList.filter(curAlert => (
-                    curAlert.extensionId !== extensionId
-                ));
-                const newAlert = {
-                    alertType: AlertTypes.EXTENSION,
-                    closeButton: true,
-                    extensionId: extensionId,
-                    extensionName: extension.name,
-                    extensionMessage: action.data.message,
-                    iconURL: extension.connectionSmallIconURL,
-                    level: AlertLevels.WARN,
-                    showDownloadFirmware: true
-                };
-                newList.push(newAlert);
+    case SHOW_DEVICE_REALTIME_ALERT: {
+        const newList = state.alertsList.filter(curAlert => (
+            curAlert.extensionId !== `${action.device.deviceId}alert`
+        ));
+        const newAlert = {
+            alertType: AlertTypes.EXTENSION,
+            closeButton: true,
+            extensionId: `${action.device.deviceId}alert`,
+            extensionName: action.device.name,
+            extensionMessage: action.device.message,
+            iconURL: action.device.connectionSmallIconURL,
+            level: AlertLevels.WARN,
+            showDownloadFirmware: true
+        };
+        newList.push(newAlert);
 
-                return Object.assign({}, state, {
-                    alertsList: newList
-                });
-            }
-        }
-        return state; // if alert not found, show nothing
-    }
-    case SHOW_EXTENSION_REALTIME_SUCCESS: {
-        const extensionId = action.data.extensionId;
-        if (extensionId) {
-            const extension = extensionData.find(ext => ext.extensionId === extensionId) ||
-                deviceData.find(dev => dev.deviceId === extensionId);
-            if (extension) {
-                const newList = state.alertsList.filter(curAlert => (
-                    curAlert.extensionId !== extensionId
-                ));
-                const newAlert = {
-                    alertType: AlertTypes.EXTENSION,
-                    closeButton: true,
-                    extensionId: extensionId,
-                    extensionName: extension.name,
-                    extensionMessage: action.data.message,
-                    iconURL: extension.connectionSmallIconURL,
-                    level: AlertLevels.SUCCESS
-                };
-                newList.push(newAlert);
-
-                return Object.assign({}, state, {
-                    alertsList: newList
-                });
-            }
-        }
-        return state; // if alert not found, show nothing
+        return Object.assign({}, state, {
+            alertsList: newList
+        });
     }
     case CLOSE_ALERT_WITH_ID:
     case CLOSE_ALERT: {
@@ -236,34 +190,30 @@ const showStandardAlert = function (alertId) {
 };
 
 /**
- * Action creator to show an alert with the given input data.
+ * Action creator to show a device alert with the given input data.
  *
- * @param {object} data - data for the alert
- * @param {string} data.message - message for the alert
- * @param {string} data.extensionId - extension ID for the alert
+ * @param {object} device - full device data for the alert
  * @return {object} - an object to be passed to the reducer.
  */
-const showExtensionAlert = function (data) {
+const showDeviceAlert = function (device) {
     return {
-        type: SHOW_EXTENSION_ALERT,
-        data
+        type: SHOW_DEVICE_ALERT,
+        device
     };
 };
 
-const showExtensionRealtimeAlert = function (data) {
+/**
+ * Action creator to show a device realtime connection alert with the given input data.
+ *
+ * @param {object} device - full device data for the alert
+ * @return {object} - an object to be passed to the reducer.
+ */
+const showDeviceRealtimeAlert = function (device) {
     return {
-        type: SHOW_EXTENSION_REALTIME_ALERT,
-        data
+        type: SHOW_DEVICE_REALTIME_ALERT,
+        device
     };
 };
-
-const showExtensionRealtimeSuccess = function (data) {
-    return {
-        type: SHOW_EXTENSION_REALTIME_SUCCESS,
-        data
-    };
-};
-
 
 /**
  * Function to dispatch showing an alert, with optional
@@ -292,8 +242,7 @@ export {
     filterInlineAlerts,
     filterPopupAlerts,
     showAlertWithTimeout,
-    showExtensionAlert,
-    showExtensionRealtimeAlert,
-    showExtensionRealtimeSuccess,
+    showDeviceAlert,
+    showDeviceRealtimeAlert,
     showStandardAlert
 };
