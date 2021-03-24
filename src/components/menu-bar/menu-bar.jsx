@@ -81,7 +81,7 @@ import sharedMessages from '../../lib/shared-messages';
 import Switch from 'react-switch';
 import {setUploadMode, setRealtimeMode} from '../../reducers/program-mode';
 import {openConnectionModal, openDeviceLibrary} from '../../reducers/modals';
-import {clearConnectionModalPeripheralName} from '../../reducers/connection-modal';
+import {setRealtimeConnection, clearConnectionModalPeripheralName} from '../../reducers/connection-modal';
 
 import deviceIcon from './icon--device.svg';
 import unconnectedIcon from './icon--unconnected.svg';
@@ -833,12 +833,19 @@ const mapDispatchToProps = dispatch => ({
     onClickSave: () => dispatch(manualUpdateProject()),
     onClickSaveAsCopy: () => dispatch(saveProjectAsCopy()),
     onSeeCommunity: () => dispatch(setPlayer(true)),
-    onSetUploadMode: () => dispatch(setUploadMode()),
+    onSetUploadMode: () => {
+        dispatch(setUploadMode());
+        dispatch(setRealtimeConnection(false));
+    },
+    onSetRealtimeConnection: state => dispatch(setRealtimeConnection(state)),
     onSetRealtimeMode: () => dispatch(setRealtimeMode()),
     onSetStageLarge: () => dispatch(setStageSize(STAGE_SIZE_MODES.large)),
     onOpenConnectionModal: () => dispatch(openConnectionModal()),
     onOpenUploadProgress: () => dispatch(openUploadProgress()),
-    onDisconnect: () => dispatch(clearConnectionModalPeripheralName()),
+    onDisconnect: () => {
+        dispatch(clearConnectionModalPeripheralName());
+        dispatch(setRealtimeConnection(false));
+    },
     onNoPeripheralIsConnected: () => showAlertWithTimeout(dispatch, 'connectAPeripheralFirst'),
     onWorkspaceIsEmpty: () => showAlertWithTimeout(dispatch, 'workspaceIsEmpty'),
     onWorkspaceIsNotEmpty: () => showAlertWithTimeout(dispatch, 'workspaceIsNotEmpty'),
