@@ -13,7 +13,6 @@ import BlocksComponent from '../components/blocks/blocks.jsx';
 import ExtensionLibrary from './extension-library.jsx';
 import DeviceLibrary from './device-library.jsx';
 import extensionData from '../lib/libraries/extensions/index.jsx';
-import deviceData from '../lib/libraries/devices/index.jsx';
 import CustomProcedures from './custom-procedures.jsx';
 import errorBoundaryHOC from '../lib/error-boundary-hoc.jsx';
 import {BLOCKS_DEFAULT_SCALE, STAGE_DISPLAY_SIZES} from '../lib/layout-constants';
@@ -175,6 +174,10 @@ class Blocks extends React.Component {
 
         // If program mode changed, call functio to update the toolbox
         if (this.props.isRealtimeMode !== this._programMode) {
+            // Do not updatecode before toolbox is updated.
+            this.props.vm.removeListener('CODE_NEED_UPDATE', this.handleCodeNeedUpdate);
+            // Clear possible errors witch print in to code editor.
+            this.props.onSetCodeEditorValue('');
             this.onProgramModeUpdate();
         }
 
@@ -250,6 +253,9 @@ class Blocks extends React.Component {
         const offset = this.workspace.toolbox_.getCategoryScrollOffset();
         this.workspace.updateToolbox(this.props.toolboxXML);
         this._renderedToolboxXML = this.props.toolboxXML;
+
+        // Relisten the CODE_NEED_UPDATE event after the toolbox is updated.
+        this.props.vm.addListener('CODE_NEED_UPDATE', this.handleCodeNeedUpdate);
 
         // In order to catch any changes that mutate the toolbox during "normal runtime"
         // (variable changes/etc), re-enable toolbox refresh.
@@ -385,7 +391,10 @@ class Blocks extends React.Component {
             const targetCostumes = target.getCostumes();
             const targetSounds = target.getSounds();
             const dynamicBlocksXML = this.props.vm.runtime.getBlocksXML(target);
-            return makeToolboxXML(false, this.props.deviceId, target.isStage, target.id, dynamicBlocksXML,
+
+            const device = this.props.deviceData.find(item => item.deviceId === this.props.deviceId);
+
+            return makeToolboxXML(false, device, target.isStage, target.id, dynamicBlocksXML,
                 this.props.isRealtimeMode,
                 targetCostumes[targetCostumes.length - 1].name,
                 stageCostumes[stageCostumes.length - 1].name,
@@ -482,10 +491,11 @@ class Blocks extends React.Component {
             this.props.updateToolboxState(toolboxXML);
         }
     }
+
     handleDeviceAdded (info) {
         const {device, categoryInfoArray} = info;
 
-        const dev = deviceData.find(ext => ext.deviceId === device);
+        const dev = this.props.deviceData.find(ext => ext.deviceId === device);
         this.props.onDeviceSelected(dev.deviceId, dev.name, dev.type);
 
         const supportUploadMode = dev.programMode.includes('upload');
@@ -558,8 +568,10 @@ class Blocks extends React.Component {
         }
     }
     handleDeviceExtensionAdded (addExts) {
-        this.ScratchBlocks = defaultsDeep(this.ScratchBlocks, addExts.addBlocks(this.ScratchBlocks),
-            addExts.addGenerator(this.ScratchBlocks), addExts.addMsg(this.ScratchBlocks));
+        this.ScratchBlocks = addExts.addMsg(this.ScratchBlocks);
+        this.ScratchBlocks = addExts.addGenerator(this.ScratchBlocks);
+        this.ScratchBlocks = addExts.addBlocks(this.ScratchBlocks);
+
         this.setLocale();
 
         const toolboxXML = this.getToolboxXML();
@@ -588,11 +600,10 @@ class Blocks extends React.Component {
         });
     }
     handleDeviceSelected (categoryId) {
-        const device = deviceData.find(ext => ext.deviceId === categoryId);
+        const device = this.props.deviceData.find(ext => ext.deviceId === categoryId);
 
         if (device && device.launchPeripheralConnectionFlow) {
             this.handleConnectionModalStart();
-            this.extensionId = categoryId;
         }
 
         this.withToolboxUpdates(() => {
@@ -600,7 +611,7 @@ class Blocks extends React.Component {
         });
     }
     handleDeviceChanged () {
-        this.props.vm.disconnectPeripheral(this.extensionId);
+        this.props.vm.disconnectPeripheral(this.props.deviceId);
     }
     setBlocks (blocks) {
         this.blocks = blocks;
@@ -625,7 +636,7 @@ class Blocks extends React.Component {
         this.ScratchBlocks.refreshStatusButtons(this.workspace);
     }
     workspaceToCode () {
-        let code = null;
+        let code = '';
         try {
             const deviceType = this.props.deviceType;
             if (deviceType === 'arduino') {
@@ -705,8 +716,6 @@ class Blocks extends React.Component {
             onRequestCloseDeviceLibrary,
             onRequestCloseCustomProcedures,
             onSetCodeEditorValue,
-            // onSetUploadMode,
-            // onSetRealtimeMode,
             onSetSupportSwitchMode,
             toolboxXML,
             updateMetrics: updateMetricsProp,
@@ -766,6 +775,7 @@ Blocks.propTypes = {
     anyModalVisible: PropTypes.bool,
     canUseCloud: PropTypes.bool,
     customProceduresVisible: PropTypes.bool,
+    deviceData: PropTypes.instanceOf(Array).isRequired,
     deviceId: PropTypes.string,
     deviceType: PropTypes.string,
     deviceLibraryVisible: PropTypes.bool,
@@ -808,8 +818,6 @@ Blocks.propTypes = {
         collapse: PropTypes.bool
     }),
     onSetCodeEditorValue: PropTypes.func,
-    // onSetUploadMode: PropTypes.func,
-    // onSetRealtimeMode: PropTypes.func,
     onSetSupportSwitchMode: PropTypes.func,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
     toolboxXML: PropTypes.string,
@@ -859,6 +867,7 @@ const mapStateToProps = state => ({
         Object.keys(state.scratchGui.modals).some(key => state.scratchGui.modals[key]) ||
         state.scratchGui.mode.isFullScreen
     ),
+    deviceData: state.scratchGui.deviceData.deviceData,
     deviceId: state.scratchGui.device.deviceId,
     deviceType: state.scratchGui.device.deviceType,
     deviceLibraryVisible: state.scratchGui.modals.deviceLibrary,

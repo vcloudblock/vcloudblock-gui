@@ -72,6 +72,7 @@ import remixIcon from './icon--remix.svg';
 import dropdownCaret from './dropdown-caret.svg';
 import languageIcon from '../language-selector/language-icon.svg';
 import aboutIcon from './icon--about.svg';
+import realtimeConnectionIcon from './icon--realtime-connection.svg';
 
 import scratchLogo from './scratch-logo.svg';
 
@@ -80,7 +81,7 @@ import sharedMessages from '../../lib/shared-messages';
 import Switch from 'react-switch';
 import {setUploadMode, setRealtimeMode} from '../../reducers/program-mode';
 import {openConnectionModal, openDeviceLibrary} from '../../reducers/modals';
-import {clearConnectionModalPeripheralName} from '../../reducers/connection-modal';
+import {setRealtimeConnection, clearConnectionModalPeripheralName} from '../../reducers/connection-modal';
 
 import deviceIcon from './icon--device.svg';
 import unconnectedIcon from './icon--unconnected.svg';
@@ -500,6 +501,17 @@ class MenuBar extends React.Component {
                             </React.Fragment>
                         )}
                     </div>
+                    <div
+                        className={classNames(styles.menuBarItem)}
+                    >
+                        {this.props.isRealtimeMode ? (
+                            <img
+                                className={classNames(styles.deviceRealtimeConnection,
+                                    {[styles.disabled]: !(this.props.realtimeConnection && this.props.peripheralName)})}
+                                src={realtimeConnectionIcon}
+                            />
+                        ) : null}
+                    </div>
                 </div>
                 <div className={styles.fileMenu}>
                     {this.props.canEditTitle ? (
@@ -619,9 +631,9 @@ class MenuBar extends React.Component {
                     </div>
                     <Divider className={classNames(styles.divider)} />
                     <div
-                        className={classNames(styles.menuBarItem, this.props.isRealtimeMode && this.props.deviceName ?
-                            styles.hoverable : styles.disabled)}
-                        onMouseUp={this.props.isRealtimeMode && this.props.deviceName ?
+                        className={classNames(styles.menuBarItem, this.props.isRealtimeMode &&
+                            this.props.peripheralName ? styles.hoverable : styles.disabled)}
+                        onMouseUp={this.props.isRealtimeMode && this.props.peripheralName ?
                             this.handleDownloadFirmware : null}
                     >
                         <img
@@ -744,6 +756,7 @@ MenuBar.propTypes = {
     onShare: PropTypes.func,
     onToggleLoginOpen: PropTypes.func,
     projectTitle: PropTypes.string,
+    realtimeConnection: PropTypes.bool.isRequired,
     renderLogin: PropTypes.func,
     sessionExists: PropTypes.bool,
     shouldSaveBeforeTransition: PropTypes.func,
@@ -789,6 +802,7 @@ const mapStateToProps = (state, ownProps) => {
         locale: state.locales.locale,
         loginMenuOpen: loginMenuOpen(state),
         projectTitle: state.scratchGui.projectTitle,
+        realtimeConnection: state.scratchGui.connectionModal.realtimeConnection,
         sessionExists: state.session && typeof state.session.session !== 'undefined',
         username: user ? user.username : null,
         userOwnsProject: ownProps.authorUsername && user &&
@@ -819,12 +833,19 @@ const mapDispatchToProps = dispatch => ({
     onClickSave: () => dispatch(manualUpdateProject()),
     onClickSaveAsCopy: () => dispatch(saveProjectAsCopy()),
     onSeeCommunity: () => dispatch(setPlayer(true)),
-    onSetUploadMode: () => dispatch(setUploadMode()),
+    onSetUploadMode: () => {
+        dispatch(setUploadMode());
+        dispatch(setRealtimeConnection(false));
+    },
+    onSetRealtimeConnection: state => dispatch(setRealtimeConnection(state)),
     onSetRealtimeMode: () => dispatch(setRealtimeMode()),
     onSetStageLarge: () => dispatch(setStageSize(STAGE_SIZE_MODES.large)),
     onOpenConnectionModal: () => dispatch(openConnectionModal()),
     onOpenUploadProgress: () => dispatch(openUploadProgress()),
-    onDisconnect: () => dispatch(clearConnectionModalPeripheralName()),
+    onDisconnect: () => {
+        dispatch(clearConnectionModalPeripheralName());
+        dispatch(setRealtimeConnection(false));
+    },
     onNoPeripheralIsConnected: () => showAlertWithTimeout(dispatch, 'connectAPeripheralFirst'),
     onWorkspaceIsEmpty: () => showAlertWithTimeout(dispatch, 'workspaceIsEmpty'),
     onWorkspaceIsNotEmpty: () => showAlertWithTimeout(dispatch, 'workspaceIsNotEmpty'),

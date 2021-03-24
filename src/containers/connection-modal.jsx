@@ -5,7 +5,6 @@ import ConnectionModalComponent, {PHASES} from '../components/connection-modal/c
 import VM from 'openblock-vm';
 import analytics from '../lib/analytics';
 import extensionData from '../lib/libraries/extensions/index.jsx';
-import deviceData from '../lib/libraries/devices/index.jsx';
 import {connect} from 'react-redux';
 import {closeConnectionModal} from '../reducers/modals';
 import {setConnectionModalPeripheralName} from '../reducers/connection-modal';
@@ -24,7 +23,7 @@ class ConnectionModal extends React.Component {
         ]);
         this.state = {
             extension: extensionData.find(ext => ext.extensionId === props.deviceId) ||
-                deviceData.find(ext => ext.deviceId === props.deviceId),
+                this.props.deviceData.find(ext => ext.deviceId === props.deviceId),
             phase: props.vm.getPeripheralIsConnected(props.deviceId) ?
                 PHASES.connected : PHASES.scanning,
             peripheralName: null
@@ -44,7 +43,11 @@ class ConnectionModal extends React.Component {
         });
     }
     handleConnecting (peripheralId, peripheralName) {
-        this.props.vm.connectPeripheral(this.props.deviceId, peripheralId);
+        if (this.props.isRealtimeMode) {
+            this.props.vm.connectPeripheral(this.props.deviceId, peripheralId);
+        } else {
+            this.props.vm.connectPeripheral(this.props.deviceId, peripheralId, parseInt(this.props.baudrate, 10));
+        }
         this.setState({
             phase: PHASES.connecting,
             peripheralName: peripheralName
@@ -136,14 +139,20 @@ class ConnectionModal extends React.Component {
 }
 
 ConnectionModal.propTypes = {
+    baudrate: PropTypes.string.isRequired,
     deviceId: PropTypes.string.isRequired,
+    deviceData: PropTypes.instanceOf(Array).isRequired,
+    isRealtimeMode: PropTypes.bool,
     onCancel: PropTypes.func.isRequired,
     onConnected: PropTypes.func.isRequired,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
 const mapStateToProps = state => ({
-    deviceId: state.scratchGui.device.deviceId
+    baudrate: state.scratchGui.hardwareConsole.baudrate,
+    deviceData: state.scratchGui.deviceData.deviceData,
+    deviceId: state.scratchGui.device.deviceId,
+    isRealtimeMode: state.scratchGui.programMode.isRealtimeMode
 });
 
 const mapDispatchToProps = dispatch => ({

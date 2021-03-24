@@ -10,7 +10,8 @@ import HardwareComponent from '../components/hardware/hardware.jsx';
 class Hardware extends React.Component {
     constructor (props) {
         super(props);
-        bindAll(this);
+        bindAll(this, [
+        ]);
     }
 
     render () {
@@ -24,6 +25,9 @@ class Hardware extends React.Component {
         );
     }
 }
+
+Hardware.propTypes = {
+};
 
 const mapStateToProps = state => ({
     stageSizeMode: state.scratchGui.stageSize.stageSize

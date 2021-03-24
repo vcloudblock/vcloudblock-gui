@@ -8,7 +8,6 @@ import {connect} from 'react-redux';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 
 import extensionLibraryContent from '../lib/libraries/extensions/index.jsx';
-import deviceData from '../lib/libraries/devices/index.jsx';
 
 import LibraryComponent from '../components/library/library.jsx';
 import extensionIcon from '../components/action-menu/icon--sprite.svg';
@@ -77,38 +76,20 @@ class ExtensionLibrary extends React.PureComponent {
     }
 
     componentDidMount () {
-        if (this.props.deviceId) {
+        if (this.props.isRealtimeMode === false) {
             this.updateDeviceExtensions();
         }
     }
 
     updateDeviceExtensions () {
-        this.props.vm.extensionManager.getLocalDeviceExtensionsList()
+        this.props.vm.extensionManager.getDeviceExtensionsList()
             .then(data => this.setState({deviceExtensions: data}));
-        // this.props.vm.extensionManager.getRemoteDeviceExtensionsList()
-        //     .then(data => this.setState({deviceExtensions: data}));
     }
 
     handleItemSelect (item) {
         const id = item.extensionId;
 
-        if (this.props.deviceId) {
-            if (id && !item.disabled) {
-                if (this.props.vm.extensionManager.isDeviceExtensionLoaded(id)) {
-                    this.props.vm.extensionManager.unloadDeviceExtension(id).then(() => {
-                        this.updateDeviceExtensions();
-                    });
-                } else {
-                    this.props.vm.extensionManager.loadDeviceExtension(id).then(() => {
-                        this.updateDeviceExtensions();
-                    })
-                        .catch(err => {
-                        // TODO add a alet device extension load failed. and change the state to bar to failed state
-                            console.error(`err = ${err}`); // eslint-disable-line no-console
-                        });
-                }
-            }
-        } else {
+        if (this.props.isRealtimeMode) {
             let url = item.extensionURL ? item.extensionURL : id;
             if (!item.disabled && !id) {
                 // eslint-disable-next-line no-alert
@@ -123,35 +104,49 @@ class ExtensionLibrary extends React.PureComponent {
                     });
                 }
             }
+        } else if (id && !item.disabled) {
+            if (this.props.vm.extensionManager.isDeviceExtensionLoaded(id)) {
+                this.props.vm.extensionManager.unloadDeviceExtension(id).then(() => {
+                    this.updateDeviceExtensions();
+                });
+            } else {
+                this.props.vm.extensionManager.loadDeviceExtension(id).then(() => {
+                    this.updateDeviceExtensions();
+                })
+                    .catch(err => {
+                        // TODO add a alet device extension load failed. and change the state to bar to failed state
+                        console.error(`err = ${err}`); // eslint-disable-line no-console
+                    });
+            }
         }
     }
     render () {
         let extensionLibraryThumbnailData = [];
-        const device = deviceData.find(dev => dev.deviceId === this.props.deviceId);
+        const device = this.props.deviceData.find(dev => dev.deviceId === this.props.deviceId);
 
-        if (this.props.deviceId) {
-            extensionLibraryThumbnailData = this.state.deviceExtensions.filter(
-                extension => extension.supportDevice.includes(this.props.deviceId) ||
-                    extension.supportDevice.includes(device.baseDeviceId))
-                .map(extension => ({
-                    rawURL: extension.iconURL || extensionIcon,
-                    ...extension
-                }));
-        } else {
+        if (this.props.isRealtimeMode) {
             extensionLibraryThumbnailData = extensionLibraryContent.map(extension => ({
                 rawURL: extension.iconURL || extensionIcon,
                 ...extension
             }));
+        } else {
+            extensionLibraryThumbnailData = this.state.deviceExtensions.filter(
+                extension => extension.supportDevice.includes(this.props.deviceId) ||
+                    extension.supportDevice.includes(device.deviceExtensionsCompatible))
+                .map(extension => ({
+                    rawURL: extension.iconURL || extensionIcon,
+                    ...extension
+                }));
         }
 
         return (
             <LibraryComponent
-                autoClose={!this.props.deviceId}
+                autoClose={this.props.isRealtimeMode}
                 data={extensionLibraryThumbnailData}
                 filterable
                 tags={tagListPrefix}
                 id="extensionLibrary"
-                isUnloadble={!!this.props.deviceId}
+                isUnloadble={!this.props.isRealtimeMode}
                 title={this.props.intl.formatMessage(messages.extensionTitle)}
                 visible={this.props.visible}
                 onItemSelected={this.handleItemSelect}
@@ -162,8 +157,10 @@ class ExtensionLibrary extends React.PureComponent {
 }
 
 ExtensionLibrary.propTypes = {
+    deviceData: PropTypes.instanceOf(Array).isRequired,
     deviceId: PropTypes.string,
     intl: intlShape.isRequired,
+    isRealtimeMode: PropTypes.bool,
     onCategorySelected: PropTypes.func,
     onRequestClose: PropTypes.func,
     visible: PropTypes.bool,
@@ -171,7 +168,9 @@ ExtensionLibrary.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    deviceId: state.scratchGui.device.deviceId
+    deviceData: state.scratchGui.deviceData.deviceData,
+    deviceId: state.scratchGui.device.deviceId,
+    isRealtimeMode: state.scratchGui.programMode.isRealtimeMode
 });
 
 export default compose(

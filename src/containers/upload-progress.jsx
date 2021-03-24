@@ -10,7 +10,6 @@ import {defineMessages} from 'react-intl';
 import VM from 'openblock-vm';
 // eslint-disable-next-line no-unused-vars
 import analytics from '../lib/analytics';
-import deviceData from '../lib/libraries/devices/index.jsx';
 import {closeUploadProgress} from '../reducers/modals';
 import {showAlertWithTimeout} from '../reducers/alerts';
 
@@ -35,7 +34,7 @@ class UploadProgress extends React.Component {
             'handleUploadSuccess'
         ]);
         this.state = {
-            extension: deviceData.find(dev => dev.deviceId === props.deviceId),
+            extension: this.props.deviceData.find(dev => dev.deviceId === props.deviceId),
             phase: PHASES.uploading,
             peripheralName: null,
             text: ''
@@ -97,6 +96,7 @@ class UploadProgress extends React.Component {
 }
 
 UploadProgress.propTypes = {
+    deviceData: PropTypes.instanceOf(Array).isRequired,
     deviceId: PropTypes.string.isRequired,
     intl: intlShape.isRequired,
     vm: PropTypes.instanceOf(VM).isRequired,
@@ -106,6 +106,7 @@ UploadProgress.propTypes = {
 };
 
 const mapStateToProps = state => ({
+    deviceData: state.scratchGui.deviceData.deviceData,
     deviceId: state.scratchGui.device.deviceId
 });
 

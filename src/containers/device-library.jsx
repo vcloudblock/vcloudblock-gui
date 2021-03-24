@@ -2,9 +2,13 @@ import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
 import VM from 'openblock-vm';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 
-import deviceLibraryContent from '../lib/libraries/devices/index.jsx';
+import {setDeviceData} from '../reducers/device-data';
+
+import {makeDeviceLibrary} from '../lib/libraries/devices/index.jsx';
 
 import LibraryComponent from '../components/library/library.jsx';
 import deviceIcon from '../components/action-menu/icon--sprite.svg';
@@ -43,31 +47,40 @@ class DeviceLibrary extends React.PureComponent {
             'handleItemSelect'
         ]);
     }
+    componentDidMount () {
+        this.props.vm.extensionManager.getDeviceList().then(data => {
+            if (data) {
+                this.props.onSetDeviceData(makeDeviceLibrary(data));
+            }
+        });
+    }
+
     handleItemSelect (item) {
         const id = item.deviceId;
         const deviceType = item.type;
-        let url = item.deviceURL ? item.deviceURL : id;
-        const extensions = item.extensions;
-        if (!item.disabled && !id) {
-            // eslint-disable-next-line no-alert
-            url = prompt(this.props.intl.formatMessage(messages.deviceUrl));
-        }
+        const pnpidList = item.pnpidList;
+        const deviceExtensions = item.deviceExtensions;
+
         if (id && !item.disabled) {
-            if (this.props.vm.extensionManager.isDeviceLoaded(url)) {
+            if (this.props.vm.extensionManager.isDeviceLoaded(id)) {
                 this.props.onDeviceSelected(id);
             } else {
                 this.props.onDeviceChanged();
-                this.props.vm.extensionManager.loadDeviceURL(url, deviceType).then(() => {
-                    this.props.vm.extensionManager.getLocalDeviceExtensionsList().then(() => {
-                        this.props.vm.installDeviceExtension(extensions);
+                this.props.vm.extensionManager.loadDeviceURL(id, deviceType, pnpidList).then(() => {
+                    this.props.vm.extensionManager.getDeviceExtensionsList().then(() => {
+                        // TODO: Add a event for install device extension
+                        // the large extensions will take many times to load
+                        // A loading interface should be launched.
+                        this.props.vm.installDeviceExtensions(deviceExtensions);
                     });
                     this.props.onDeviceSelected(id);
                 });
             }
         }
     }
+
     render () {
-        const deviceLibraryThumbnailData = deviceLibraryContent.map(device => ({
+        const deviceLibraryThumbnailData = this.props.deviceData.map(device => ({
             rawURL: device.iconURL || deviceIcon,
             ...device
         }));
@@ -88,12 +101,28 @@ class DeviceLibrary extends React.PureComponent {
 }
 
 DeviceLibrary.propTypes = {
+    deviceData: PropTypes.instanceOf(Array).isRequired,
     intl: intlShape.isRequired,
     onDeviceChanged: PropTypes.func,
     onDeviceSelected: PropTypes.func,
     onRequestClose: PropTypes.func,
+    onSetDeviceData: PropTypes.func.isRequired,
     visible: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired // eslint-disable-line react/no-unused-prop-types
 };
 
-export default injectIntl(DeviceLibrary);
+const mapStateToProps = state => ({
+    deviceData: state.scratchGui.deviceData.deviceData
+});
+
+const mapDispatchToProps = dispatch => ({
+    onSetDeviceData: data => dispatch(setDeviceData(data))
+});
+
+export default compose(
+    injectIntl,
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )
+)(DeviceLibrary);

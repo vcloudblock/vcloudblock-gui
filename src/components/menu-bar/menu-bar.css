@@ -212,6 +212,11 @@
     margin-right: 0.35rem;
 }
 
+.device-realtime-connection {
+    height: 20px;
+    margin-right: 0.35rem;
+}
+
 .account-nav-menu, .mystuff-button {
     padding: 0 .25rem;
     display: flex;
