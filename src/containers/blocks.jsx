@@ -505,10 +505,8 @@ class Blocks extends React.Component {
         if (!(supportUploadMode && supportRealtimeMode)) {
             if (supportUploadMode) {
                 this.props.vm.runtime.setRealtimeMode(false);
-                // this.props.onSetUploadMode();
             } else {
                 this.props.vm.runtime.setRealtimeMode(true);
-                // this.props.onSetRealtimeMode();
             }
             this.props.onSetSupportSwitchMode(false);
         } else {
