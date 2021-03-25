@@ -76,6 +76,14 @@ const getStageDimensions = (stageSize, isFullScreen) => {
     stageDimensions.height = Math.round(stageDimensions.height);
     stageDimensions.width = Math.round(stageDimensions.width);
 
+    // When STAGE_DISPLAY_SIZES.hide the width and height will be Nan, set them to 0.
+    if (isNaN(stageDimensions.width)) {
+        stageDimensions.width = 0;
+    }
+    if (isNaN(stageDimensions.height)) {
+        stageDimensions.height = 0;
+    }
+
     return stageDimensions;
 };
 
