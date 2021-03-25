@@ -9,22 +9,28 @@ import styles from './code-editor.css';
 
 const CodeEditorComponent = props => {
     const {
+        containerRef,
         language,
         value,
         options,
         width,
+        height,
         onChange,
         editorDidMount,
         theme,
         ...componentProps
     } = props;
     return (
-        <Box className={styles.codeEditor}>
+        <Box
+            className={styles.codeEditor}
+            componentRef={containerRef}
+        >
             <MonacoEditor
                 language={language}
                 value={value}
                 options={options}
                 width={width}
+                height={height}
                 onChange={onChange}
                 editorDidMount={editorDidMount}
                 theme={theme}
@@ -35,6 +41,7 @@ const CodeEditorComponent = props => {
 };
 
 CodeEditorComponent.propTypes = {
+    containerRef: PropTypes.func,
     language: PropTypes.string,
     value: PropTypes.string,
     options: PropTypes.shape({
