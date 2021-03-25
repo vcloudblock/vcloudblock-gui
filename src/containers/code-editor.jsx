@@ -44,10 +44,12 @@ class CodeEditor extends React.Component {
     }
 
     containerRef (el) {
-        this.containerElement = el;
-        this.setState({
-            clientHeight: this.containerElement.getBoundingClientRect().height
-        });
+        if (el){
+            this.containerElement = el;
+            this.setState({
+                clientHeight: this.containerElement.getBoundingClientRect().height
+            });
+        }
     }
 
     render () {

@@ -85,7 +85,8 @@ class Stage extends React.Component {
             this.props.isFullScreen !== nextProps.isFullScreen ||
             this.state.question !== nextState.question ||
             this.props.micIndicator !== nextProps.micIndicator ||
-            this.props.isStarted !== nextProps.isStarted;
+            this.props.isStarted !== nextProps.isStarted ||
+            this.props.isRealtimeMode !== nextProps.isRealtimeMode;
     }
     componentDidUpdate (prevProps) {
         if (this.props.isColorPicking && !prevProps.isColorPicking) {
@@ -430,6 +431,7 @@ class Stage extends React.Component {
 Stage.propTypes = {
     isColorPicking: PropTypes.bool,
     isFullScreen: PropTypes.bool.isRequired,
+    isRealtimeMode: PropTypes.bool,
     isStarted: PropTypes.bool,
     micIndicator: PropTypes.bool,
     onActivateColorPicker: PropTypes.func,
@@ -446,6 +448,7 @@ Stage.defaultProps = {
 const mapStateToProps = state => ({
     isColorPicking: state.scratchGui.colorPicker.active,
     isFullScreen: state.scratchGui.mode.isFullScreen,
+    isRealtimeMode: state.scratchGui.programMode.isRealtimeMode,
     isStarted: state.scratchGui.vmStatus.started,
     micIndicator: state.scratchGui.micIndicator,
     // Do not use editor drag style in fullscreen or player mode.
