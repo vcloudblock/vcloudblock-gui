@@ -334,40 +334,42 @@ const sound = function (isInitialSetup, isStage, targetId, soundName) {
 const events = function (isInitialSetup, isStage, targetId, isRealtimeMode) {
     return `
     <category name="%{BKY_CATEGORY_EVENTS}" id="events" colour="#FFD500" secondaryColour="#CC9900">
-        ${isRealtimeMode ?
-        `<block type="event_whenflagclicked"/>
-        <block type="event_whenkeypressed">
-        </block>
-        ${isStage ? `
-            <block type="event_whenstageclicked"/>
-        ` : `
-            <block type="event_whenthisspriteclicked"/>
-        `}
-        <block type="event_whenbackdropswitchesto">
-        </block>
-        ${blockSeparator}
-        <block type="event_whengreaterthan">
-            <value name="VALUE">
-                <shadow type="math_number">
-                    <field name="NUM">10</field>
-                </shadow>
-            </value>
-        </block>
-        ${blockSeparator}
-        <block type="event_whenbroadcastreceived">
-        </block>
-        <block type="event_broadcast">
-            <value name="BROADCAST_INPUT">
+        ${isRealtimeMode ? `
+            <block type="event_whenflagclicked"/>
+            <block type="event_whenkeypressed">
+            </block>
+            ${isStage ? `
+                <block type="event_whenstageclicked"/>
+            ` : `
+                <block type="event_whenthisspriteclicked"/>
+            `}
+            <block type="event_whenbackdropswitchesto">
+            </block>
+            ${blockSeparator}
+            <block type="event_whengreaterthan">
+                <value name="VALUE">
+                    <shadow type="math_number">
+                        <field name="NUM">10</field>
+                    </shadow>
+                </value>
+            </block>
+            ${blockSeparator}
+            <block type="event_whenbroadcastreceived">
+            </block>
+            <block type="event_broadcast">
+                <value name="BROADCAST_INPUT">
+                    <shadow type="event_broadcast_menu"></shadow>
+                </value>
+            </block>
+            <block type="event_broadcastandwait">
+                <value name="BROADCAST_INPUT">
                 <shadow type="event_broadcast_menu"></shadow>
-            </value>
-        </block>
-        <block type="event_broadcastandwait">
-            <value name="BROADCAST_INPUT">
-              <shadow type="event_broadcast_menu"></shadow>
-            </value>
-        </block>
-        ${categorySeparator}` :
-        `<block type="event_whenarduinobegin"/>`}
+                </value>
+            </block>
+        ` : `
+            <block type="event_whenarduinobegin"/>
+        `}
+        ${categorySeparator}
     </category>
     `;
 };
@@ -396,24 +398,26 @@ const control = function (isInitialSetup, isStage, targetId, isRealtimeMode) {
         <block type="control_if_else"/>
         <block id="wait_until" type="control_wait_until"/>
         <block id="repeat_until" type="control_repeat_until"/>
-        ${blockSeparator}
-        <block type="control_stop"/>
-        ${blockSeparator}
-        ${isStage ? `
-            <block type="control_create_clone_of">
-                <value name="CLONE_OPTION">
-                    <shadow type="control_create_clone_of_menu"/>
-                </value>
-            </block>
-        ` : `
-            <block type="control_start_as_clone"/>
-            <block type="control_create_clone_of">
-                <value name="CLONE_OPTION">
-                    <shadow type="control_create_clone_of_menu"/>
-                </value>
-            </block>
-            <block type="control_delete_this_clone"/>
-        `}
+        ${isRealtimeMode ? `
+            ${blockSeparator}
+            <block type="control_stop"/>
+            ${blockSeparator}
+            ${isStage ? `
+                <block type="control_create_clone_of">
+                    <value name="CLONE_OPTION">
+                        <shadow type="control_create_clone_of_menu"/>
+                    </value>
+                </block>
+            ` : `
+                <block type="control_start_as_clone"/>
+                <block type="control_create_clone_of">
+                    <value name="CLONE_OPTION">
+                        <shadow type="control_create_clone_of_menu"/>
+                    </value>
+                </block>
+                <block type="control_delete_this_clone"/>
+            `}
+        ` : null}
         ${categorySeparator}
     </category>
     `;
