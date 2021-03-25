@@ -13,6 +13,9 @@ import {setRunningState, setTurboState, setStartedState} from '../reducers/vm-st
 import {showDeviceAlert, showDeviceRealtimeAlert} from '../reducers/alerts';
 import {setRealtimeConnection} from '../reducers/connection-modal';
 import {updateMicIndicator} from '../reducers/mic-indicator';
+import {setDeviceData} from '../reducers/device-data';
+
+import {makeDeviceLibrary} from '../lib/libraries/devices/index.jsx';
 
 /*
  * Higher Order Component to manage events emitted by the VM
@@ -60,6 +63,12 @@ const vmListenerHOC = function (WrappedComponent) {
                 document.addEventListener('keyup', this.handleKeyUp);
             }
             this.props.vm.postIOData('userData', {username: this.props.username});
+            // Update device list
+            this.props.vm.extensionManager.getDeviceList().then(data => {
+                if (data) {
+                    this.props.onSetDeviceData(makeDeviceLibrary(data));
+                }
+            });
         }
         componentDidUpdate (prevProps) {
             if (prevProps.username !== this.props.username) {
@@ -169,6 +178,7 @@ const vmListenerHOC = function (WrappedComponent) {
                 onSetRealtimeConnection,
                 onShowDeviceAlert,
                 onShowDeviceRealtimeAlert,
+                onSetDeviceData,
                 /* eslint-enable no-unused-vars */
                 ...props
             } = this.props;
@@ -189,6 +199,7 @@ const vmListenerHOC = function (WrappedComponent) {
         onProjectRunStop: PropTypes.func.isRequired,
         onProjectSaved: PropTypes.func.isRequired,
         onRuntimeStarted: PropTypes.func.isRequired,
+        onSetDeviceData: PropTypes.func.isRequired,
         onSetRealtimeConnection: PropTypes.func.isRequired,
         onShowDeviceAlert: PropTypes.func.isRequired,
         onShowDeviceRealtimeAlert: PropTypes.func.isRequired,
@@ -241,6 +252,7 @@ const vmListenerHOC = function (WrappedComponent) {
         onShowDeviceRealtimeAlert: device => {
             dispatch(showDeviceRealtimeAlert(device));
         },
+        onSetDeviceData: data => dispatch(setDeviceData(data)),
         onSetRealtimeConnection: state => {
             dispatch(setRealtimeConnection(state));
         },
