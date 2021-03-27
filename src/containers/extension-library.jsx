@@ -83,7 +83,11 @@ class ExtensionLibrary extends React.PureComponent {
 
     updateDeviceExtensions () {
         this.props.vm.extensionManager.getDeviceExtensionsList()
-            .then(data => this.setState({deviceExtensions: data}));
+            .then(data => {
+                if (data) {
+                    this.setState({deviceExtensions: data});
+                }
+            });
     }
 
     handleItemSelect (item) {
@@ -144,7 +148,7 @@ class ExtensionLibrary extends React.PureComponent {
                 autoClose={this.props.isRealtimeMode}
                 data={extensionLibraryThumbnailData}
                 filterable
-                tags={tagListPrefix}
+                tags={this.props.isRealtimeMode ? [] : tagListPrefix}
                 id="extensionLibrary"
                 isUnloadble={!this.props.isRealtimeMode}
                 title={this.props.intl.formatMessage(messages.extensionTitle)}

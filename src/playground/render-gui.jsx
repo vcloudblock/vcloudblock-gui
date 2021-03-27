@@ -8,7 +8,7 @@ import HashParserHOC from '../lib/hash-parser-hoc.jsx';
 import log from '../lib/log.js';
 
 const onClickLogo = () => {
-    window.location = 'https://openblock.github.io/wiki/';
+    window.location = 'https://openblockcc.github.io/wiki/';
 };
 
 const handleTelemetryModalCancel = () => {

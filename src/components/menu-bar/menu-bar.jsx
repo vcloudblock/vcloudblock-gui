@@ -349,6 +349,7 @@ class MenuBar extends React.Component {
     handleDownloadFirmware () {
         if (this.props.deviceId) {
             this.props.vm.uploadFirmwareToPeripheral(this.props.deviceId);
+            this.props.onSetRealtimeConnection(false);
             this.props.onOpenUploadProgress();
         } else {
             this.props.onNoPeripheralIsConnected();
@@ -766,6 +767,7 @@ MenuBar.propTypes = {
     stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
     vm: PropTypes.instanceOf(VM).isRequired,
     onSetUploadMode: PropTypes.func,
+    onSetRealtimeConnection: PropTypes.func.isRequired,
     onSetRealtimeMode: PropTypes.func,
     onOpenConnectionModal: PropTypes.func,
     onOpenUploadProgress: PropTypes.func,
