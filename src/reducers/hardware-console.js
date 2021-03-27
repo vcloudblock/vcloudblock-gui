@@ -5,7 +5,7 @@ const SWITCH_AUTOSCROLL = 'scratch-gui/hardware-console/switchAutoScroll';
 const SWITCH_PAUSE = 'scratch-gui/hardware-console/switchPause';
 
 const initialState = {
-    baudrate: '9600',
+    baudrate: '1200',
     eol: 'lfAndCr',
     isHexForm: false,
     isAutoScroll: true,

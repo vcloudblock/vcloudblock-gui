@@ -167,6 +167,7 @@ const HardwareConsoleComponent = props => {
                                     type="checkbox"
                                     name="hexform"
                                     checked={isHexForm}
+                                    readOnly
                                 />
                             </MenuItem>
                             <MenuItem
@@ -183,6 +184,7 @@ const HardwareConsoleComponent = props => {
                                     type="checkbox"
                                     name="autoScroll"
                                     checked={isAutoScroll}
+                                    readOnly
                                 />
                             </MenuItem>
                         </MenuSection>
