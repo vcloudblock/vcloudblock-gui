@@ -29,6 +29,7 @@ import {updateMetrics} from '../reducers/workspace-metrics';
 import {setCodeEditorValue} from '../reducers/code';
 import {setDeviceId, setDeviceName, setDeviceType} from '../reducers/device';
 import {setSupportSwitchMode} from '../reducers/program-mode';
+import {setBaudrate} from '../reducers/hardware-console';
 
 import {
     activateTab,
@@ -497,6 +498,9 @@ class Blocks extends React.Component {
 
         const dev = this.props.deviceData.find(ext => ext.deviceId === device);
         this.props.onDeviceSelected(dev.deviceId, dev.name, dev.type);
+        if (dev.defaultBaudRate) {
+            this.props.onSetBaudrate(dev.defaultBaudRate);
+        }
 
         const supportUploadMode = dev.programMode.includes('upload');
         const supportRealtimeMode = dev.programMode.includes('realtime');
@@ -609,7 +613,9 @@ class Blocks extends React.Component {
         });
     }
     handleDeviceChanged () {
-        this.props.vm.disconnectPeripheral(this.props.deviceId);
+        if (this.props.peripheralName) {
+            this.props.vm.disconnectPeripheral(this.props.deviceId);
+        }
     }
     setBlocks (blocks) {
         this.blocks = blocks;
@@ -776,6 +782,7 @@ Blocks.propTypes = {
     deviceData: PropTypes.instanceOf(Array).isRequired,
     deviceId: PropTypes.string,
     deviceType: PropTypes.string,
+    peripheralName: PropTypes.string,
     deviceLibraryVisible: PropTypes.bool,
     extensionLibraryVisible: PropTypes.bool,
     isRealtimeMode: PropTypes.bool,
@@ -815,6 +822,7 @@ Blocks.propTypes = {
         comments: PropTypes.bool,
         collapse: PropTypes.bool
     }),
+    onSetBaudrate: PropTypes.func.isRequired,
     onSetCodeEditorValue: PropTypes.func,
     onSetSupportSwitchMode: PropTypes.func,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
@@ -868,6 +876,7 @@ const mapStateToProps = state => ({
     deviceData: state.scratchGui.deviceData.deviceData,
     deviceId: state.scratchGui.device.deviceId,
     deviceType: state.scratchGui.device.deviceType,
+    peripheralName: state.scratchGui.connectionModal.peripheralName,
     deviceLibraryVisible: state.scratchGui.modals.deviceLibrary,
     extensionLibraryVisible: state.scratchGui.modals.extensionLibrary,
     isRealtimeMode: state.scratchGui.programMode.isRealtimeMode,
@@ -903,6 +912,7 @@ const mapDispatchToProps = dispatch => ({
     onRequestCloseCustomProcedures: data => {
         dispatch(deactivateCustomProcedures(data));
     },
+    onSetBaudrate: baudrate => dispatch(setBaudrate(baudrate)),
     onToolboxWillUpdate: () => {
         dispatch(setIsUpdating(true));
     },
