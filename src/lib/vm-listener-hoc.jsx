@@ -10,7 +10,7 @@ import {updateBlockDrag} from '../reducers/block-drag';
 import {updateMonitors} from '../reducers/monitors';
 import {setProjectChanged, setProjectUnchanged} from '../reducers/project-changed';
 import {setRunningState, setTurboState, setStartedState} from '../reducers/vm-status';
-import {showDeviceAlert, showDeviceRealtimeAlert} from '../reducers/alerts';
+import {showDeviceAlert, showDeviceRealtimeAlert, clearDeviceRealtimeAlert} from '../reducers/alerts';
 import {setRealtimeConnection} from '../reducers/connection-modal';
 import {updateMicIndicator} from '../reducers/mic-indicator';
 import {setDeviceData} from '../reducers/device-data';
@@ -151,6 +151,7 @@ const vmListenerHOC = function (WrappedComponent) {
             const device = this.props.deviceData.find(dev => dev.deviceId === data.deviceId);
             device.message = data.message;
             if (device) {
+                this.props.onClearDeviceRealtimeAlert(device);
                 this.props.onSetRealtimeConnection(true);
             }
         }
@@ -178,6 +179,7 @@ const vmListenerHOC = function (WrappedComponent) {
                 onSetRealtimeConnection,
                 onShowDeviceAlert,
                 onShowDeviceRealtimeAlert,
+                onClearDeviceRealtimeAlert,
                 onSetDeviceData,
                 /* eslint-enable no-unused-vars */
                 ...props
@@ -203,6 +205,7 @@ const vmListenerHOC = function (WrappedComponent) {
         onSetRealtimeConnection: PropTypes.func.isRequired,
         onShowDeviceAlert: PropTypes.func.isRequired,
         onShowDeviceRealtimeAlert: PropTypes.func.isRequired,
+        onClearDeviceRealtimeAlert: PropTypes.func.isRequired,
         onTargetsUpdate: PropTypes.func.isRequired,
         onTurboModeOff: PropTypes.func.isRequired,
         onTurboModeOn: PropTypes.func.isRequired,
@@ -251,6 +254,9 @@ const vmListenerHOC = function (WrappedComponent) {
         },
         onShowDeviceRealtimeAlert: device => {
             dispatch(showDeviceRealtimeAlert(device));
+        },
+        onClearDeviceRealtimeAlert: device => {
+            dispatch(clearDeviceRealtimeAlert(device));
         },
         onSetDeviceData: data => dispatch(setDeviceData(data)),
         onSetRealtimeConnection: state => {

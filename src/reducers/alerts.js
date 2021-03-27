@@ -4,6 +4,7 @@ import {AlertTypes, AlertLevels} from '../lib/alerts/index.jsx';
 const SHOW_ALERT = 'scratch-gui/alerts/SHOW_ALERT';
 const SHOW_DEVICE_ALERT = 'scratch-gui/alerts/SHOW_DEVICE_ALERT';
 const SHOW_DEVICE_REALTIME_ALERT = 'scratch-gui/alerts/SHOW_DEVICE_REALTIME_ALERT';
+const CLEAR_DEVICE_REALTIME_ALERT = 'scratch-gui/alerts/CLEAR_DEVICE_REALTIME_ALERT';
 const CLOSE_ALERT = 'scratch-gui/alerts/CLOSE_ALERT';
 const CLOSE_ALERTS_WITH_ID = 'scratch-gui/alerts/CLOSE_ALERTS_WITH_ID';
 const CLOSE_ALERT_WITH_ID = 'scratch-gui/alerts/CLOSE_ALERT_WITH_ID';
@@ -113,6 +114,14 @@ const reducer = function (state, action) {
             alertsList: newList
         });
     }
+    case CLEAR_DEVICE_REALTIME_ALERT: {
+        const newList = state.alertsList.filter(curAlert => (
+            curAlert.extensionId !== `${action.device.deviceId}alert`
+        ));
+        return Object.assign({}, state, {
+            alertsList: newList
+        });
+    }
     case CLOSE_ALERT_WITH_ID:
     case CLOSE_ALERT: {
         if (action.alertId) {
@@ -216,6 +225,19 @@ const showDeviceRealtimeAlert = function (device) {
 };
 
 /**
+ * Action creator to clear a device realtime connection alert with the given input data.
+ *
+ * @param {object} device - full device data for the alert
+ * @return {object} - an object to be passed to the reducer.
+ */
+const clearDeviceRealtimeAlert = function (device) {
+    return {
+        type: CLEAR_DEVICE_REALTIME_ALERT,
+        device
+    };
+};
+
+/**
  * Function to dispatch showing an alert, with optional
  * timeout to make it close/go away.
  *
@@ -244,5 +266,6 @@ export {
     showAlertWithTimeout,
     showDeviceAlert,
     showDeviceRealtimeAlert,
+    clearDeviceRealtimeAlert,
     showStandardAlert
 };
