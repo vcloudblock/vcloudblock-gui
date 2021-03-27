@@ -28,6 +28,10 @@ import microbitIconURL from './microbit/microbit.png';
 import microbitConnectionIconURLL from './microbit/microbit-illustration.svg';
 import microbitConnectionSmallIconURL from './microbit/microbit-small.svg';
 
+import microbitV2IconURL from './microbitV2/microbitV2.png';
+import microbitV2ConnectionIconURLL from './microbitV2/microbitV2-illustration.svg';
+import microbitV2ConnectionSmallIconURL from './microbitV2/microbitV2-small.svg';
+
 import maixduinoIconURL from './maixduino/maixduino.png';
 import maixduinoConnectionIconURLL from './maixduino/maixduino-illustration.svg';
 import maixduinoConnectionSmallIconURL from './maixduino/maixduino-small.svg';
@@ -243,6 +247,43 @@ const deviceData = [
         useAutoScan: false,
         connectionIconURL: microbitConnectionIconURLL,
         connectionSmallIconURL: microbitConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their microbit."
+                id="gui.device.microbit.connectingMessage"
+            />
+        ),
+        baseToolBoxXml: microbitBaseToolBox,
+        programMode: ['upload'],
+        programLanguage: ['block', 'python'],
+        tags: ['microPython'],
+        helpLink: 'https://microbit.org/get-started/first-steps/introduction/'
+    },
+    {
+        name: 'Micro:bit V2',
+        deviceId: 'microbitV2',
+        manufactor: 'microbit.org',
+        leanMore: 'https://microbit.org/',
+        type: 'microbit',
+        iconURL: microbitV2IconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="Upgraded processor, built-In speaker and microphone, touch sensitive logo."
+                description="Description for the 'micro:bit V2' device"
+                id="gui.device.microbitV2.description"
+            />
+        ),
+        featured: true,
+        disabled: true,
+        bluetoothRequired: false,
+        serialportRequired: true,
+        defaultBaudRate: '115200',
+        internetConnectionRequired: false,
+        launchPeripheralConnectionFlow: true,
+        useAutoScan: false,
+        connectionIconURL: microbitV2ConnectionIconURLL,
+        connectionSmallIconURL: microbitV2ConnectionSmallIconURL,
         connectingMessage: (
             <FormattedMessage
                 defaultMessage="Connecting"
