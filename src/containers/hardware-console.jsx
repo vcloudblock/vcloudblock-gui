@@ -125,7 +125,7 @@ class HardwareConsole extends React.Component {
                     consoleArray: this._recivceBuffer
                 });
                 this._updateTimeoutID = null;
-            }, 100);
+            }, 50);
         }
     }
 
