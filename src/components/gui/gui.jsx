@@ -199,6 +199,7 @@ const GUIComponent = props => {
                         className={styles.alertsContainer}
                     />
                 ) : null}
+                // TODO 添加一个软件和插件升级提示窗
                 {connectionModalVisible ? (
                     <ConnectionModal
                         vm={vm}
