@@ -2,10 +2,10 @@ import {defineMessages} from 'react-intl';
 import sharedMessages from '../shared-messages';
 
 let messages = defineMessages({
-    meow: {
-        defaultMessage: 'Meow',
-        description: 'Name for the meow sound',
-        id: 'gui.defaultProject.meow'
+    biberbi: {
+        defaultMessage: 'Biberbi',
+        description: 'Name for the biberbi sound',
+        id: 'gui.defaultProject.biberbi'
     },
     variable: {
         defaultMessage: 'my variable',
@@ -89,13 +89,13 @@ const projectData = translateFunction => {
                 ],
                 sounds: [
                     {
-                        assetId: '83c36d806dc92327b9e7049a565c6bff',
-                        name: translator(messages.meow),
+                        assetId: '4e080acae1c3dc65eef30f07c2b0d4a5',
+                        name: translator(messages.biberbi),
                         dataFormat: 'wav',
                         format: '',
                         rate: 22050,
                         sampleCount: 18688,
-                        md5ext: '83c36d806dc92327b9e7049a565c6bff.wav'
+                        md5ext: '4e080acae1c3dc65eef30f07c2b0d4a5.wav'
                     }
                 ],
                 volume: 100,
