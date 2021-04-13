@@ -140,7 +140,7 @@ jobs:
       - run: |
           echo export RELEASE_VERSION="0.1.0-prerelease.$(date +'%Y%m%d%H%M%S')" >> $BASH_ENV
           echo export NPM_TAG=latest >> $BASH_ENV
-          if [ "$CIRCLE_BRANCH" == "master" ]
+          if [ "$CIRCLE_BRANCH" == "main" ]
             then echo export NPM_TAG=stable >> $BASH_ENV
           fi
           if [[ "$CIRCLE_BRANCH" == hotfix/* ]] # double brackets are important for matching the wildcard
@@ -222,7 +222,7 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
                 - develop
                 - /^hotfix\/.*/
       - deploy-gh-pages:
