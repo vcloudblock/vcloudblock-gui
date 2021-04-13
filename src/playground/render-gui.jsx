@@ -11,6 +11,14 @@ const onClickLogo = () => {
     window.location = 'https://openblockcc.github.io/wiki/';
 };
 
+const onClickUpdate = () => {
+    log('User click update');
+};
+
+const onClickClearCache = () => {
+    log('User click clear cahce');
+};
+
 const handleTelemetryModalCancel = () => {
     log('User canceled telemetry modal');
 };
@@ -72,6 +80,8 @@ export default appTarget => {
                 onTelemetryModalCancel={handleTelemetryModalCancel}
                 onTelemetryModalOptIn={handleTelemetryModalOptIn}
                 onTelemetryModalOptOut={handleTelemetryModalOptOut}
+                onClickUpdate={onClickUpdate}
+                onClickClearCache={onClickClearCache}
             /> :
             <WrappedGui
                 canEditTitle

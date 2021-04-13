@@ -2,10 +2,10 @@ import {defineMessages} from 'react-intl';
 import sharedMessages from '../shared-messages';
 
 let messages = defineMessages({
-    biberbi: {
-        defaultMessage: 'Biberbi',
-        description: 'Name for the biberbi sound',
-        id: 'gui.defaultProject.biberbi'
+    chirp: {
+        defaultMessage: 'Chirp',
+        description: 'Name for the chirp sound',
+        id: 'gui.defaultProject.chirp'
     },
     variable: {
         defaultMessage: 'my variable',
@@ -90,7 +90,7 @@ const projectData = translateFunction => {
                 sounds: [
                     {
                         assetId: '4e080acae1c3dc65eef30f07c2b0d4a5',
-                        name: translator(messages.biberbi),
+                        name: translator(messages.chirp),
                         dataFormat: 'wav',
                         format: '',
                         rate: 22050,
