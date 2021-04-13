@@ -34,6 +34,7 @@ import DragLayer from '../../containers/drag-layer.jsx';
 import ConnectionModal from '../../containers/connection-modal.jsx';
 import UploadProgress from '../../containers/upload-progress.jsx';
 import TelemetryModal from '../telemetry-modal/telemetry-modal.jsx';
+import UpdateModal from '../../containers/update-modal.jsx';
 
 import layout, {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
@@ -86,9 +87,11 @@ const GUIComponent = props => {
         uploadProgressVisible,
         costumeLibraryVisible,
         costumesTabVisible,
+        updateModalVisible,
         enableCommunity,
         intl,
         isCreating,
+        isUpgrading,
         isFullScreen,
         isPlayerOnly,
         isRtl,
@@ -106,6 +109,9 @@ const GUIComponent = props => {
         onActivateSoundsTab,
         onActivateTab,
         onClickLogo,
+        onClickUpdate,
+        onClickClearCache,
+        onClickInstallDriver,
         onExtensionButtonClick,
         onProjectTelemetryEvent,
         onRequestCloseBackdropLibrary,
@@ -184,6 +190,9 @@ const GUIComponent = props => {
                 {isCreating ? (
                     <Loader messageId="gui.loader.creating" />
                 ) : null}
+                {isUpgrading ? (
+                    <Loader messageId="gui.loader.upgrading" />
+                ) : null}
                 {isRendererSupported ? null : (
                     <WebGlModal isRtl={isRtl} />
                 )}
@@ -221,6 +230,12 @@ const GUIComponent = props => {
                         onRequestClose={onRequestCloseBackdropLibrary}
                     />
                 ) : null}
+                {updateModalVisible ? (
+                    <UpdateModal
+                        vm={vm}
+                        onClickUpdate={onClickUpdate}
+                    />
+                ) : null}
                 <MenuBar
                     accountNavOpen={accountNavOpen}
                     authorId={authorId}
@@ -250,6 +265,8 @@ const GUIComponent = props => {
                     onSeeCommunity={onSeeCommunity}
                     onShare={onShare}
                     onToggleLoginOpen={onToggleLoginOpen}
+                    onClickClearCache={onClickClearCache}
+                    onClickInstallDriver={onClickInstallDriver}
                 />
                 <Box className={styles.bodyWrapper}>
                     <Box className={styles.flexWrapper}>
@@ -420,6 +437,7 @@ GUIComponent.propTypes = {
     enableCommunity: PropTypes.bool,
     intl: intlShape.isRequired,
     isCreating: PropTypes.bool,
+    isUpgrading: PropTypes.bool,
     isFullScreen: PropTypes.bool,
     isPlayerOnly: PropTypes.bool,
     isRtl: PropTypes.bool,
@@ -432,6 +450,9 @@ GUIComponent.propTypes = {
     onClickAbout: PropTypes.func,
     onClickAccountNav: PropTypes.func,
     onClickLogo: PropTypes.func,
+    onClickUpdate: PropTypes.func,
+    onClickClearCache: PropTypes.func,
+    onClickInstallDriver: PropTypes.func,
     onCloseAccountNav: PropTypes.func,
     onExtensionButtonClick: PropTypes.func,
     onLogOut: PropTypes.func,
@@ -472,6 +493,7 @@ GUIComponent.defaultProps = {
     canUseCloud: false,
     enableCommunity: false,
     isCreating: false,
+    isUpgrading: false,
     isShared: false,
     loading: false,
     showComingSoon: false,

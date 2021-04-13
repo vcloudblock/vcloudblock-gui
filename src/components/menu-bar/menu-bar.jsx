@@ -29,6 +29,7 @@ import SB3Downloader from '../../containers/sb3-downloader.jsx';
 import DeletionRestorer from '../../containers/deletion-restorer.jsx'; // eslint-disable-line no-unused-vars
 import TurboMode from '../../containers/turbo-mode.jsx'; // eslint-disable-line no-unused-vars
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
+import {isScratchDesktop} from '../../lib/isScratchDesktop';
 
 import {openTipsLibrary, openUploadProgress} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
@@ -51,6 +52,9 @@ import {
     openEditMenu,
     closeEditMenu,
     editMenuOpen,
+    openSettingMenu,
+    closeSettingMenu,
+    settingMenuOpen,
     openLanguageMenu,
     closeLanguageMenu,
     languageMenuOpen,
@@ -72,7 +76,7 @@ import remixIcon from './icon--remix.svg';
 import dropdownCaret from './dropdown-caret.svg';
 import languageIcon from '../language-selector/language-icon.svg';
 import aboutIcon from './icon--about.svg';
-import realtimeConnectionIcon from './icon--realtime-connection.svg';
+import linkSocketIcon from './icon--link-socket.svg';
 
 import scratchLogo from './scratch-logo.svg';
 
@@ -88,6 +92,8 @@ import unconnectedIcon from './icon--unconnected.svg';
 import connectedIcon from './icon--connected.svg';
 import fileIcon from './icon--file.svg';
 import screenshotIcon from './icon--screenshot.svg';
+import settingIcon from './icon--setting.svg';
+
 import downloadFirmwareIcon from './icon--download-firmware.svg';
 import saveSvgAsPng from 'openblock-save-svg-as-png';
 import {showAlertWithTimeout} from '../../reducers/alerts';
@@ -192,7 +198,8 @@ class MenuBar extends React.Component {
             'handleSelectDeviceMouseUp',
             'handleProgramModeSwitchOnChange',
             'handleProgramModeUpdate',
-            'handleScreenshot'
+            'handleScreenshot',
+            'handleClearCache'
         ]);
     }
     componentDidMount () {
@@ -374,6 +381,14 @@ class MenuBar extends React.Component {
             });
         }
     }
+    handleClearCache () {
+        const readyClearCache = this.props.confirmClearCache(
+            this.props.intl.formatMessage(sharedMessages.clearCacheWarning)
+        );
+        if (readyClearCache) {
+            this.props.onClickClearCache();
+        }
+    }
     render () {
         const saveNowMessage = (
             <FormattedMessage
@@ -401,6 +416,20 @@ class MenuBar extends React.Component {
                 defaultMessage="New"
                 description="Menu bar item for creating a new project"
                 id="gui.menuBar.new"
+            />
+        );
+        const installDriver = (
+            <FormattedMessage
+                defaultMessage="Install driver"
+                description="Menu bar item for install drivers"
+                id="gui.menuBar.installDriver"
+            />
+        );
+        const clearCache = (
+            <FormattedMessage
+                defaultMessage="Clear cache and restart"
+                description="Menu bar item for clear cache and restart"
+                id="gui.menuBar.clearCacheAndRestart"
             />
         );
         // eslint-disable-next-line no-unused-vars
@@ -505,13 +534,10 @@ class MenuBar extends React.Component {
                     <div
                         className={classNames(styles.menuBarItem)}
                     >
-                        {this.props.isRealtimeMode ? (
-                            <img
-                                className={classNames(styles.deviceRealtimeConnection,
-                                    {[styles.disabled]: !(this.props.realtimeConnection && this.props.peripheralName)})}
-                                src={realtimeConnectionIcon}
-                            />
-                        ) : null}
+                        <img
+                            className={classNames(styles.linkSocketIcon)}
+                            src={linkSocketIcon}
+                        />
                     </div>
                 </div>
                 <div className={styles.fileMenu}>
@@ -694,6 +720,42 @@ class MenuBar extends React.Component {
                             }
                         />
                     </div>
+                    {isScratchDesktop() ? (
+                        <div
+                            className={classNames(styles.menuBarItem, styles.hoverable, {
+                                [styles.active]: this.props.settingMenuOpen
+                            })}
+                            onMouseUp={this.props.onClickSetting}
+                        >
+                            <img
+                                className={styles.settingIcon}
+                                src={settingIcon}
+                            />
+                            <MenuBarMenu
+                                className={classNames(styles.menuBarMenu)}
+                                open={this.props.settingMenuOpen}
+                                place={'left'}
+                                onRequestClose={this.props.onRequestCloseSetting}
+                            >
+                                <MenuSection>
+                                    <MenuItem
+                                        isRtl={this.props.isRtl}
+                                        onClick={this.props.onClickInstallDriver}
+                                    >
+                                        {installDriver}
+                                    </MenuItem>
+                                </MenuSection>
+                                <MenuSection>
+                                    <MenuItem
+                                        isRtl={this.props.isRtl}
+                                        onClick={this.handleClearCache}
+                                    >
+                                        {clearCache}
+                                    </MenuItem>
+                                </MenuSection>
+                            </MenuBarMenu>
+                        </div>
+                    ) : null}
                 </div>
                 {aboutButton}
             </Box>
@@ -717,9 +779,11 @@ MenuBar.propTypes = {
     canShare: PropTypes.bool,
     className: PropTypes.string,
     confirmReadyToReplaceProject: PropTypes.func,
+    confirmClearCache: PropTypes.func,
     editMenuOpen: PropTypes.bool,
     enableCommunity: PropTypes.bool,
     fileMenuOpen: PropTypes.bool,
+    settingMenuOpen: PropTypes.bool,
     intl: intlShape,
     isUpdating: PropTypes.bool,
     isRealtimeMode: PropTypes.bool.isRequired,
@@ -736,6 +800,7 @@ MenuBar.propTypes = {
     onClickAccount: PropTypes.func,
     onClickEdit: PropTypes.func,
     onClickFile: PropTypes.func,
+    onClickSetting: PropTypes.func,
     onClickLanguage: PropTypes.func,
     onClickLogin: PropTypes.func,
     onClickLogo: PropTypes.func,
@@ -743,6 +808,8 @@ MenuBar.propTypes = {
     onClickRemix: PropTypes.func,
     onClickSave: PropTypes.func,
     onClickSaveAsCopy: PropTypes.func,
+    onClickClearCache: PropTypes.func,
+    onClickInstallDriver: PropTypes.func,
     onLogOut: PropTypes.func,
     onNoPeripheralIsConnected: PropTypes.func.isRequired,
     onOpenRegistration: PropTypes.func,
@@ -751,6 +818,7 @@ MenuBar.propTypes = {
     onRequestCloseAccount: PropTypes.func,
     onRequestCloseEdit: PropTypes.func,
     onRequestCloseFile: PropTypes.func,
+    onRequestCloseSetting: PropTypes.func,
     onRequestCloseLanguage: PropTypes.func,
     onRequestCloseLogin: PropTypes.func,
     onSeeCommunity: PropTypes.func,
@@ -793,6 +861,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         accountMenuOpen: accountMenuOpen(state),
         fileMenuOpen: fileMenuOpen(state),
+        settingMenuOpen: settingMenuOpen(state),
         editMenuOpen: editMenuOpen(state),
         isUpdating: getIsUpdating(loadingState),
         isRealtimeMode: state.scratchGui.programMode.isRealtimeMode,
@@ -824,6 +893,8 @@ const mapDispatchToProps = dispatch => ({
     onRequestCloseAccount: () => dispatch(closeAccountMenu()),
     onClickFile: () => dispatch(openFileMenu()),
     onRequestCloseFile: () => dispatch(closeFileMenu()),
+    onClickSetting: () => dispatch(openSettingMenu()),
+    onRequestCloseSetting: () => dispatch(closeSettingMenu()),
     onClickEdit: () => dispatch(openEditMenu()),
     onRequestCloseEdit: () => dispatch(closeEditMenu()),
     onClickLanguage: () => dispatch(openLanguageMenu()),
