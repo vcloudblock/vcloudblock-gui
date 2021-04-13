@@ -65,9 +65,9 @@ const UpdateModalComponent = props => (
                     onClick={props.onCancel}
                 >
                     <FormattedMessage
-                        defaultMessage="Later"
-                        description="Button in bottom to later update"
-                        id="gui.updateModal.later"
+                        defaultMessage="Update later"
+                        description="Button in bottom to update later"
+                        id="gui.updateModal.updateLater"
                     />
                 </button>
                 <button
