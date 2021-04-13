@@ -418,6 +418,13 @@ class MenuBar extends React.Component {
                 id="gui.menuBar.new"
             />
         );
+        const installDriver = (
+            <FormattedMessage
+                defaultMessage="Install driver"
+                description="Menu bar item for install drivers"
+                id="gui.menuBar.installDriver"
+            />
+        );
         const clearCache = (
             <FormattedMessage
                 defaultMessage="Clear cache and restart"
@@ -733,6 +740,14 @@ class MenuBar extends React.Component {
                                 <MenuSection>
                                     <MenuItem
                                         isRtl={this.props.isRtl}
+                                        onClick={this.props.onClickInstallDriver}
+                                    >
+                                        {installDriver}
+                                    </MenuItem>
+                                </MenuSection>
+                                <MenuSection>
+                                    <MenuItem
+                                        isRtl={this.props.isRtl}
                                         onClick={this.handleClearCache}
                                     >
                                         {clearCache}
@@ -794,6 +809,7 @@ MenuBar.propTypes = {
     onClickSave: PropTypes.func,
     onClickSaveAsCopy: PropTypes.func,
     onClickClearCache: PropTypes.func,
+    onClickInstallDriver: PropTypes.func,
     onLogOut: PropTypes.func,
     onNoPeripheralIsConnected: PropTypes.func.isRequired,
     onOpenRegistration: PropTypes.func,
