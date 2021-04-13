@@ -30,7 +30,7 @@ const initialState = {
     [MODAL_UPLOAD_PROGRESS]: false,
     [MODAL_DEVICE_LIBRARY]: false,
     [MODAL_TIPS_LIBRARY]: false,
-    [MODAL_UPDATE]: false
+    [MODAL_UPDATE]: true
 };
 
 const reducer = function (state, action) {

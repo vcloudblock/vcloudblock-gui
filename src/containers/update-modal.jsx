@@ -4,12 +4,20 @@ import bindAll from 'lodash.bindall';
 
 import {connect} from 'react-redux';
 import {compose} from 'redux';
-import {injectIntl} from 'react-intl';
+import {injectIntl, intlShape, defineMessages} from 'react-intl';
 
 import {closeUpdateModal} from '../reducers/modals';
 import {clearUpdate, setUpgrading} from '../reducers/update';
 
 import UpdateModalComponent from '../components/update-modal/update-modal.jsx';
+
+const messages = defineMessages({
+    upgradeWarning: {
+        id: 'gui.updateModal.upgradeWarning',
+        defaultMessage: 'Currently unsaved projects will be lost, continue upgrade and restart?',
+        description: 'Confirmation that user wants upgrade'
+    }
+});
 
 class UpdateModal extends React.Component {
     constructor (props) {
@@ -28,11 +36,14 @@ class UpdateModal extends React.Component {
         this.props.onClearUpdate();
     }
     handleClickUpdate () {
-        this.props.onCloseUpdateModal();
-        if (typeof this.props.onClickUpdate !== 'undefined') {
-            this.props.onClickUpdate();
+        const readyUpgrade = this.props.confirmWithMessage(this.props.intl.formatMessage(messages.upgradeWarning));
+        if (readyUpgrade) {
+            this.props.onCloseUpdateModal();
+            if (typeof this.props.onClickUpdate !== 'undefined') {
+                this.props.onClickUpdate();
+            }
+            this.props.onSetUpgrading();
         }
-        this.props.onSetUpgrading();
     }
 
     render () {
@@ -50,6 +61,8 @@ class UpdateModal extends React.Component {
 }
 
 UpdateModal.propTypes = {
+    confirmWithMessage: PropTypes.func,
+    intl: intlShape,
     onClickUpdate: PropTypes.func.isRequired,
     onCloseUpdateModal: PropTypes.func.isRequired,
     onClearUpdate: PropTypes.func.isRequired,
@@ -58,6 +71,11 @@ UpdateModal.propTypes = {
     extensionMessage: PropTypes.string.isRequired,
     deviceVersion: PropTypes.string.isRequired,
     deviceMessage: PropTypes.string.isRequired
+};
+
+UpdateModal.defaultProps = {
+    // default to using standard js confirm
+    confirmWithMessage: message => (confirm(message)) // eslint-disable-line no-alert
 };
 
 const mapStateToProps = state => ({
