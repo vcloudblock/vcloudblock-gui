@@ -11,8 +11,12 @@ const onClickLogo = () => {
     window.location = 'https://openblockcc.github.io/wiki/';
 };
 
-const onClickUpdate = () => {
-    log('User click update');
+const onClickCheckUpdate = () => {
+    log('User click check update');
+};
+
+const onClickUpgrade = () => {
+    log('User click upgrade');
 };
 
 const onClickClearCache = () => {
@@ -84,7 +88,8 @@ export default appTarget => {
                 onTelemetryModalCancel={handleTelemetryModalCancel}
                 onTelemetryModalOptIn={handleTelemetryModalOptIn}
                 onTelemetryModalOptOut={handleTelemetryModalOptOut}
-                onClickUpdate={onClickUpdate}
+                onClickCheckUpdate={onClickCheckUpdate}
+                onClickUpgrade={onClickUpgrade}
                 onClickClearCache={onClickClearCache}
                 onClickInstallDriver={onClickInstallDriver}
             /> :

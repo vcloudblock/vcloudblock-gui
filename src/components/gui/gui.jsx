@@ -91,7 +91,6 @@ const GUIComponent = props => {
         enableCommunity,
         intl,
         isCreating,
-        isUpgrading,
         isFullScreen,
         isPlayerOnly,
         isRtl,
@@ -109,7 +108,8 @@ const GUIComponent = props => {
         onActivateSoundsTab,
         onActivateTab,
         onClickLogo,
-        onClickUpdate,
+        onClickCheckUpdate,
+        onClickUpgrade,
         onClickClearCache,
         onClickInstallDriver,
         onExtensionButtonClick,
@@ -190,9 +190,6 @@ const GUIComponent = props => {
                 {isCreating ? (
                     <Loader messageId="gui.loader.creating" />
                 ) : null}
-                {isUpgrading ? (
-                    <Loader messageId="gui.loader.upgrading" />
-                ) : null}
                 {isRendererSupported ? null : (
                     <WebGlModal isRtl={isRtl} />
                 )}
@@ -233,7 +230,7 @@ const GUIComponent = props => {
                 {updateModalVisible ? (
                     <UpdateModal
                         vm={vm}
-                        onClickUpdate={onClickUpdate}
+                        onClickUpgrade={onClickUpgrade}
                     />
                 ) : null}
                 <MenuBar
@@ -265,6 +262,7 @@ const GUIComponent = props => {
                     onSeeCommunity={onSeeCommunity}
                     onShare={onShare}
                     onToggleLoginOpen={onToggleLoginOpen}
+                    onClickCheckUpdate={onClickCheckUpdate}
                     onClickClearCache={onClickClearCache}
                     onClickInstallDriver={onClickInstallDriver}
                 />
@@ -437,7 +435,6 @@ GUIComponent.propTypes = {
     enableCommunity: PropTypes.bool,
     intl: intlShape.isRequired,
     isCreating: PropTypes.bool,
-    isUpgrading: PropTypes.bool,
     isFullScreen: PropTypes.bool,
     isPlayerOnly: PropTypes.bool,
     isRtl: PropTypes.bool,
@@ -450,7 +447,8 @@ GUIComponent.propTypes = {
     onClickAbout: PropTypes.func,
     onClickAccountNav: PropTypes.func,
     onClickLogo: PropTypes.func,
-    onClickUpdate: PropTypes.func,
+    onClickCheckUpdate: PropTypes.func,
+    onClickUpgrade: PropTypes.func,
     onClickClearCache: PropTypes.func,
     onClickInstallDriver: PropTypes.func,
     onCloseAccountNav: PropTypes.func,
@@ -493,7 +491,6 @@ GUIComponent.defaultProps = {
     canUseCloud: false,
     enableCommunity: false,
     isCreating: false,
-    isUpgrading: false,
     isShared: false,
     loading: false,
     showComingSoon: false,
