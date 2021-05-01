@@ -39,15 +39,25 @@
 }
 
 .bottom-area {
-    background-color: $ui-white;
-    text-align: center;
     display: flex;
+    text-align: center;
+    align-items: center;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-end;
+    background-color: $ui-white;
     padding-top: 1rem;
     padding-bottom: .75rem;
     padding-left: 2.5rem;
     padding-right: 2.5rem;
+}
+
+.update-button-wrapper {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    flex-direction: row;
+    align-items: center;
     justify-content: flex-end;
 }
 
@@ -55,7 +65,7 @@
     margin-left: 1.5rem;
 }
 
-.update-button {
+.upgrade-button {
     padding: 0.6rem 0.75rem;
     border-radius: 0.5rem;
     background: $motion-primary;
@@ -73,4 +83,18 @@
     background: $ui-white-dim;
     border: 2px solid $text-primary-transparent;
     color: $text-primary-transparent;
+}
+
+.progress-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.download-info-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
 }

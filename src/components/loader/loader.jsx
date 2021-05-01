@@ -113,13 +113,6 @@ const mainMessages = {
             description="Main creating message"
             id="gui.loader.creating"
         />
-    ),
-    'gui.loader.upgrading': (
-        <FormattedMessage
-            defaultMessage="Upgrading"
-            description="Main upgrading message"
-            id="gui.loader.upgrading"
-        />
     )
 };
 

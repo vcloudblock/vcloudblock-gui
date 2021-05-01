@@ -31,7 +31,7 @@ import TurboMode from '../../containers/turbo-mode.jsx'; // eslint-disable-line 
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
 import {isScratchDesktop} from '../../lib/isScratchDesktop';
 
-import {openTipsLibrary, openUploadProgress} from '../../reducers/modals';
+import {openTipsLibrary, openUploadProgress, openUpdateModal} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
 import {
     autoUpdateProject,
@@ -86,6 +86,7 @@ import Switch from 'react-switch';
 import {setUploadMode, setRealtimeMode} from '../../reducers/program-mode';
 import {openConnectionModal, openDeviceLibrary} from '../../reducers/modals';
 import {setRealtimeConnection, clearConnectionModalPeripheralName} from '../../reducers/connection-modal';
+import {setUpdate} from '../../reducers/update';
 
 import deviceIcon from './icon--device.svg';
 import unconnectedIcon from './icon--unconnected.svg';
@@ -199,6 +200,7 @@ class MenuBar extends React.Component {
             'handleProgramModeSwitchOnChange',
             'handleProgramModeUpdate',
             'handleScreenshot',
+            'handleCheckUpdate',
             'handleClearCache'
         ]);
     }
@@ -381,6 +383,10 @@ class MenuBar extends React.Component {
             });
         }
     }
+    handleCheckUpdate () {
+        this.props.onSetUpdate({phase: 'checking'});
+        this.props.onClickCheckUpdate();
+    }
     handleClearCache () {
         const readyClearCache = this.props.confirmClearCache(
             this.props.intl.formatMessage(sharedMessages.clearCacheWarning)
@@ -416,6 +422,13 @@ class MenuBar extends React.Component {
                 defaultMessage="New"
                 description="Menu bar item for creating a new project"
                 id="gui.menuBar.new"
+            />
+        );
+        const checkUpdate = (
+            <FormattedMessage
+                defaultMessage="Check update"
+                description="Menu bar item for check update"
+                id="gui.menuBar.checkUpdate"
             />
         );
         const installDriver = (
@@ -740,17 +753,23 @@ class MenuBar extends React.Component {
                                 <MenuSection>
                                     <MenuItem
                                         isRtl={this.props.isRtl}
-                                        onClick={this.props.onClickInstallDriver}
+                                        onClick={this.handleCheckUpdate}
                                     >
-                                        {installDriver}
+                                        {checkUpdate}
                                     </MenuItem>
-                                </MenuSection>
-                                <MenuSection>
                                     <MenuItem
                                         isRtl={this.props.isRtl}
                                         onClick={this.handleClearCache}
                                     >
                                         {clearCache}
+                                    </MenuItem>
+                                </MenuSection>
+                                <MenuSection>
+                                    <MenuItem
+                                        isRtl={this.props.isRtl}
+                                        onClick={this.props.onClickInstallDriver}
+                                    >
+                                        {installDriver}
                                     </MenuItem>
                                 </MenuSection>
                             </MenuBarMenu>
@@ -808,6 +827,7 @@ MenuBar.propTypes = {
     onClickRemix: PropTypes.func,
     onClickSave: PropTypes.func,
     onClickSaveAsCopy: PropTypes.func,
+    onClickCheckUpdate: PropTypes.func,
     onClickClearCache: PropTypes.func,
     onClickInstallDriver: PropTypes.func,
     onLogOut: PropTypes.func,
@@ -837,6 +857,7 @@ MenuBar.propTypes = {
     onSetUploadMode: PropTypes.func,
     onSetRealtimeConnection: PropTypes.func.isRequired,
     onSetRealtimeMode: PropTypes.func,
+    onSetUpdate: PropTypes.func.isRequired,
     onOpenConnectionModal: PropTypes.func,
     onOpenUploadProgress: PropTypes.func,
     peripheralName: PropTypes.string,
@@ -918,6 +939,10 @@ const mapDispatchToProps = dispatch => ({
     onDisconnect: () => {
         dispatch(clearConnectionModalPeripheralName());
         dispatch(setRealtimeConnection(false));
+    },
+    onSetUpdate: message => {
+        dispatch(setUpdate(message));
+        dispatch(openUpdateModal());
     },
     onNoPeripheralIsConnected: () => showAlertWithTimeout(dispatch, 'connectAPeripheralFirst'),
     onWorkspaceIsEmpty: () => showAlertWithTimeout(dispatch, 'workspaceIsEmpty'),

@@ -7,7 +7,7 @@ import {compose} from 'redux';
 import {injectIntl, intlShape, defineMessages} from 'react-intl';
 
 import {closeUpdateModal} from '../reducers/modals';
-import {clearUpdate, setUpgrading} from '../reducers/update';
+import {setUpdate, clearUpdate} from '../reducers/update';
 
 import UpdateModalComponent from '../components/update-modal/update-modal.jsx';
 
@@ -19,42 +19,78 @@ const messages = defineMessages({
     }
 });
 
+const progressBarPhase = {
+    idle: 0,
+    downloading: 10,
+    extracting: 80,
+    covering: 90
+};
+
 class UpdateModal extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
             'handleCancel',
-            'handleClickUpdate'
+            'handleClickUpgrade'
         ]);
+        this.state = {
+            progressBarCompleted: progressBarPhase.idle
+        };
     }
-    componentDidMount () {
+
+    componentWillUpdate (newProps) {
+        if (this.props.updateState.phase !== newProps.updateState.phase) {
+            if (newProps.updateState.phase === 'downloading') {
+                this.setState({
+                    progressBarCompleted: progressBarPhase.downloading
+                });
+                this.downloadInterval = setInterval(() => {
+                    if (this.state.progressBarCompleted < (progressBarPhase.extracting - 1)) {
+                        this.setState({
+                            progressBarCompleted: this.state.progressBarCompleted + 1
+                        });
+                    }
+                }, 1000);
+            } else {
+                clearInterval(this.downloadInterval);
+
+                if (newProps.updateState.phase === 'extracting') {
+                    this.setState({
+                        progressBarCompleted: progressBarPhase.extracting
+                    });
+                } else if (newProps.updateState.phase === 'covering') {
+                    this.setState({
+                        progressBarCompleted: progressBarPhase.covering
+                    });
+                }
+            }
+        }
     }
     componentWillUnmount () {
+        clearInterval(this.downloadInterval);
     }
+
     handleCancel () {
-        this.props.onCloseUpdateModal();
         this.props.onClearUpdate();
     }
-    handleClickUpdate () {
-        const readyUpgrade = this.props.confirmWithMessage(this.props.intl.formatMessage(messages.upgradeWarning));
-        if (readyUpgrade) {
-            this.props.onCloseUpdateModal();
-            if (typeof this.props.onClickUpdate !== 'undefined') {
-                this.props.onClickUpdate();
+
+    handleClickUpgrade () {
+        const confirmUpgrade = this.props.confirmWithMessage(this.props.intl.formatMessage(messages.upgradeWarning));
+        if (confirmUpgrade) {
+            this.props.onSetUpdate({phase: 'downloading', speed: 0, transferred: 0});
+            if (typeof this.props.onClickUpgrade !== 'undefined') {
+                this.props.onClickUpgrade();
             }
-            this.props.onSetUpgrading();
         }
     }
 
     render () {
         return (
             <UpdateModalComponent
-                onClickUpdate={this.handleClickUpdate}
+                onClickUpgrade={this.handleClickUpgrade}
                 onCancel={this.handleCancel}
-                extensionVersion={this.props.extensionVersion}
-                extensionMessage={this.props.extensionMessage}
-                deviceVersion={this.props.deviceVersion}
-                deviceMessage={this.props.deviceMessage}
+                updateState={this.props.updateState}
+                progressBarCompleted={this.state.progressBarCompleted}
             />
         );
     }
@@ -63,14 +99,17 @@ class UpdateModal extends React.Component {
 UpdateModal.propTypes = {
     confirmWithMessage: PropTypes.func,
     intl: intlShape,
-    onClickUpdate: PropTypes.func.isRequired,
-    onCloseUpdateModal: PropTypes.func.isRequired,
+    onClickUpgrade: PropTypes.func.isRequired,
     onClearUpdate: PropTypes.func.isRequired,
-    onSetUpgrading: PropTypes.func.isRequired,
-    extensionVersion: PropTypes.string.isRequired,
-    extensionMessage: PropTypes.string.isRequired,
-    deviceVersion: PropTypes.string.isRequired,
-    deviceMessage: PropTypes.string.isRequired
+    onSetUpdate: PropTypes.func.isRequired,
+    updateState: PropTypes.shape({
+        phase: PropTypes.oneOf(['idle', 'downloading', 'extracting', 'covering', 'checking', 'error', 'latest']),
+        version: PropTypes.string,
+        describe: PropTypes.string,
+        speed: PropTypes.number,
+        transferred: PropTypes.number,
+        message: PropTypes.string
+    })
 };
 
 UpdateModal.defaultProps = {
@@ -79,16 +118,16 @@ UpdateModal.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-    extensionVersion: state.scratchGui.update.extensionVersion,
-    extensionMessage: state.scratchGui.update.extensionMessage,
-    deviceVersion: state.scratchGui.update.deviceVersion,
-    deviceMessage: state.scratchGui.update.deviceMessage
+    updateMessage: state.scratchGui.update.updateMessage,
+    updateState: state.scratchGui.update.updateState
 });
 
 const mapDispatchToProps = dispatch => ({
-    onCloseUpdateModal: () => dispatch(closeUpdateModal()),
-    onClearUpdate: () => dispatch(clearUpdate()),
-    onSetUpgrading: () => dispatch(setUpgrading())
+    onClearUpdate: () => {
+        dispatch(closeUpdateModal());
+        dispatch(clearUpdate());
+    },
+    onSetUpdate: message => dispatch(setUpdate(message))
 });
 
 export default compose(
