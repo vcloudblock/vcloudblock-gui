@@ -50,7 +50,7 @@ class UpdateModal extends React.Component {
                             progressBarCompleted: this.state.progressBarCompleted + 1
                         });
                     }
-                }, 1000);
+                }, 2000);
             } else {
                 clearInterval(this.downloadInterval);
 
@@ -103,11 +103,9 @@ UpdateModal.propTypes = {
     onClearUpdate: PropTypes.func.isRequired,
     onSetUpdate: PropTypes.func.isRequired,
     updateState: PropTypes.shape({
-        phase: PropTypes.oneOf(['idle', 'downloading', 'extracting', 'covering', 'checking', 'error', 'latest']),
+        phase: PropTypes.oneOf(['idle', 'downloading', 'covering', 'checking', 'error', 'latest']),
         version: PropTypes.string,
         describe: PropTypes.string,
-        speed: PropTypes.number,
-        transferred: PropTypes.number,
         message: PropTypes.string
     })
 };

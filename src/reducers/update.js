@@ -8,8 +8,6 @@ const initialState = {
         phase: 'idle',
         version: '',
         describe: '',
-        speed: 0,
-        transferred: 0,
         message: ''
     }
 };
