@@ -19,31 +19,49 @@ const UpdateModalComponent = props => (
         closeButtonVisible={false}
     >
         <Box className={styles.body}>
-            {(props.updateState.phase === 'error') ? (
+            {(props.updateState.phase === 'idle') ? (
                 <div>
                     <div className={styles.updateTitle}>
                         <div>
                             <FormattedMessage
-                                defaultMessage="Operation failed"
-                                description="Tile of update modal in error"
-                                id="gui.updateModel.tileError"
+                                defaultMessage="New external resource version detected"
+                                description="Tile of update modal in new external resource version detected"
+                                id="gui.updateModel.tileUpdate"
                             />
+                            {`: ${props.updateState.version}`}
                         </div>
                     </div>
                     <div className={styles.updateInfo}>
-                        {props.updateState.message}
+                        {props.updateState.version ? (
+                            <div>
+                                {`${props.updateState.describe}\n\n`}
+                            </div>
+                        ) : null}
                     </div>
                     <div className={styles.bottomArea}>
-                        <button
-                            className={classNames(styles.bottomAreaItem, styles.upgradeButton)}
-                            onClick={props.onCancel}
-                        >
-                            <FormattedMessage
-                                defaultMessage="Close"
-                                description="Button in bottom to close update modal"
-                                id="gui.upgradeModal.closeChecking"
-                            />
-                        </button>
+                        <div className={styles.updateButtonWrapper}>
+                            <button
+                                className={classNames(styles.bottomAreaItem,
+                                    styles.upgradeButton, styles.primary)}
+                                onClick={props.onCancel}
+                            >
+                                <FormattedMessage
+                                    defaultMessage="Upgrade later"
+                                    description="Button in bottom to upgrade later"
+                                    id="gui.upgradeModal.upgradeLater"
+                                />
+                            </button>
+                            <button
+                                className={classNames(styles.bottomAreaItem, styles.upgradeButton)}
+                                onClick={props.onClickUpgrade}
+                            >
+                                <FormattedMessage
+                                    defaultMessage="Upgrade and restart"
+                                    description="Button in bottom to confirm upgrade and restart"
+                                    id="gui.upgradeModal.upgradeAndRestart"
+                                />
+                            </button>
+                        </div>
                     </div>
                 </div>
             ) : null}
@@ -115,95 +133,72 @@ const UpdateModalComponent = props => (
                     </div>
                 </div>
             ) : null}
-            {(props.updateState.phase === 'idle') || (props.updateState.phase === 'downloading') ||
-                (props.updateState.phase === 'extracting') || (props.updateState.phase === 'covering') ? (
-                    <div>
-                        <div className={styles.updateTitle}>
-                            <div>
-                                <FormattedMessage
-                                    defaultMessage="New external resource version detected"
-                                    description="Tile of update modal in new external resource version detected"
-                                    id="gui.updateModel.tileUpdate"
-                                />
-                                {`: ${props.updateState.version}`}
+            {(props.updateState.phase === 'downloading') || (props.updateState.phase === 'covering') ? (
+                <div>
+                    <div className={styles.updateTitle}>
+                        <div>
+                            <FormattedMessage
+                                defaultMessage="Upgrading"
+                                description="Tile of update modal in upgrading"
+                                id="gui.updateModel.upgrading"
+                            />
+                        </div>
+                    </div>
+                    <div className={styles.bottomArea}>
+                        <div className={classNames(styles.progressWrapper)}>
+                            <ProgressBar
+                                completed={props.progressBarCompleted}
+                                bgColor="#4C97FF"
+                                height="15px"
+                            />
+                            <div className={classNames(styles.upgradeInfoWrapper)}>
+                                <div >
+                                    {props.updateState.phase === 'downloading' ?
+                                        (<FormattedMessage
+                                            defaultMessage="Downloading"
+                                            description="Prompt for in downloading porgress"
+                                            id="gui.upgradeModal.downloading"
+                                        />) : null}
+                                    {props.updateState.phase === 'covering' ?
+                                        (<FormattedMessage
+                                            defaultMessage="Covering"
+                                            description="Prompt for in covering porgress"
+                                            id="gui.upgradeModal.covering"
+                                        />) : null}
+                                </div>
                             </div>
                         </div>
-                        <div className={styles.updateInfo}>
-                            {props.updateState.version ? (
-                                <div>
-                                    {`${props.updateState.describe}\n\n`}
-                                </div>
-                            ) : null}
+                    </div>
+                </div>
+            ) : null}
+            {(props.updateState.phase === 'error') ? (
+                <div>
+                    <div className={styles.updateTitle}>
+                        <div>
+                            <FormattedMessage
+                                defaultMessage="Operation failed"
+                                description="Tile of update modal in error"
+                                id="gui.updateModel.tileError"
+                            />
                         </div>
-                        <div className={styles.bottomArea}>
-                            {(props.updateState.phase === 'idle') ? (
-                                <div className={styles.updateButtonWrapper}>
-                                    <button
-                                        className={classNames(styles.bottomAreaItem,
-                                            styles.upgradeButton, styles.primary)}
-                                        onClick={props.onCancel}
-                                    >
-                                        <FormattedMessage
-                                            defaultMessage="Upgrade later"
-                                            description="Button in bottom to upgrade later"
-                                            id="gui.upgradeModal.upgradeLater"
-                                        />
-                                    </button>
-                                    <button
-                                        className={classNames(styles.bottomAreaItem, styles.upgradeButton)}
-                                        onClick={props.onClickUpgrade}
-                                    >
-                                        <FormattedMessage
-                                            defaultMessage="Upgrade and restart"
-                                            description="Button in bottom to confirm upgrade and restart"
-                                            id="gui.upgradeModal.upgradeAndRestart"
-                                        />
-                                    </button>
-                                </div>
-                            ) : (
-                                <div className={classNames(styles.progressWrapper)}>
-                                    <ProgressBar
-                                        completed={props.progressBarCompleted}
-                                        bgColor="#4C97FF"
-                                        height="15px"
-                                    />
-                                    <div className={classNames(styles.downloadInfoWrapper)}>
-                                        <div >
-                                            <FormattedMessage
-                                                defaultMessage="Transferred"
-                                                description="Prompt for the size of downloaded files"
-                                                id="gui.upgradeModal.transferred"
-                                            />
-                                            {`: ${(props.updateState.transferred / (1024 * 1024)).toFixed(2)}MB`}
-                                        </div>
-                                        <div >
-                                            {props.updateState.phase === 'downloading' ? (
-                                                <div >
-                                                    <FormattedMessage
-                                                        defaultMessage="Speed"
-                                                        description="Prompt for download speed"
-                                                        id="gui.upgradeModal.speed"
-                                                    />
-                                                    {`: ${(props.updateState.speed / 1024).toFixed(2)}KB/s`}
-                                                </div>) : null}
-                                            {props.updateState.phase === 'extracting' ?
-                                                (<FormattedMessage
-                                                    defaultMessage="Extracting"
-                                                    description="Prompt for in extracting porgress"
-                                                    id="gui.upgradeModal.extracting"
-                                                />) : null}
-                                            {props.updateState.phase === 'covering' ?
-                                                (<FormattedMessage
-                                                    defaultMessage="Covering"
-                                                    description="Prompt for in covering porgress"
-                                                    id="gui.upgradeModal.covering"
-                                                />) : null}
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </div>) : null}
+                    </div>
+                    <div className={styles.updateInfo}>
+                        {props.updateState.message}
+                    </div>
+                    <div className={styles.bottomArea}>
+                        <button
+                            className={classNames(styles.bottomAreaItem, styles.upgradeButton)}
+                            onClick={props.onCancel}
+                        >
+                            <FormattedMessage
+                                defaultMessage="Close"
+                                description="Button in bottom to close update modal"
+                                id="gui.upgradeModal.closeChecking"
+                            />
+                        </button>
+                    </div>
+                </div>
+            ) : null}
         </Box>
     </Modal>
 );
@@ -212,11 +207,9 @@ UpdateModalComponent.propTypes = {
     onClickUpgrade: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     updateState: PropTypes.shape({
-        phase: PropTypes.oneOf(['idle', 'downloading', 'extracting', 'covering', 'checking', 'error', 'latest']),
+        phase: PropTypes.oneOf(['idle', 'downloading', 'covering', 'checking', 'error', 'latest']),
         version: PropTypes.string,
         describe: PropTypes.string,
-        speed: PropTypes.number,
-        transferred: PropTypes.number,
         message: PropTypes.string
     }),
     progressBarCompleted: PropTypes.number
