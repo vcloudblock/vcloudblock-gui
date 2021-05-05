@@ -76,7 +76,7 @@ import remixIcon from './icon--remix.svg';
 import dropdownCaret from './dropdown-caret.svg';
 import languageIcon from '../language-selector/language-icon.svg';
 import aboutIcon from './icon--about.svg';
-import linkSocketIcon from './icon--link-socket.svg';
+import linkSocketIcon from './icon--link-socket.svg'; // eslint-disable-line no-unused-vars
 
 import scratchLogo from './scratch-logo.svg';
 
@@ -544,14 +544,14 @@ class MenuBar extends React.Component {
                             </React.Fragment>
                         )}
                     </div>
-                    <div
+                    {/* <div
                         className={classNames(styles.menuBarItem)}
                     >
                         <img
                             className={classNames(styles.linkSocketIcon)}
                             src={linkSocketIcon}
                         />
-                    </div>
+                    </div>*/}
                 </div>
                 <div className={styles.fileMenu}>
                     {this.props.canEditTitle ? (
