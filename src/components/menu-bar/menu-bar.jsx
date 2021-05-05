@@ -544,14 +544,14 @@ class MenuBar extends React.Component {
                             </React.Fragment>
                         )}
                     </div>
-                    <div
+                    {/* <div
                         className={classNames(styles.menuBarItem)}
                     >
                         <img
                             className={classNames(styles.linkSocketIcon)}
                             src={linkSocketIcon}
                         />
-                    </div>
+                    </div>*/}
                 </div>
                 <div className={styles.fileMenu}>
                     {this.props.canEditTitle ? (

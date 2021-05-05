@@ -276,7 +276,7 @@ const deviceData = [
         iconURL: esp32IconURL,
         description: (
             <FormattedMessage
-                defaultMessage="Wi-Fi & Bluetooth control board with rich functions"
+                defaultMessage="Wi-Fi & Bluetooth control board with rich functions."
                 description="Description for the esp32 device"
                 id="gui.device.arduinoEsp32.description"
             />
@@ -340,7 +340,7 @@ const deviceData = [
         programLanguage: ['block', 'python'],
         tags: ['microPython'],
         helpLink: 'https://microbit.org/get-started/first-steps/introduction/'
-    }
+    },
     {
         name: 'Maixduino',
         deviceId: 'maixduino',
