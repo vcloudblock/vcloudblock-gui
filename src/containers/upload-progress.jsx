@@ -8,7 +8,6 @@ import {injectIntl, intlShape} from 'react-intl';
 import {defineMessages} from 'react-intl';
 
 import VM from 'openblock-vm';
-// eslint-disable-next-line no-unused-vars
 import analytics from '../lib/analytics';
 import {closeUploadProgress} from '../reducers/modals';
 import {showAlertWithTimeout} from '../reducers/alerts';
@@ -49,6 +48,11 @@ class UploadProgress extends React.Component {
             text: ''
         };
         this.uploadTimeout = setTimeout(() => this.handleUploadTimeout(), UPLOAD_TIMEOUT_TIME);
+        analytics.event({
+            category: 'devices',
+            action: 'uploading',
+            label: this.props.deviceId
+        });
     }
     componentDidMount () {
         this.props.vm.on('PERIPHERAL_UPLOAD_STDOUT', this.handleStdout);
@@ -87,6 +91,11 @@ class UploadProgress extends React.Component {
             phase: PHASES.error
         });
         this.props.onUploadError();
+        analytics.event({
+            category: 'devices',
+            action: 'upload error',
+            label: this.props.deviceId
+        });
         clearTimeout(this.uploadTimeout);
     }
     handleUploadSuccess () {
@@ -103,6 +112,11 @@ class UploadProgress extends React.Component {
             phase: PHASES.timeout
         });
         this.props.onUploadError();
+        analytics.event({
+            category: 'devices',
+            action: 'upload timeout',
+            label: this.props.deviceId
+        });
         clearTimeout(this.uploadTimeout);
     }
 
