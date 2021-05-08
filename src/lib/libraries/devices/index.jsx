@@ -268,7 +268,7 @@ const deviceData = [
         helpLink: 'https://microbit.org/get-started/first-steps/introduction/'
     },
     {
-        name: 'ESP32 DevKitC 32E',
+        name: 'ESP32',
         deviceId: 'arduinoEsp32',
         manufactor: 'espressif',
         leanMore: 'https://www.espressif.com/',
