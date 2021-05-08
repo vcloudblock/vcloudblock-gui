@@ -10,6 +10,9 @@ if (GA_ID) {
         sampleRate: (process.env.NODE_ENV === 'production') ? 100 : 0,
         forceSSL: true
     });
+    GoogleAnalytics.set({checkProtocolTask: null});
+    GoogleAnalytics.set({checkStorageTask: null});
+    GoogleAnalytics.set({historyImportTask: null});
 } else {
     log.info('Disabling GA because GA_ID is not set.');
     window.ga = () => {
