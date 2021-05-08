@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import VM from 'openblock-vm';
 
+import analytics from '../lib/analytics';
+
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
@@ -105,6 +107,11 @@ class ExtensionLibrary extends React.PureComponent {
                 } else {
                     this.props.vm.extensionManager.loadExtensionURL(url).then(() => {
                         this.props.onCategorySelected(id);
+                        analytics.event({
+                            category: 'extensions',
+                            action: 'select extension',
+                            label: id
+                        });
                     });
                 }
             }
@@ -116,6 +123,11 @@ class ExtensionLibrary extends React.PureComponent {
             } else {
                 this.props.vm.extensionManager.loadDeviceExtension(id).then(() => {
                     this.updateDeviceExtensions();
+                    analytics.event({
+                        category: 'extensions',
+                        action: 'select device extension',
+                        label: id
+                    });
                 })
                     .catch(err => {
                         // TODO add a alet device extension load failed. and change the state to bar to failed state
