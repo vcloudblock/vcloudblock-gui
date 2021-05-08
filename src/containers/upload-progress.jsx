@@ -69,8 +69,8 @@ class UploadProgress extends React.Component {
     handleHelp () {
         window.open(this.state.extension.helpLink, '_blank');
         analytics.event({
-            category: 'extensions',
-            action: 'help',
+            category: 'devices',
+            action: 'upload help',
             label: this.props.deviceId
         });
     }
