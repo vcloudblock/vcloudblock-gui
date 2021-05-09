@@ -10,12 +10,9 @@ const initialAnalytics = (clientId = null) => {
             debug: (process.env.NODE_ENV !== 'production'),
             titleCase: true,
             sampleRate: (process.env.NODE_ENV === 'production') ? 100 : 0,
-            forceSSL: true
+            forceSSL: true,
+            gaOptions: clientId ? {clientId: clientId} : null
         };
-
-        if (clientId) {
-            arg.clientId = clientId;
-        }
 
         GoogleAnalytics.initialize(GA_ID, arg);
     } else {
