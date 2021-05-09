@@ -7,7 +7,7 @@ const GA_ID = (process.env.GA_ID || window.GA_ID);
 const initialAnalytics = (clientId = null) => {
     if (GA_ID) {
         const arg = {
-            debug: true,
+            debug: (process.env.NODE_ENV !== 'production'),
             titleCase: true,
             sampleRate: (process.env.NODE_ENV === 'production') ? 100 : 0,
             forceSSL: true
