@@ -380,6 +380,17 @@ const deviceData = [
     }
 ];
 
+// For those parent devices that exist in VM but are not displayed in GUI
+const hidenDeviceData = [
+    {
+        deviceId: 'arduinoUnoUltra',
+        type: 'arduino',
+        featured: true,
+        disabled: false,
+        baseToolBoxXml: arduinoBaseToolBox
+    }
+];
+
 /**
  * To get real device id. eg: the third party id like ironKit_arduinoUno.
  * @param {string} deviceId - the id of the device.
@@ -413,7 +424,8 @@ const makeDeviceLibrary = data => {
         // This is a third party device. Try to parse it's parent deivce.
         const realDeviceId = analysisRealDeviceId(dev.deviceId);
         if (realDeviceId) {
-            const parentDevice = deviceData.find(item => realDeviceId === item.deviceId);
+            const parentDevice = deviceData.find(item => realDeviceId === item.deviceId) ||
+                hidenDeviceData.find(item => realDeviceId === item.deviceId);
             if (parentDevice) {
                 return defaultsDeep({}, dev, parentDevice);
             }
