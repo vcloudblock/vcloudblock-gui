@@ -377,16 +377,14 @@ const deviceData = [
         programLanguage: ['block', 'python'],
         tags: ['microPython'],
         helpLink: 'https://maixduino.sipeed.com/'
-    }
-];
-
-// For those parent devices that exist in VM but are not displayed in GUI
-const hidenDeviceData = [
+    },
+    // For those parent devices that exist in VM but are not displayed in GUI
     {
         deviceId: 'arduinoUnoUltra',
         type: 'arduino',
         featured: true,
         disabled: false,
+        hide: true,
         baseToolBoxXml: arduinoBaseToolBox
     }
 ];
@@ -424,8 +422,10 @@ const makeDeviceLibrary = data => {
         // This is a third party device. Try to parse it's parent deivce.
         const realDeviceId = analysisRealDeviceId(dev.deviceId);
         if (realDeviceId) {
-            const parentDevice = deviceData.find(item => realDeviceId === item.deviceId) ||
-                hidenDeviceData.find(item => realDeviceId === item.deviceId);
+            const parentDevice = deviceData.find(item => realDeviceId === item.deviceId);
+            if (typeof dev.hide === 'undefined') {
+                dev.hide = false;
+            }
             if (parentDevice) {
                 return defaultsDeep({}, dev, parentDevice);
             }
@@ -433,6 +433,16 @@ const makeDeviceLibrary = data => {
         log.warn('Cannot find this device or it\'s parent device :', dev.deviceId);
         return null;
     });
+
+    // if the provided devices list missing some build-in device, hide them and put into the data.
+    deviceData.forEach(dev => {
+        const matchedDevice = fullData.find(item => dev.deviceId === item.deviceId);
+        if (typeof matchedDevice === 'undefined') {
+            dev.hide = true;
+            fullData.push(dev);
+        }
+    });
+
     fullData = fullData.filter(dev => !!dev);
     return fullData;
 };
