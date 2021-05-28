@@ -34,9 +34,9 @@ import microbitV2IconURL from './microbitV2/microbitV2.png';
 import microbitV2ConnectionIconURLL from './microbitV2/microbitV2-illustration.svg';
 import microbitV2ConnectionSmallIconURL from './microbitV2/microbitV2-small.svg';
 
-import maixduinoIconURL from './maixduino/maixduino.png';
-import maixduinoConnectionIconURLL from './maixduino/maixduino-illustration.svg';
-import maixduinoConnectionSmallIconURL from './maixduino/maixduino-small.svg';
+// import maixduinoIconURL from './maixduino/maixduino.png';
+// import maixduinoConnectionIconURLL from './maixduino/maixduino-illustration.svg';
+// import maixduinoConnectionSmallIconURL from './maixduino/maixduino-small.svg';
 
 import esp32IconURL from './esp32/esp32.png';
 import esp32ConnectionIconURLL from './esp32/esp32-illustration.svg';

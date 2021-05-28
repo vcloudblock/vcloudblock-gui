@@ -16,8 +16,8 @@ import text2speechInsetIconURL from './text2speech/text2speech-small.svg';
 import translateIconURL from './translate/translate.png';
 import translateInsetIconURL from './translate/translate-small.png';
 
-import makeymakeyIconURL from './makeymakey/makeymakey.png';
-import makeymakeyInsetIconURL from './makeymakey/makeymakey-small.svg';
+// import makeymakeyIconURL from './makeymakey/makeymakey.png';
+// import makeymakeyInsetIconURL from './makeymakey/makeymakey-small.svg';
 
 // import microbitIconURL from './microbit/microbit.png';
 // import microbitInsetIconURL from './microbit/microbit-small.svg';
