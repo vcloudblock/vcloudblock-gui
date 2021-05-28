@@ -394,7 +394,7 @@ const deviceData = [
         iconURL: makeymakeyIconURL,
         description: (
             <FormattedMessage
-                defaultMessage="Makey Makey"
+                defaultMessage="Make anything into a key."
                 description="Description for the Makey Makey device"
                 id="gui.device.makeymakey.description"
             />
