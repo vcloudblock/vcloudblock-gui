@@ -422,43 +422,43 @@ const deviceData = [
         tags: ['arduino'],
         helpLink: 'https://makeymakey.com'
     },
-    {
-        name: 'Maixduino',
-        deviceId: 'maixduino',
-        manufactor: 'sipeed',
-        leanMore: 'https://www.sipeed.com/',
-        type: 'maixduino',
-        iconURL: maixduinoIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="The K210 RISC-V board with ESP32 inside"
-                description="Description for the maixduino device"
-                id="gui.device.maixduino.description"
-            />
-        ),
-        featured: true,
-        disabled: true,
-        bluetoothRequired: false,
-        serialportRequired: true,
-        defaultBaudRate: '115200',
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: true,
-        useAutoScan: false,
-        connectionIconURL: maixduinoConnectionIconURLL,
-        connectionSmallIconURL: maixduinoConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their maixduino."
-                id="gui.device.maixduino.connectingMessage"
-            />
-        ),
-        baseToolBoxXml: arduinoBaseToolBox,
-        programMode: ['realtime', 'upload'],
-        programLanguage: ['block', 'python'],
-        tags: ['microPython'],
-        helpLink: 'https://maixduino.sipeed.com/'
-    },
+    // {
+    //     name: 'Maixduino',
+    //     deviceId: 'maixduino',
+    //     manufactor: 'sipeed',
+    //     leanMore: 'https://www.sipeed.com/',
+    //     type: 'maixduino',
+    //     iconURL: maixduinoIconURL,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="The K210 RISC-V board with ESP32 inside"
+    //             description="Description for the maixduino device"
+    //             id="gui.device.maixduino.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     disabled: true,
+    //     bluetoothRequired: false,
+    //     serialportRequired: true,
+    //     defaultBaudRate: '115200',
+    //     internetConnectionRequired: false,
+    //     launchPeripheralConnectionFlow: true,
+    //     useAutoScan: false,
+    //     connectionIconURL: maixduinoConnectionIconURLL,
+    //     connectionSmallIconURL: maixduinoConnectionSmallIconURL,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their maixduino."
+    //             id="gui.device.maixduino.connectingMessage"
+    //         />
+    //     ),
+    //     baseToolBoxXml: arduinoBaseToolBox,
+    //     programMode: ['realtime', 'upload'],
+    //     programLanguage: ['block', 'python'],
+    //     tags: ['microPython'],
+    //     helpLink: 'https://maixduino.sipeed.com/'
+    // },
     // For those parent devices that exist in VM but are not displayed in GUI
     {
         deviceId: 'arduinoUnoUltra',
