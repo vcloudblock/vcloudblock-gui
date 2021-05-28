@@ -19,11 +19,6 @@ import translateInsetIconURL from './translate/translate-small.png';
 import makeymakeyIconURL from './makeymakey/makeymakey.png';
 import makeymakeyInsetIconURL from './makeymakey/makeymakey-small.svg';
 
-// import microbitIconURL from './microbit/microbit.png';
-// import microbitInsetIconURL from './microbit/microbit-small.svg';
-// import microbitConnectionIconURL from './microbit/microbit-illustration.svg';
-// import microbitConnectionSmallIconURL from './microbit/microbit-small.svg';
-
 // import ev3IconURL from './ev3/ev3.png';
 // import ev3InsetIconURL from './ev3/ev3-small.svg';
 // import ev3ConnectionIconURL from './ev3/ev3-hub-illustration.svg';
@@ -173,36 +168,6 @@ export default [
         featured: true
     }
     // {
-    //     name: 'micro:bit',
-    //     extensionId: 'microbit',
-    //     collaborator: 'micro:bit',
-    //     iconURL: microbitIconURL,
-    //     insetIconURL: microbitInsetIconURL,
-    //     description: (
-    //         <FormattedMessage
-    //             defaultMessage="Connect your projects with the world."
-    //             description="Description for the 'micro:bit' extension"
-    //             id="gui.extension.microbit.description"
-    //         />
-    //     ),
-    //     featured: true,
-    //     disabled: false,
-    //     bluetoothRequired: true,
-    //     internetConnectionRequired: true,
-    //     launchPeripheralConnectionFlow: true,
-    //     useAutoScan: false,
-    //     connectionIconURL: microbitConnectionIconURL,
-    //     connectionSmallIconURL: microbitConnectionSmallIconURL,
-    //     connectingMessage: (
-    //         <FormattedMessage
-    //             defaultMessage="Connecting"
-    //             description="Message to help people connect to their micro:bit."
-    //             id="gui.extension.microbit.connectingMessage"
-    //         />
-    //     ),
-    //     helpLink: 'https://scratch.mit.edu/microbit'
-    // },
-    // {
     //     name: 'LEGO MINDSTORMS EV3',
     //     extensionId: 'ev3',
     //     collaborator: 'LEGO',
@@ -323,36 +288,5 @@ export default [
     //         />
     //     ),
     //     helpLink: 'https://scratch.mit.edu/vernier'
-    // },
-    // {
-    //     name: 'Arduino Uno',
-    //     extensionId: 'arduinouno',
-    //     collaborator: 'arduino',
-    //     iconURL: arduinoUnoIconURL,
-    //     insetIconURL: arduinoUnoInsetIconURL,
-    //     description: (
-    //         <FormattedMessage
-    //             defaultMessage=" The best board to get started with electronics and coding."
-    //             description="Description for  the 'Arduino Uno' extension"
-    //             id="gui.extension.arduinouno.description"
-    //         />
-    //     ),
-    //     featured: true,
-    //     disabled: false,
-    //     bluetoothRequired: false,
-    //     serialportRequired: true,
-    //     internetConnectionRequired: false,
-    //     launchPeripheralConnectionFlow: true,
-    //     useAutoScan: false,
-    //     connectionIconURL: arduinoUnoConnectionIconURLL,
-    //     connectionSmallIconURL: arduinoUnoConnectionSmallIconURL,
-    //     connectingMessage: (
-    //         <FormattedMessage
-    //             defaultMessage="Connecting"
-    //             description="Message to help people connect to their arduino."
-    //             id="gui.extension.arduino.connectingMessage"
-    //         />
-    //     ),
-    //     helpLink: 'https://store.arduino.cc/usa/arduino-uno-rev3'
     // }
 ];
