@@ -34,9 +34,9 @@ import microbitV2IconURL from './microbitV2/microbitV2.png';
 import microbitV2ConnectionIconURLL from './microbitV2/microbitV2-illustration.svg';
 import microbitV2ConnectionSmallIconURL from './microbitV2/microbitV2-small.svg';
 
-import maixduinoIconURL from './maixduino/maixduino.png';
-import maixduinoConnectionIconURLL from './maixduino/maixduino-illustration.svg';
-import maixduinoConnectionSmallIconURL from './maixduino/maixduino-small.svg';
+// import maixduinoIconURL from './maixduino/maixduino.png';
+// import maixduinoConnectionIconURLL from './maixduino/maixduino-illustration.svg';
+// import maixduinoConnectionSmallIconURL from './maixduino/maixduino-small.svg';
 
 import esp32IconURL from './esp32/esp32.png';
 import esp32ConnectionIconURLL from './esp32/esp32-illustration.svg';
@@ -394,7 +394,7 @@ const deviceData = [
         iconURL: makeymakeyIconURL,
         description: (
             <FormattedMessage
-                defaultMessage="Makey Makey"
+                defaultMessage="Make anything into a key."
                 description="Description for the Makey Makey device"
                 id="gui.device.makeymakey.description"
             />
@@ -422,43 +422,43 @@ const deviceData = [
         tags: ['arduino'],
         helpLink: 'https://makeymakey.com'
     },
-    {
-        name: 'Maixduino',
-        deviceId: 'maixduino',
-        manufactor: 'sipeed',
-        leanMore: 'https://www.sipeed.com/',
-        type: 'maixduino',
-        iconURL: maixduinoIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="The K210 RISC-V board with ESP32 inside"
-                description="Description for the maixduino device"
-                id="gui.device.maixduino.description"
-            />
-        ),
-        featured: true,
-        disabled: true,
-        bluetoothRequired: false,
-        serialportRequired: true,
-        defaultBaudRate: '115200',
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: true,
-        useAutoScan: false,
-        connectionIconURL: maixduinoConnectionIconURLL,
-        connectionSmallIconURL: maixduinoConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their maixduino."
-                id="gui.device.maixduino.connectingMessage"
-            />
-        ),
-        baseToolBoxXml: arduinoBaseToolBox,
-        programMode: ['realtime', 'upload'],
-        programLanguage: ['block', 'python'],
-        tags: ['microPython'],
-        helpLink: 'https://maixduino.sipeed.com/'
-    },
+    // {
+    //     name: 'Maixduino',
+    //     deviceId: 'maixduino',
+    //     manufactor: 'sipeed',
+    //     leanMore: 'https://www.sipeed.com/',
+    //     type: 'maixduino',
+    //     iconURL: maixduinoIconURL,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="The K210 RISC-V board with ESP32 inside"
+    //             description="Description for the maixduino device"
+    //             id="gui.device.maixduino.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     disabled: true,
+    //     bluetoothRequired: false,
+    //     serialportRequired: true,
+    //     defaultBaudRate: '115200',
+    //     internetConnectionRequired: false,
+    //     launchPeripheralConnectionFlow: true,
+    //     useAutoScan: false,
+    //     connectionIconURL: maixduinoConnectionIconURLL,
+    //     connectionSmallIconURL: maixduinoConnectionSmallIconURL,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their maixduino."
+    //             id="gui.device.maixduino.connectingMessage"
+    //         />
+    //     ),
+    //     baseToolBoxXml: arduinoBaseToolBox,
+    //     programMode: ['realtime', 'upload'],
+    //     programLanguage: ['block', 'python'],
+    //     tags: ['microPython'],
+    //     helpLink: 'https://maixduino.sipeed.com/'
+    // },
     // For those parent devices that exist in VM but are not displayed in GUI
     {
         deviceId: 'arduinoUnoUltra',
