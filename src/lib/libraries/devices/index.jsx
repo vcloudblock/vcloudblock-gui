@@ -283,7 +283,7 @@ const deviceData = [
         iconURL: esp8266IconURL,
         description: (
             <FormattedMessage
-                defaultMessage="Wi-Fi & Bluetooth control board with rich functions."
+                defaultMessage="Low-cost Wi-Fi SOC control board."
                 description="Description for the esp8266 device"
                 id="gui.device.arduinoEsp8266.description"
             />
