@@ -34,14 +34,21 @@ import microbitV2IconURL from './microbitV2/microbitV2.png';
 import microbitV2ConnectionIconURLL from './microbitV2/microbitV2-illustration.svg';
 import microbitV2ConnectionSmallIconURL from './microbitV2/microbitV2-small.svg';
 
-import maixduinoIconURL from './maixduino/maixduino.png';
-import maixduinoConnectionIconURLL from './maixduino/maixduino-illustration.svg';
-import maixduinoConnectionSmallIconURL from './maixduino/maixduino-small.svg';
+// import maixduinoIconURL from './maixduino/maixduino.png';
+// import maixduinoConnectionIconURLL from './maixduino/maixduino-illustration.svg';
+// import maixduinoConnectionSmallIconURL from './maixduino/maixduino-small.svg';
 
 import esp32IconURL from './esp32/esp32.png';
 import esp32ConnectionIconURLL from './esp32/esp32-illustration.svg';
 import esp32ConnectionSmallIconURL from './esp32/esp32-small.svg';
 
+import esp8266IconURL from './esp8266/esp8266.png';
+import esp8266ConnectionIconURL from './esp8266/esp8266-illustration.svg';
+import esp8266ConnectionSmallIconURL from './esp8266/esp8266-small.svg';
+
+import makeymakeyIconURL from './makeymakey/makeymakey.png';
+import makeymakeyConnectionIconURL from './makeymakey/makeymakey-illustration.svg';
+import makeymakeyConnectionSmallIconURL from './makeymakey/makeymakey-small.svg';
 
 const deviceData = [
     {
@@ -268,6 +275,43 @@ const deviceData = [
         helpLink: 'https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/hw-reference/esp32/get-started-devkitc.html'
     },
     {
+        name: 'ESP8266',
+        deviceId: 'arduinoEsp8266',
+        manufactor: 'espressif',
+        leanMore: 'https://www.espressif.com/',
+        type: 'arduino',
+        iconURL: esp8266IconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="Low-cost Wi-Fi SOC control board."
+                description="Description for the esp8266 device"
+                id="gui.device.arduinoEsp8266.description"
+            />
+        ),
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        serialportRequired: true,
+        defaultBaudRate: '115200',
+        internetConnectionRequired: false,
+        launchPeripheralConnectionFlow: true,
+        useAutoScan: false,
+        connectionIconURL: esp8266ConnectionIconURL,
+        connectionSmallIconURL: esp8266ConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their esp8266."
+                id="gui.device.arduinoEsp8266.connectingMessage"
+            />
+        ),
+        baseToolBoxXml: arduinoBaseToolBox,
+        programMode: ['upload'],
+        programLanguage: ['block', 'python'],
+        tags: ['arduino'],
+        helpLink: 'https://arduino-esp8266.readthedocs.io/en/3.0.0/index.html'
+    },
+    {
         name: 'Micro:bit',
         deviceId: 'microbit',
         manufactor: 'microbit.org',
@@ -342,42 +386,79 @@ const deviceData = [
         helpLink: 'https://microbit.org/get-started/first-steps/introduction/'
     },
     {
-        name: 'Maixduino',
-        deviceId: 'maixduino',
-        manufactor: 'sipeed',
-        leanMore: 'https://www.sipeed.com/',
-        type: 'maixduino',
-        iconURL: maixduinoIconURL,
+        name: 'Makey Makey',
+        deviceId: 'makeyMakey',
+        manufactor: 'makeymakey.com',
+        leanMore: 'https://makeymakey.com/',
+        type: 'arduino',
+        iconURL: makeymakeyIconURL,
         description: (
             <FormattedMessage
-                defaultMessage="The K210 RISC-V board with ESP32 inside"
-                description="Description for the maixduino device"
-                id="gui.device.maixduino.description"
+                defaultMessage="Make anything into a key."
+                description="Description for the Makey Makey device"
+                id="gui.device.makeymakey.description"
             />
         ),
         featured: true,
-        disabled: true,
+        disabled: false,
         bluetoothRequired: false,
         serialportRequired: true,
         defaultBaudRate: '115200',
         internetConnectionRequired: false,
         launchPeripheralConnectionFlow: true,
         useAutoScan: false,
-        connectionIconURL: maixduinoConnectionIconURLL,
-        connectionSmallIconURL: maixduinoConnectionSmallIconURL,
+        connectionIconURL: makeymakeyConnectionIconURL,
+        connectionSmallIconURL: makeymakeyConnectionSmallIconURL,
         connectingMessage: (
             <FormattedMessage
                 defaultMessage="Connecting"
-                description="Message to help people connect to their maixduino."
-                id="gui.device.maixduino.connectingMessage"
+                description="Message to help people connect to their arduino."
+                id="gui.device.arduino.connectingMessage"
             />
         ),
         baseToolBoxXml: arduinoBaseToolBox,
-        programMode: ['realtime', 'upload'],
-        programLanguage: ['block', 'python'],
-        tags: ['microPython'],
-        helpLink: 'https://maixduino.sipeed.com/'
+        programMode: ['upload'],
+        programLanguage: ['block', 'c', 'cpp'],
+        tags: ['arduino'],
+        helpLink: 'https://makeymakey.com'
     },
+    // {
+    //     name: 'Maixduino',
+    //     deviceId: 'maixduino',
+    //     manufactor: 'sipeed',
+    //     leanMore: 'https://www.sipeed.com/',
+    //     type: 'maixduino',
+    //     iconURL: maixduinoIconURL,
+    //     description: (
+    //         <FormattedMessage
+    //             defaultMessage="The K210 RISC-V board with ESP32 inside"
+    //             description="Description for the maixduino device"
+    //             id="gui.device.maixduino.description"
+    //         />
+    //     ),
+    //     featured: true,
+    //     disabled: true,
+    //     bluetoothRequired: false,
+    //     serialportRequired: true,
+    //     defaultBaudRate: '115200',
+    //     internetConnectionRequired: false,
+    //     launchPeripheralConnectionFlow: true,
+    //     useAutoScan: false,
+    //     connectionIconURL: maixduinoConnectionIconURLL,
+    //     connectionSmallIconURL: maixduinoConnectionSmallIconURL,
+    //     connectingMessage: (
+    //         <FormattedMessage
+    //             defaultMessage="Connecting"
+    //             description="Message to help people connect to their maixduino."
+    //             id="gui.device.maixduino.connectingMessage"
+    //         />
+    //     ),
+    //     baseToolBoxXml: arduinoBaseToolBox,
+    //     programMode: ['realtime', 'upload'],
+    //     programLanguage: ['block', 'python'],
+    //     tags: ['microPython'],
+    //     helpLink: 'https://maixduino.sipeed.com/'
+    // },
     // For those parent devices that exist in VM but are not displayed in GUI
     {
         deviceId: 'arduinoUnoUltra',
