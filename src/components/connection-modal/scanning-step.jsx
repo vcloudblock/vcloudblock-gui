@@ -18,8 +18,8 @@ const ScanningStep = props => (
             <Box className={classNames(styles.bodyHeadArea)}>
                 <div className={styles.listAll}>
                     <FormattedMessage
-                        defaultMessage="List all connectable devices"
-                        description="Button in prompt for list all connectable devices"
+                        defaultMessage="Show all connectable devices"
+                        description="Button in prompt for show all connectable devices"
                         id="gui.connection.scanning.listAll"
                     />
                 </div>
