@@ -10,6 +10,7 @@ class ScanningStep extends React.Component {
         bindAll(this, [
             'handlePeripheralListUpdate',
             'handlePeripheralScanTimeout',
+            'handleClickListAll',
             'handleRefresh'
         ]);
         this.state = {
@@ -18,7 +19,7 @@ class ScanningStep extends React.Component {
         };
     }
     componentDidMount () {
-        this.props.vm.scanForPeripheral(this.props.extensionId);
+        this.scanForPeripheral(this.props.isListAll);
         this.props.vm.on(
             'PERIPHERAL_LIST_UPDATE', this.handlePeripheralListUpdate);
         this.props.vm.on(
@@ -30,6 +31,9 @@ class ScanningStep extends React.Component {
             'PERIPHERAL_LIST_UPDATE', this.handlePeripheralListUpdate);
         this.props.vm.removeListener(
             'PERIPHERAL_SCAN_TIMEOUT', this.handlePeripheralScanTimeout);
+    }
+    scanForPeripheral (listAll) {
+        this.props.vm.scanForPeripheral(this.props.extensionId, listAll);
     }
     handlePeripheralScanTimeout () {
         this.setState({
@@ -44,8 +48,12 @@ class ScanningStep extends React.Component {
         );
         this.setState({peripheralList: peripheralArray});
     }
+    handleClickListAll () {
+        this.props.onClickListAll(!this.props.isListAll);
+        this.scanForPeripheral(!this.props.isListAll);
+    }
     handleRefresh () {
-        this.props.vm.scanForPeripheral(this.props.extensionId);
+        this.scanForPeripheral(this.props.isListAll);
         this.setState({
             scanning: true,
             peripheralList: []
@@ -56,12 +64,14 @@ class ScanningStep extends React.Component {
             <ScanningStepComponent
                 connectionSmallIconURL={this.props.connectionSmallIconURL}
                 isSerialport={this.props.isSerialport}
+                isListAll={this.props.isListAll}
                 peripheralList={this.state.peripheralList}
                 phase={this.state.phase}
                 scanning={this.state.scanning}
                 title={this.props.extensionId}
                 onConnected={this.props.onConnected}
                 onConnecting={this.props.onConnecting}
+                onClickListAll={this.handleClickListAll}
                 onRefresh={this.handleRefresh}
             />
         );
@@ -70,10 +80,12 @@ class ScanningStep extends React.Component {
 
 ScanningStep.propTypes = {
     connectionSmallIconURL: PropTypes.string,
-    isSerialport: PropTypes.bool,
+    isSerialport: PropTypes.bool.isRequired,
+    isListAll: PropTypes.bool.isRequired,
     extensionId: PropTypes.string.isRequired,
     onConnected: PropTypes.func.isRequired,
     onConnecting: PropTypes.func.isRequired,
+    onClickListAll: PropTypes.func.isRequired,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 

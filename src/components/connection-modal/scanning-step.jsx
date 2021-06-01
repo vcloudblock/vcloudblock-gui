@@ -14,6 +14,25 @@ import styles from './connection-modal.css';
 
 const ScanningStep = props => (
     <Box className={styles.body}>
+        {props.isSerialport ? (
+            <Box className={classNames(styles.bodyHeadArea)}>
+                <div className={styles.listAll}>
+                    <FormattedMessage
+                        defaultMessage="Show all connectable devices"
+                        description="Button in prompt for show all connectable devices"
+                        id="gui.connection.scanning.listAll"
+                    />
+                </div>
+                <div className={styles.checkBox}>
+                    <input
+                        type="checkbox"
+                        name="hexform"
+                        checked={props.isListAll}
+                        onClick={props.onClickListAll}
+                    />
+                </div>
+            </Box>
+        ) : null}
         <Box className={styles.activityArea}>
             {props.scanning ? (
                 props.peripheralList.length === 0 ? (
@@ -88,7 +107,9 @@ const ScanningStep = props => (
 
 ScanningStep.propTypes = {
     connectionSmallIconURL: PropTypes.string,
+    isListAll: PropTypes.bool.isRequired,
     isSerialport: PropTypes.bool,
+    onClickListAll: PropTypes.func.isRequired,
     onConnecting: PropTypes.func,
     onRefresh: PropTypes.func,
     peripheralList: PropTypes.arrayOf(PropTypes.shape({
