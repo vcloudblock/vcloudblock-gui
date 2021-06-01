@@ -218,6 +218,54 @@
     align-items: center;
 }
 
+.body-head-area {
+    background-color: $ui-white;
+    padding: 0.5rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+    vertical-align:middle;
+}
+
+.list-all {
+    margin: auto 0;
+    font-size: 0.85rem;
+}
+
+.check-box input{
+    cursor: pointer;
+    width: 0;
+    height: 0;
+    margin: 0;
+}
+
+.check-box input::after {
+    display: block;
+    position: relative;
+    width: 0.8rem;
+    height: 0.8rem;
+    border: 0.05rem solid #808080;
+    border-radius: 0.25rem;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    content: "";
+    background: #FFF;
+    background-position:center;
+}
+
+.check-box input:checked::after {
+    display: block;
+    width: 0.8rem;
+    height: 0.8rem;
+    border: 0.05rem solid $motion-primary;
+    border-radius: 0.25rem;
+    content: "";
+    background-image: linear-gradient($motion-primary, $motion-primary);
+    background-repeat: no-repeat;
+    background-position:center;
+}
+
 .activityArea {
     height: 165px;
     background-color: $motion-light-transparent;
