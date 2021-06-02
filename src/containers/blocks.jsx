@@ -174,9 +174,11 @@ class Blocks extends React.Component {
         }
 
         // If program mode changed, call functio to update the toolbox
-        if (this.props.isRealtimeMode !== this._programMode && this.props.isRealtimeMode === false) {
-            // Do not update code before toolbox is updated.
-            this._toolboxUpdating = true;
+        if (this.props.isRealtimeMode !== this._programMode) {
+            if (this.props.isRealtimeMode === false) {
+                // Do not update code before toolbox is updated.
+                this._toolboxUpdating = true;
+            }
             // Clear possible errors witch print in to code editor.
             this.props.onSetCodeEditorValue('');
             this.onProgramModeUpdate();

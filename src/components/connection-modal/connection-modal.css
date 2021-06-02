@@ -230,7 +230,10 @@
 
 .list-all {
     margin: auto 0;
-    font-size: 0.85rem;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: normal;
+    color: $text-primary;
 }
 
 .check-box input{
