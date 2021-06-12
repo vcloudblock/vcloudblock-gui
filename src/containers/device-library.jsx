@@ -34,12 +34,18 @@ const messages = defineMessages({
         defaultMessage: 'MicroPython',
         description: 'Micro python tag to filter all micro python devices.',
         id: 'gui.deviceLibrary.microPythonTag'
+    },
+    kitTag: {
+        defaultMessage: 'Kit',
+        description: 'Kit tag to filter all kit devices.',
+        id: 'gui.deviceLibrary.kitTag'
     }
 });
 
 const ARDUINO_TAG = {tag: 'Arduino', intlLabel: messages.arduinoTag};
 const MICROPYTHON_TAG = {tag: 'MicroPython', intlLabel: messages.microPythonTag};
-const tagListPrefix = [ARDUINO_TAG, MICROPYTHON_TAG];
+const KIT_TAG = {tag: 'Kit', intlLabel: messages.kitTag};
+const tagListPrefix = [ARDUINO_TAG, MICROPYTHON_TAG, KIT_TAG];
 
 class DeviceLibrary extends React.PureComponent {
     constructor (props) {
@@ -86,11 +92,10 @@ class DeviceLibrary extends React.PureComponent {
     }
 
     render () {
-        const deviceLibraryThumbnailData = this.props.deviceData.filter(device => device.hide !== true)
-            .map(device => ({
-                rawURL: device.iconURL || deviceIcon,
-                ...device
-            }));
+        const deviceLibraryThumbnailData = this.props.deviceData.map(device => ({
+            rawURL: device.iconURL || deviceIcon,
+            ...device
+        }));
 
         return (
             <LibraryComponent

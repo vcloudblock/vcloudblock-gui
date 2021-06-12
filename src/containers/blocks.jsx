@@ -497,62 +497,69 @@ class Blocks extends React.Component {
     handleDeviceAdded (info) {
         const {device, categoryInfoArray} = info;
 
-        const dev = this.props.deviceData.find(ext => ext.deviceId === device);
-        this.props.onDeviceSelected(dev.deviceId, dev.name, dev.type);
-        if (dev.defaultBaudRate) {
-            this.props.onSetBaudrate(dev.defaultBaudRate);
-        }
-
-        const supportUploadMode = dev.programMode.includes('upload');
-        const supportRealtimeMode = dev.programMode.includes('realtime');
-
-        // eslint-disable-next-line no-negated-condition
-        if (!(supportUploadMode && supportRealtimeMode)) {
-            if (supportUploadMode) {
-                this.props.vm.runtime.setRealtimeMode(false);
-            } else {
-                this.props.vm.runtime.setRealtimeMode(true);
+        if (device) {
+            const dev = this.props.deviceData.find(ext => ext.deviceId === device);
+            this.props.onDeviceSelected(dev.deviceId, dev.name, dev.type);
+            if (dev.defaultBaudRate) {
+                this.props.onSetBaudrate(dev.defaultBaudRate);
             }
-            this.props.onSetSupportSwitchMode(false);
-        } else {
-            this.props.onSetSupportSwitchMode(true);
-        }
 
-        categoryInfoArray.forEach(categoryInfo => {
-            const defineBlocks = blockInfoArray => {
-                if (blockInfoArray && blockInfoArray.length > 0) {
-                    const staticBlocksJson = [];
-                    const dynamicBlocksInfo = [];
-                    blockInfoArray.forEach(blockInfo => {
-                        if (blockInfo.info && blockInfo.info.isDynamic) {
-                            dynamicBlocksInfo.push(blockInfo);
-                        } else if (blockInfo.json) {
-                            staticBlocksJson.push(blockInfo.json);
-                        }
-                        // otherwise it's a non-block entry such as '---'
-                    });
+            const supportUploadMode = dev.programMode.includes('upload');
+            const supportRealtimeMode = dev.programMode.includes('realtime');
 
-                    this.ScratchBlocks.defineBlocksWithJsonArray(staticBlocksJson);
-                    dynamicBlocksInfo.forEach(blockInfo => {
-                        // This is creating the block factory / constructor -- NOT a specific instance of the block.
-                        // The factory should only know static info about the block: the category info and the opcode.
-                        // Anything else will be picked up from the XML attached to the block instance.
-                        const extendedOpcode = `${categoryInfo.id}_${blockInfo.info.opcode}`;
-                        const blockDefinition =
-                            defineDynamicBlock(this.ScratchBlocks, categoryInfo, blockInfo, extendedOpcode);
-                        this.ScratchBlocks.Blocks[extendedOpcode] = blockDefinition;
-                    });
+            // eslint-disable-next-line no-negated-condition
+            if (!(supportUploadMode && supportRealtimeMode)) {
+                if (supportUploadMode) {
+                    this.props.vm.runtime.setRealtimeMode(false);
+                } else {
+                    this.props.vm.runtime.setRealtimeMode(true);
                 }
-            };
+                this.props.onSetSupportSwitchMode(false);
+            } else {
+                this.props.onSetSupportSwitchMode(true);
+            }
 
-            // openblock-blocks implements a menu or custom field as a special kind of block ("shadow" block)
-            // these actually define blocks and MUST run regardless of the UI state
-            defineBlocks(
-                Object.getOwnPropertyNames(categoryInfo.customFieldTypes)
-                    .map(fieldTypeName => categoryInfo.customFieldTypes[fieldTypeName].scratchBlocksDefinition));
-            defineBlocks(categoryInfo.menus);
-            defineBlocks(categoryInfo.blocks);
-        });
+            categoryInfoArray.forEach(categoryInfo => {
+                const defineBlocks = blockInfoArray => {
+                    if (blockInfoArray && blockInfoArray.length > 0) {
+                        const staticBlocksJson = [];
+                        const dynamicBlocksInfo = [];
+                        blockInfoArray.forEach(blockInfo => {
+                            if (blockInfo.info && blockInfo.info.isDynamic) {
+                                dynamicBlocksInfo.push(blockInfo);
+                            } else if (blockInfo.json) {
+                                staticBlocksJson.push(blockInfo.json);
+                            }
+                            // otherwise it's a non-block entry such as '---'
+                        });
+
+                        this.ScratchBlocks.defineBlocksWithJsonArray(staticBlocksJson);
+                        dynamicBlocksInfo.forEach(blockInfo => {
+                            // This is creating the block factory / constructor -- NOT a specific instance of the block.
+                            // The factory should only know static info about the block: the category info and the opcode.
+                            // Anything else will be picked up from the XML attached to the block instance.
+                            const extendedOpcode = `${categoryInfo.id}_${blockInfo.info.opcode}`;
+                            const blockDefinition =
+                                defineDynamicBlock(this.ScratchBlocks, categoryInfo, blockInfo, extendedOpcode);
+                            this.ScratchBlocks.Blocks[extendedOpcode] = blockDefinition;
+                        });
+                    }
+                };
+
+                // openblock-blocks implements a menu or custom field as a special kind of block ("shadow" block)
+                // these actually define blocks and MUST run regardless of the UI state
+                defineBlocks(
+                    Object.getOwnPropertyNames(categoryInfo.customFieldTypes)
+                        .map(fieldTypeName => categoryInfo.customFieldTypes[fieldTypeName].scratchBlocksDefinition));
+                defineBlocks(categoryInfo.menus);
+                defineBlocks(categoryInfo.blocks);
+            });
+
+        } else {
+            this.props.onDeviceSelected(null, null, null);
+            this.props.vm.runtime.setRealtimeMode(true);
+            this.props.onSetSupportSwitchMode(false);
+        }
 
         // Update the toolbox with new blocks if possible, use timeout to let props update first
         this.requestGetXMLAndUpdateToolbox();
