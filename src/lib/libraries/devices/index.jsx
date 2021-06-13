@@ -482,26 +482,28 @@ const analysisRealDeviceId = deviceId => {
  * @return {string} fullData - processed data of devices.
  */
 const makeDeviceLibrary = data => {
-    const fullData = data.map(dev => {
+    const fullData = data
+        .map(dev => {
         // Check if this is a build-in device.
-        const matchedDevice = deviceData.find(item => dev.deviceId === item.deviceId);
-        if (matchedDevice) {
-            return matchedDevice;
-        }
-
-        // This is a third party device. Try to parse it's parent deivce.
-        const realDeviceId = analysisRealDeviceId(dev.deviceId);
-        if (realDeviceId) {
-            const parentDevice = deviceData.find(item => realDeviceId === item.deviceId);
-            if (parentDevice) {
-                return defaultsDeep({}, dev, {hide: false}, parentDevice);
+            const matchedDevice = deviceData.find(item => dev.deviceId === item.deviceId);
+            if (matchedDevice) {
+                return matchedDevice;
             }
-        }
-        log.warn('Cannot find this device or it\'s parent device :', dev.deviceId);
-        return null;
-    })
-        .unshift(deviceData[0]) // add unselect deive in the head.
+
+            // This is a third party device. Try to parse it's parent deivce.
+            const realDeviceId = analysisRealDeviceId(dev.deviceId);
+            if (realDeviceId) {
+                const parentDevice = deviceData.find(item => realDeviceId === item.deviceId);
+                if (parentDevice) {
+                    return defaultsDeep({}, dev, {hide: false}, parentDevice);
+                }
+            }
+            log.warn('Cannot find this device or it\'s parent device :', dev.deviceId);
+            return null;
+        })
         .filter(dev => dev); // filter null data.
+
+    fullData.unshift(deviceData[0]); // add unselect deive in the head.
 
     return fullData;
 };
