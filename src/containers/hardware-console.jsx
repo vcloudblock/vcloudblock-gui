@@ -6,7 +6,6 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {intlShape, injectIntl} from 'react-intl';
 import VM from 'openblock-vm';
-import iconv from 'iconv-lite';
 
 import HardwareConsoleComponent from '../components/hardware-console/hardware-console.jsx';
 
@@ -158,14 +157,7 @@ class HardwareConsole extends React.Component {
 
                 data = `${data}\r\n`;
             }
-
-            let buffer = null;
-            if (this.props.locale === 'zh-cn') {
-                buffer = iconv.encode(data, 'gb2312');
-            } else {
-                buffer = iconv.encode(data, 'utf-8');
-            }
-            this.props.vm.writeToPeripheral(this.props.deviceId, buffer);
+            this.props.vm.writeToPeripheral(this.props.deviceId, data);
         } else {
             this.props.onNoPeripheralIsConnected();
         }
@@ -209,7 +201,6 @@ class HardwareConsole extends React.Component {
                 isHexForm={this.props.isHexForm}
                 isPause={this.props.isPause}
                 isRtl={this.props.isRtl}
-                locale={this.props.locale}
                 onClickClean={this.handleClickClean}
                 onClickPause={this.handleClickPause}
                 onClickAutoScroll={this.handleClickAutoScroll}
@@ -238,7 +229,6 @@ HardwareConsole.propTypes = {
     isPause: PropTypes.bool.isRequired,
     intl: intlShape.isRequired,
     isRtl: PropTypes.bool,
-    locale: PropTypes.string.isRequired,
     onNoPeripheralIsConnected: PropTypes.func.isRequired,
     onSetBaudrate: PropTypes.func.isRequired,
     onSetEol: PropTypes.func.isRequired,
@@ -257,7 +247,6 @@ const mapStateToProps = state => ({
     isHexForm: state.scratchGui.hardwareConsole.isHexForm,
     isPause: state.scratchGui.hardwareConsole.isPause,
     isRtl: state.locales.isRtl,
-    locale: state.locales.locale,
     peripheralName: state.scratchGui.connectionModal.peripheralName,
     serialportMenuOpen: serialportMenuOpen(state)
 });
