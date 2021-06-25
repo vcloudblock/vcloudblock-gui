@@ -82,6 +82,7 @@ class Blocks extends React.Component {
             'onProgramModeUpdate',
             'onTargetsUpdate',
             'onVisualReport',
+            'onActivateColorPicker',
             'onWorkspaceUpdate',
             'onWorkspaceMetricsChange',
             'setBlocks',
@@ -99,8 +100,7 @@ class Blocks extends React.Component {
         this.toolboxUpdateQueue = [];
     }
     componentDidMount () {
-
-        this.ScratchBlocks.FieldColourSlider.activateEyedropper_ = this.props.onActivateColorPicker;
+        this.ScratchBlocks.FieldColourSlider.activateEyedropper_ = this.onActivateColorPicker; // TODO 实时模式下在此处处理色彩捕捉器
         this.ScratchBlocks.Procedures.externalProcedureDefCallback = this.props.onActivateCustomProcedures;
         this.ScratchBlocks.ScratchMsgs.setLocale(this.props.locale);
 
@@ -379,6 +379,11 @@ class Blocks extends React.Component {
     }
     onVisualReport (data) {
         this.workspace.reportValue(data.id, data.value);
+    }
+    onActivateColorPicker (callback) {
+        if (this.props.isRealtimeMode) {
+            this.props.onActivateColorPicker(callback);
+        }
     }
     getToolboxXML () {
         // Use try/catch because this requires digging pretty deep into the VM

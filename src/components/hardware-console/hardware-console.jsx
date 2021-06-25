@@ -14,7 +14,7 @@ import pauseIcon from './pause.svg';
 import startIcon from './start.svg';
 
 const toHexForm = buffer => Array.prototype.map.call(buffer,
-    x => (`00${x.toString(16).toUpperCase()}`).slice(-2)).join(' ');
+    x => x.toString(16).toUpperCase()).join(' ');
 
 const HardwareConsoleComponent = props => {
     const {
