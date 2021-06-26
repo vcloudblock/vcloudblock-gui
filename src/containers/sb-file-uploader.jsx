@@ -138,7 +138,8 @@ class SBFileUploader extends React.Component {
                 })
                 .catch(error => {
                     log.warn(error);
-                    alert(this.props.intl.formatMessage(messages.loadError)); // eslint-disable-line no-alert
+                    // eslint-disable-next-line no-alert
+                    alert(`${this.props.intl.formatMessage(messages.loadError)}\n${error}`);
                     this.props.onLoadingFinished(this.props.loadingState, false);
                     // Reset the file input after project is loaded
                     // This is necessary in case the user wants to reload a project

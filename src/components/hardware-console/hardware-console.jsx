@@ -3,7 +3,6 @@ import {FormattedMessage, intlShape} from 'react-intl';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import ScrollableFeed from 'react-scrollable-feed';
-import iconv from 'iconv-lite';
 
 import Box from '../box/box.jsx';
 import MenuBarMenu from '../menu-bar/menu-bar-menu.jsx';
@@ -14,9 +13,8 @@ import settingIcon from './setting.svg';
 import pauseIcon from './pause.svg';
 import startIcon from './start.svg';
 
-const toHexForm = buffer => Array.prototype.map.call(buffer, x => (`00${x.toString(16)}`).slice(-2)).join(' ');
-const toStringGB2312 = buffer => iconv.decode(buffer, 'gb2312');
-const toStringUTF8 = buffer => iconv.decode(buffer, 'utf-8');
+const toHexForm = buffer => Array.prototype.map.call(buffer,
+    x => x.toString(16).toUpperCase()).join(' ');
 
 const HardwareConsoleComponent = props => {
     const {
@@ -29,7 +27,6 @@ const HardwareConsoleComponent = props => {
         isAutoScroll,
         isHexForm,
         isPause,
-        locale,
         onClickClean,
         onClickPause,
         onClickSerialportMenu,
@@ -49,9 +46,7 @@ const HardwareConsoleComponent = props => {
                     forceScroll={isAutoScroll}
                 >
                     <span>
-                        {isHexForm ? toHexForm(consoleArray) :
-                            locale === 'zh-cn' ? toStringGB2312(consoleArray) : toStringUTF8(consoleArray)
-                        }
+                        {isHexForm ? toHexForm(consoleArray) : new TextDecoder('utf-8').decode(consoleArray)}
                     </span>
                 </ScrollableFeed>
             </Box>
@@ -218,7 +213,6 @@ HardwareConsoleComponent.propTypes = {
     isHexForm: PropTypes.bool.isRequired,
     isPause: PropTypes.bool.isRequired,
     isAutoScroll: PropTypes.bool.isRequired,
-    locale: PropTypes.string.isRequired,
     onClickClean: PropTypes.func.isRequired,
     onClickPause: PropTypes.func.isRequired,
     onClickAutoScroll: PropTypes.func.isRequired,

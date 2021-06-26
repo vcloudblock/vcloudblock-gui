@@ -6,6 +6,8 @@ import log from '../../log';
 import arduinoBaseToolBox from './baseToolbox/arduino';
 import microbitBaseToolBox from './baseToolbox/microbit';
 
+import unselectDeviceIconURL from './unselectDevice/unselectDevice.png';
+
 import arduinoUnoIconURL from './arduinoUno/arduinoUno.png';
 import arduinoUnoConnectionIconURLL from './arduinoUno/arduinoUno-illustration.svg';
 import arduinoUnoConnectionSmallIconURL from './arduinoUno/arduinoUno-small.svg';
@@ -34,10 +36,6 @@ import microbitV2IconURL from './microbitV2/microbitV2.png';
 import microbitV2ConnectionIconURLL from './microbitV2/microbitV2-illustration.svg';
 import microbitV2ConnectionSmallIconURL from './microbitV2/microbitV2-small.svg';
 
-// import maixduinoIconURL from './maixduino/maixduino.png';
-// import maixduinoConnectionIconURLL from './maixduino/maixduino-illustration.svg';
-// import maixduinoConnectionSmallIconURL from './maixduino/maixduino-small.svg';
-
 import esp32IconURL from './esp32/esp32.png';
 import esp32ConnectionIconURLL from './esp32/esp32-illustration.svg';
 import esp32ConnectionSmallIconURL from './esp32/esp32-small.svg';
@@ -51,6 +49,32 @@ import makeymakeyConnectionIconURL from './makeymakey/makeymakey-illustration.sv
 import makeymakeyConnectionSmallIconURL from './makeymakey/makeymakey-small.svg';
 
 const deviceData = [
+    /**
+     * Unselect the deivce back to pure scratch mode
+     */
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Unselect deivce"
+                description="Name for the unselect deivce"
+                id="gui.device.unselectDevice.name"
+            />
+        ),
+        deviceId: 'unselectDevice',
+        iconURL: unselectDeviceIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="Unselect the deivce, return to pure realtime programming mode."
+                description="Description for the unselect deivce"
+                id="gui.device.unselectDevice.description"
+            />
+        ),
+        featured: true,
+        hide: false,
+        programMode: ['realtime'],
+        programLanguage: ['block'],
+        tags: ['realtime']
+    },
     {
         name: 'Arduino Uno',
         deviceId: 'arduinoUno',
@@ -422,44 +446,9 @@ const deviceData = [
         tags: ['arduino'],
         helpLink: 'https://makeymakey.com'
     },
-    // {
-    //     name: 'Maixduino',
-    //     deviceId: 'maixduino',
-    //     manufactor: 'sipeed',
-    //     leanMore: 'https://www.sipeed.com/',
-    //     type: 'maixduino',
-    //     iconURL: maixduinoIconURL,
-    //     description: (
-    //         <FormattedMessage
-    //             defaultMessage="The K210 RISC-V board with ESP32 inside"
-    //             description="Description for the maixduino device"
-    //             id="gui.device.maixduino.description"
-    //         />
-    //     ),
-    //     featured: true,
-    //     disabled: true,
-    //     bluetoothRequired: false,
-    //     serialportRequired: true,
-    //     defaultBaudRate: '115200',
-    //     internetConnectionRequired: false,
-    //     launchPeripheralConnectionFlow: true,
-    //     useAutoScan: false,
-    //     connectionIconURL: maixduinoConnectionIconURLL,
-    //     connectionSmallIconURL: maixduinoConnectionSmallIconURL,
-    //     connectingMessage: (
-    //         <FormattedMessage
-    //             defaultMessage="Connecting"
-    //             description="Message to help people connect to their maixduino."
-    //             id="gui.device.maixduino.connectingMessage"
-    //         />
-    //     ),
-    //     baseToolBoxXml: arduinoBaseToolBox,
-    //     programMode: ['realtime', 'upload'],
-    //     programLanguage: ['block', 'python'],
-    //     tags: ['microPython'],
-    //     helpLink: 'https://maixduino.sipeed.com/'
-    // },
-    // For those parent devices that exist in VM but are not displayed in GUI
+    /**
+     * For those parent devices that exist in VM but are not displayed in GUI
+     */
     {
         deviceId: 'arduinoUnoUltra',
         type: 'arduino',
@@ -493,38 +482,29 @@ const analysisRealDeviceId = deviceId => {
  * @return {string} fullData - processed data of devices.
  */
 const makeDeviceLibrary = data => {
-    let fullData = data.map(dev => {
+    const fullData = data
+        .map(dev => {
         // Check if this is a build-in device.
-        const matchedDevice = deviceData.find(item => dev.deviceId === item.deviceId);
-        if (matchedDevice) {
-            return matchedDevice;
-        }
-
-        // This is a third party device. Try to parse it's parent deivce.
-        const realDeviceId = analysisRealDeviceId(dev.deviceId);
-        if (realDeviceId) {
-            const parentDevice = deviceData.find(item => realDeviceId === item.deviceId);
-            if (typeof dev.hide === 'undefined') {
-                dev.hide = false;
+            const matchedDevice = deviceData.find(item => dev.deviceId === item.deviceId);
+            if (matchedDevice) {
+                return matchedDevice;
             }
-            if (parentDevice) {
-                return defaultsDeep({}, dev, parentDevice);
+
+            // This is a third party device. Try to parse it's parent deivce.
+            const realDeviceId = analysisRealDeviceId(dev.deviceId);
+            if (realDeviceId) {
+                const parentDevice = deviceData.find(item => realDeviceId === item.deviceId);
+                if (parentDevice) {
+                    return defaultsDeep({}, dev, {hide: false}, parentDevice);
+                }
             }
-        }
-        log.warn('Cannot find this device or it\'s parent device :', dev.deviceId);
-        return null;
-    });
+            log.warn('Cannot find this device or it\'s parent device :', dev.deviceId);
+            return null;
+        })
+        .filter(dev => dev); // filter null data.
 
-    // if the provided devices list missing some build-in device, hide them and put into the data.
-    deviceData.forEach(dev => {
-        const matchedDevice = fullData.find(item => dev.deviceId === item.deviceId);
-        if (typeof matchedDevice === 'undefined') {
-            dev.hide = true;
-            fullData.push(dev);
-        }
-    });
+    fullData.unshift(deviceData[0]); // add unselect deive in the head.
 
-    fullData = fullData.filter(dev => !!dev);
     return fullData;
 };
 

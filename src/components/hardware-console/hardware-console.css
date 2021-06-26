@@ -104,6 +104,7 @@
     border: none;
     outline: none;
     cursor: pointer;
+    white-space:nowrap;
 }
 
 .send-button:active{
