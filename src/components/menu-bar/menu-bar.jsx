@@ -26,8 +26,8 @@ import AuthorInfo from './author-info.jsx';
 import AccountNav from '../../containers/account-nav.jsx'; // eslint-disable-line no-unused-vars
 import LoginDropdown from './login-dropdown.jsx'; // eslint-disable-line no-unused-vars
 import SB3Downloader from '../../containers/sb3-downloader.jsx';
-import DeletionRestorer from '../../containers/deletion-restorer.jsx'; // eslint-disable-line no-unused-vars
-import TurboMode from '../../containers/turbo-mode.jsx'; // eslint-disable-line no-unused-vars
+import DeletionRestorer from '../../containers/deletion-restorer.jsx';
+import TurboMode from '../../containers/turbo-mode.jsx';
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
 import {isScratchDesktop} from '../../lib/isScratchDesktop';
 
@@ -495,6 +495,54 @@ class MenuBar extends React.Component {
                         </div>
                         <LanguageSelector label={this.props.intl.formatMessage(ariaMessages.language)} />
                     </div>)}
+                    <div
+                        className={classNames(styles.menuBarItem, styles.hoverable, {
+                            [styles.active]: this.props.editMenuOpen
+                        })}
+                        onMouseUp={this.props.onClickEdit}
+                    >
+                        <div className={classNames(styles.editMenu)}>
+                            <FormattedMessage
+                                defaultMessage="Edit"
+                                description="Text for edit dropdown menu"
+                                id="gui.menuBar.edit"
+                            />
+                        </div>
+                        <MenuBarMenu
+                            className={classNames(styles.menuBarMenu)}
+                            open={this.props.editMenuOpen}
+                            place={this.props.isRtl ? 'left' : 'right'}
+                            onRequestClose={this.props.onRequestCloseEdit}
+                        >
+                            <DeletionRestorer>{(handleRestore, {restorable, deletedItem}) => (
+                                <MenuItem
+                                    className={classNames({[styles.disabled]: !restorable})}
+                                    onClick={this.handleRestoreOption(handleRestore)}
+                                >
+                                    {this.restoreOptionMessage(deletedItem)}
+                                </MenuItem>
+                            )}</DeletionRestorer>
+                            <MenuSection>
+                                <TurboMode>{(toggleTurboMode, {turboMode}) => (
+                                    <MenuItem onClick={toggleTurboMode}>
+                                        {turboMode ? (
+                                            <FormattedMessage
+                                                defaultMessage="Turn off Turbo Mode"
+                                                description="Menu bar item for turning off turbo mode"
+                                                id="gui.menuBar.turboModeOff"
+                                            />
+                                        ) : (
+                                            <FormattedMessage
+                                                defaultMessage="Turn on Turbo Mode"
+                                                description="Menu bar item for turning on turbo mode"
+                                                id="gui.menuBar.turboModeOn"
+                                            />
+                                        )}
+                                    </MenuItem>
+                                )}</TurboMode>
+                            </MenuSection>
+                        </MenuBarMenu>
+                    </div>
                     <Divider className={classNames(styles.divider)} />
                     <div
                         className={classNames(styles.menuBarItem, styles.hoverable)}
