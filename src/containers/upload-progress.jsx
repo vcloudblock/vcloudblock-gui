@@ -4,8 +4,7 @@ import bindAll from 'lodash.bindall';
 
 import {connect} from 'react-redux';
 import {compose} from 'redux';
-import {injectIntl, intlShape} from 'react-intl';
-import {defineMessages} from 'react-intl';
+import {injectIntl, intlShape, defineMessages} from 'react-intl';
 
 import VM from 'openblock-vm';
 import analytics from '../lib/analytics';
