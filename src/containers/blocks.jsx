@@ -38,8 +38,8 @@ import {
 
 const addFunctionListener = (object, property, callback) => {
     const oldFn = object[property];
-    object[property] = function () {
-        const result = oldFn.apply(this, arguments);
+    object[property] = function (...args) {
+        const result = oldFn.apply(this, args);
         callback.apply(this, result);
         return result;
     };
