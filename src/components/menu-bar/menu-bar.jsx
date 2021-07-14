@@ -30,7 +30,13 @@ import TurboMode from '../../containers/turbo-mode.jsx';
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
 import {isScratchDesktop} from '../../lib/isScratchDesktop';
 
-import {openTipsLibrary, openUploadProgress, openUpdateModal} from '../../reducers/modals';
+import {
+    openTipsLibrary,
+    openUploadProgress,
+    openUpdateModal,
+    openConnectionModal,
+    openDeviceLibrary
+} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
 import {
     autoUpdateProject,
@@ -65,6 +71,9 @@ import {
     loginMenuOpen
 } from '../../reducers/menus';
 import {setStageSize} from '../../reducers/stage-size';
+import {setUploadMode, setRealtimeMode} from '../../reducers/program-mode';
+import {setRealtimeConnection, clearConnectionModalPeripheralName} from '../../reducers/connection-modal';
+import {setUpdate} from '../../reducers/update';
 import {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 
 import collectMetadata from '../../lib/collect-metadata';
@@ -85,10 +94,6 @@ import scratchLogo from './scratch-logo.svg';
 import sharedMessages from '../../lib/shared-messages';
 
 import Switch from 'react-switch';
-import {setUploadMode, setRealtimeMode} from '../../reducers/program-mode';
-import {openConnectionModal, openDeviceLibrary} from '../../reducers/modals';
-import {setRealtimeConnection, clearConnectionModalPeripheralName} from '../../reducers/connection-modal';
-import {setUpdate} from '../../reducers/update';
 
 import deviceIcon from './icon--device.svg';
 import unconnectedIcon from './icon--unconnected.svg';
