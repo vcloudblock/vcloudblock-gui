@@ -12,10 +12,10 @@
     height: 260px;
     overflow:auto;
     word-break:break-all;
-	white-space: pre-line;
+	white-space: pre-wrap;
     user-select: text;
     color: $text-primary;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "monospace", Helvetica, Arial, sans-serif;
     font-size: $menu-bar-standard-font-size;
 }
 

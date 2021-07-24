@@ -26,8 +26,8 @@ const messages = defineMessages({
     }
 });
 
-// 40s
-const UPLOAD_TIMEOUT_TIME = 40 * 1000;
+// 60s
+const UPLOAD_TIMEOUT_TIME = 60 * 1000;
 
 class UploadProgress extends React.Component {
     constructor (props) {
@@ -108,7 +108,7 @@ class UploadProgress extends React.Component {
             phase: PHASES.success
         });
         this.props.onUploadSuccess();
-        // this.handleCancel();
+        this.handleCancel();
         clearTimeout(this.uploadTimeout);
     }
     handleUploadTimeout () {

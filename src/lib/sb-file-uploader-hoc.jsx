@@ -159,7 +159,8 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                     })
                     .catch(error => {
                         log.warn(error);
-                        alert(this.props.intl.formatMessage(messages.loadError)); // eslint-disable-line no-alert
+                        // eslint-disable-next-line no-alert
+                        alert(`${this.props.intl.formatMessage(messages.loadError)}\n${error}`);
                     })
                     .then(() => {
                         this.props.onLoadingFinished(this.props.loadingState, loadingSuccess);
