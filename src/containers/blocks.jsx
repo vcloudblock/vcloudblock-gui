@@ -100,7 +100,7 @@ class Blocks extends React.Component {
         this.toolboxUpdateQueue = [];
     }
     componentDidMount () {
-        this.ScratchBlocks.FieldColourSlider.activateEyedropper_ = this.onActivateColorPicker; // TODO 实时模式下在此处处理色彩捕捉器
+        this.ScratchBlocks.FieldColourSlider.activateEyedropper_ = this.onActivateColorPicker;
         this.ScratchBlocks.Procedures.externalProcedureDefCallback = this.props.onActivateCustomProcedures;
         this.ScratchBlocks.ScratchMsgs.setLocale(this.props.locale);
 
