@@ -114,7 +114,8 @@ const deviceData = [
     },
     {
         name: 'Arduino Nano',
-        deviceId: 'arduinoNano',
+        deviceId: 'arduinoNano_arduinoUno',
+        deviceExtensionsCompatible: 'arduinoUno',
         manufactor: 'arduino.cc',
         leanMore: 'https://store.arduino.cc/usa/arduino-nano',
         type: 'arduino',
@@ -151,7 +152,8 @@ const deviceData = [
     },
     {
         name: 'Arduino Mini',
-        deviceId: 'arduinoMini',
+        deviceId: 'arduinoMini_arduinoUno',
+        deviceExtensionsCompatible: 'arduinoUno',
         manufactor: 'arduino.cc',
         // Discontinued board
         // leanMore: 'https://store.arduino.cc/usa/arduino/boards-modules',
