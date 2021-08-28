@@ -10,6 +10,7 @@ import {closeUpdateModal} from '../reducers/modals';
 import {setUpdate, clearUpdate} from '../reducers/update';
 
 import UpdateModalComponent from '../components/update-modal/update-modal.jsx';
+import MessageBoxType from '../lib/message-box.js';
 
 const messages = defineMessages({
     upgradeWarning: {
@@ -75,7 +76,8 @@ class UpdateModal extends React.Component {
     }
 
     handleClickUpgrade () {
-        const confirmUpgrade = this.props.confirmWithMessage(this.props.intl.formatMessage(messages.upgradeWarning));
+        const confirmUpgrade = this.props.onShowMessageBox(MessageBoxType.confirm,
+            this.props.intl.formatMessage(messages.upgradeWarning));
         if (confirmUpgrade) {
             this.props.onSetUpdate({phase: 'downloading', speed: 0, transferred: 0});
             if (typeof this.props.onClickUpgrade !== 'undefined') {
@@ -97,22 +99,17 @@ class UpdateModal extends React.Component {
 }
 
 UpdateModal.propTypes = {
-    confirmWithMessage: PropTypes.func,
     intl: intlShape,
     onClickUpgrade: PropTypes.func.isRequired,
     onClearUpdate: PropTypes.func.isRequired,
     onSetUpdate: PropTypes.func.isRequired,
+    onShowMessageBox: PropTypes.func.isRequired,
     updateState: PropTypes.shape({
         phase: PropTypes.oneOf(['idle', 'downloading', 'covering', 'checking', 'error', 'latest']),
         version: PropTypes.string,
         describe: PropTypes.string,
         message: PropTypes.string
     })
-};
-
-UpdateModal.defaultProps = {
-    // default to using standard js confirm
-    confirmWithMessage: message => (confirm(message)) // eslint-disable-line no-alert
 };
 
 const mapStateToProps = state => ({
