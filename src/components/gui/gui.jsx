@@ -122,6 +122,7 @@ const GUIComponent = props => {
         onShare,
         onShowPrivacyPolicy,
         onStartSelectingFileUpload,
+        onShowMessageBox,
         onTelemetryModalCancel,
         onTelemetryModalOptIn,
         onTelemetryModalOptOut,
@@ -235,6 +236,7 @@ const GUIComponent = props => {
                     <UpdateModal
                         vm={vm}
                         onClickUpgrade={onClickUpgrade}
+                        onShowMessageBox={onShowMessageBox}
                     />
                 ) : null}
                 <MenuBar
@@ -266,6 +268,7 @@ const GUIComponent = props => {
                     onSeeCommunity={onSeeCommunity}
                     onShare={onShare}
                     onStartSelectingFileUpload={onStartSelectingFileUpload}
+                    onShowMessageBox={onShowMessageBox}
                     onToggleLoginOpen={onToggleLoginOpen}
                     onClickCheckUpdate={onClickCheckUpdate}
                     onClickClearCache={onClickClearCache}
@@ -365,7 +368,10 @@ const GUIComponent = props => {
                                     {costumesTabVisible ? <CostumeTab vm={vm} /> : null}
                                 </TabPanel>
                                 <TabPanel className={tabClassNames.tabPanel}>
-                                    {soundsTabVisible ? <SoundTab vm={vm} /> : null}
+                                    {soundsTabVisible ? <SoundTab
+                                        vm={vm}
+                                        onShowMessageBox={onShowMessageBox}
+                                    /> : null}
                                 </TabPanel>
                             </Tabs>
                             {/*
@@ -466,6 +472,7 @@ GUIComponent.propTypes = {
     onShare: PropTypes.func,
     onShowPrivacyPolicy: PropTypes.func,
     onStartSelectingFileUpload: PropTypes.func,
+    onShowMessageBox: PropTypes.func.isRequired,
     onTabSelect: PropTypes.func,
     onTelemetryModalCancel: PropTypes.func,
     onTelemetryModalOptIn: PropTypes.func,

@@ -6,6 +6,7 @@ import AppStateHOC from '../lib/app-state-hoc.jsx';
 import GUI from '../containers/gui.jsx';
 import HashParserHOC from '../lib/hash-parser-hoc.jsx';
 import log from '../lib/log.js';
+import MessageBoxType from '../lib/message-box.js';
 
 const onClickLogo = () => {
     window.location = 'https://openblockcc.github.io/wiki/';
@@ -37,6 +38,14 @@ const handleTelemetryModalOptIn = () => {
 
 const handleTelemetryModalOptOut = () => {
     log('User opted out of telemetry');
+};
+
+const handleShowMessageBox = (type, message) => {
+    if (type === MessageBoxType.confirm) {
+        return confirm(message); // eslint-disable-line no-alert
+    } else if (type === MessageBoxType.alert) {
+        return alert(message); // eslint-disable-line no-alert
+    }
 };
 
 /*
@@ -92,6 +101,7 @@ export default appTarget => {
                 onClickUpgrade={onClickUpgrade}
                 onClickClearCache={onClickClearCache}
                 onClickInstallDriver={onClickInstallDriver}
+                onShowMessageBox={handleShowMessageBox}
             /> :
             <WrappedGui
                 canEditTitle
@@ -100,6 +110,7 @@ export default appTarget => {
                 backpackHost={backpackHost}
                 canSave={false}
                 onClickLogo={onClickLogo}
+                onShowMessageBox={handleShowMessageBox}
             />,
         appTarget);
 };

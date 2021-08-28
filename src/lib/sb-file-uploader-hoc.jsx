@@ -5,6 +5,7 @@ import {defineMessages, intlShape, injectIntl} from 'react-intl';
 import {connect} from 'react-redux';
 import log from '../lib/log';
 import sharedMessages from './shared-messages';
+import MessageBoxType from '../lib/message-box.js';
 
 import {
     LoadingStates,
@@ -104,9 +105,8 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                 // changed it, no need to confirm.)
                 let uploadAllowed = true;
                 if (userOwnsProject || (projectChanged && isShowingWithoutId)) {
-                    uploadAllowed = confirm( // eslint-disable-line no-alert
-                        intl.formatMessage(sharedMessages.replaceProjectWarning)
-                    );
+                    uploadAllowed = this.props.onShowMessageBox(MessageBoxType.confirm,
+                        intl.formatMessage(sharedMessages.replaceProjectWarning));
                 }
                 if (uploadAllowed) {
                     // cues step 4
@@ -159,8 +159,8 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                     })
                     .catch(error => {
                         log.warn(error);
-                        // eslint-disable-next-line no-alert
-                        alert(`${this.props.intl.formatMessage(messages.loadError)}\n${error}`);
+                        this.props.onShowMessageBox(MessageBoxType.alert,
+                            `${this.props.intl.formatMessage(messages.loadError)}\n${error}`);
                     })
                     .then(() => {
                         this.props.onLoadingFinished(this.props.loadingState, loadingSuccess);
@@ -220,6 +220,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
         onLoadingFinished: PropTypes.func,
         onLoadingStarted: PropTypes.func,
         onSetProjectTitle: PropTypes.func,
+        onShowMessageBox: PropTypes.func.isRequired,
         projectChanged: PropTypes.bool,
         requestProjectUpload: PropTypes.func,
         userOwnsProject: PropTypes.bool,
