@@ -61,7 +61,6 @@ class Blocks extends React.Component {
             'handleCategorySelected',
             'handleConnectionModalStart',
             'handleDeviceAdded',
-            'handleDeviceChanged',
             'handleDeviceExtensionAdded',
             'handleDeviceExtensionRemoved',
             'handleDeviceSelected',
@@ -627,11 +626,6 @@ class Blocks extends React.Component {
             this.workspace.toolbox_.setSelectedCategoryById(categoryId);
         });
     }
-    handleDeviceChanged () {
-        if (this.props.peripheralName) {
-            this.props.vm.disconnectPeripheral(this.props.deviceId);
-        }
-    }
     setBlocks (blocks) {
         this.blocks = blocks;
     }
@@ -772,7 +766,6 @@ class Blocks extends React.Component {
                     <DeviceLibrary
                         vm={vm}
                         onDeviceSelected={this.handleDeviceSelected}
-                        onDeviceChanged={this.handleDeviceChanged}
                         onRequestClose={onRequestCloseDeviceLibrary}
                     />
                 ) : null}

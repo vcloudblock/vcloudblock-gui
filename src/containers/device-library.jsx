@@ -72,7 +72,6 @@ class DeviceLibrary extends React.PureComponent {
             if (this.props.vm.extensionManager.isDeviceLoaded(id)) {
                 this.props.onDeviceSelected(id);
             } else {
-                this.props.onDeviceChanged();
                 this.props.vm.extensionManager.loadDeviceURL(id, deviceType, pnpidList).then(() => {
                     this.props.vm.extensionManager.getDeviceExtensionsList().then(() => {
                         // TODO: Add a event for install device extension
@@ -115,7 +114,6 @@ class DeviceLibrary extends React.PureComponent {
 DeviceLibrary.propTypes = {
     deviceData: PropTypes.instanceOf(Array).isRequired,
     intl: intlShape.isRequired,
-    onDeviceChanged: PropTypes.func,
     onDeviceSelected: PropTypes.func,
     onRequestClose: PropTypes.func,
     onSetDeviceData: PropTypes.func.isRequired,
