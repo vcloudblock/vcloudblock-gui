@@ -583,10 +583,16 @@ class Blocks extends React.Component {
             this.props.updateToolboxState(toolboxXML);
         }
     }
-    handleDeviceExtensionAdded (addExts) {
-        this.ScratchBlocks = addExts.addMsg(this.ScratchBlocks);
-        this.ScratchBlocks = addExts.addGenerator(this.ScratchBlocks);
-        this.ScratchBlocks = addExts.addBlocks(this.ScratchBlocks);
+    handleDeviceExtensionAdded (deviceExtensionsRegister) {
+        if (deviceExtensionsRegister.addMsg) {
+            this.ScratchBlocks = deviceExtensionsRegister.addMsg(this.ScratchBlocks);
+        }
+        if (deviceExtensionsRegister.addGenerator) {
+            this.ScratchBlocks = deviceExtensionsRegister.addGenerator(this.ScratchBlocks);
+        }
+        if (deviceExtensionsRegister.addBlocks) {
+            this.ScratchBlocks = deviceExtensionsRegister.addBlocks(this.ScratchBlocks);
+        }
 
         this.setLocale();
 
