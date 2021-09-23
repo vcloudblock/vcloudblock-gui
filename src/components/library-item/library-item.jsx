@@ -68,10 +68,10 @@ class LibraryItemComponent extends React.PureComponent {
                 >
                     <a
                         className={styles.libraryItemName}
-                        href={this.props.leanMore}
+                        href={this.props.learnMore}
                         rel="noopener noreferrer"
                         target="_blank"
-                        onClick={this.props.onClickLeanMore ? this.props.onClickLeanMore : null}
+                        onClick={this.props.onClickLearnMore ? this.props.onClickLearnMore : null}
                     >
                         {this.props.name}
                     </a>
@@ -240,15 +240,15 @@ class LibraryItemComponent extends React.PureComponent {
                         </div>
                     </div>
                 ) : null}
-                {this.props.leanMore || this.props.helpLink ? (
+                {this.props.learnMore || this.props.helpLink ? (
                     <div className={styles.featuredExtensionMetadataThirdRow}>
-                        {this.props.leanMore ? (
-                            <div className={styles.featuredExtensionLeanMore}>
+                        {this.props.learnMore ? (
+                            <div className={styles.featuredExtensionLearnMore}>
                                 <a
-                                    href={this.props.leanMore}
+                                    href={this.props.learnMore}
                                     rel="noopener noreferrer"
                                     target="_blank"
-                                    onClick={this.props.onClickLeanMore}
+                                    onClick={this.props.onClickLearnMore}
                                 >
                                     <FormattedMessage
                                         defaultMessage="Learn more"
@@ -264,7 +264,7 @@ class LibraryItemComponent extends React.PureComponent {
                                     href={this.props.helpLink}
                                     rel="noopener noreferrer"
                                     target="_blank"
-                                    onClick={this.props.onClickLeanMore}
+                                    onClick={this.props.onClickLearnMore}
                                 >
                                     <FormattedMessage
                                         defaultMessage="Help"
@@ -383,7 +383,7 @@ LibraryItemComponent.propTypes = {
     isUnloadble: PropTypes.bool,
     isPlaying: PropTypes.bool,
     isProcessing: PropTypes.bool,
-    leanMore: PropTypes.string,
+    learnMore: PropTypes.string,
     manufactor: PropTypes.string,
     name: PropTypes.oneOfType([
         PropTypes.string,
@@ -391,7 +391,7 @@ LibraryItemComponent.propTypes = {
     ]),
     onBlur: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired,
-    onClickLeanMore: PropTypes.func.isRequired,
+    onClickLearnMore: PropTypes.func.isRequired,
     onFocus: PropTypes.func.isRequired,
     onKeyPress: PropTypes.func.isRequired,
     onMouseEnter: PropTypes.func.isRequired,
