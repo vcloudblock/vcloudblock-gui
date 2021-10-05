@@ -507,15 +507,23 @@ class Blocks extends React.Component {
             const supportRealtimeMode = dev.programMode.includes('realtime');
 
             // eslint-disable-next-line no-negated-condition
-            if (!(supportUploadMode && supportRealtimeMode)) {
+            if (supportUploadMode && supportRealtimeMode) {
+                this.props.onSetSupportSwitchMode(true);
+
+                const defaultProgramMode = dev.defaultProgramMode;
+                if (dev.programMode.includes(defaultProgramMode)) {
+                    if (defaultProgramMode === 'upload') {
+                        this.props.vm.runtime.setRealtimeMode(false);
+                    }
+                }
+
+            } else {
                 if (supportUploadMode) {
                     this.props.vm.runtime.setRealtimeMode(false);
                 } else {
                     this.props.vm.runtime.setRealtimeMode(true);
                 }
                 this.props.onSetSupportSwitchMode(false);
-            } else {
-                this.props.onSetSupportSwitchMode(true);
             }
 
             categoryInfoArray.forEach(categoryInfo => {
