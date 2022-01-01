@@ -1,6 +1,6 @@
 # openblock-gui
 
-![](https://img.shields.io/circleci/build/github/openblockcc/openblock-gui/develop) ![](https://img.shields.io/github/license/openblockcc/openblock-gui) [![Gitter](https://badges.gitter.im/openblockcc/community.svg)](https://gitter.im/openblockcc/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![ko-fi](https://img.shields.io/badge/donate-sponsors-ea4aaa.svg?logo=ko-fi)](https://ko-fi.com/X8X66DATO)
+[![Publish Npm Package And Deploy Github Pages](https://github.com/openblockcc/openblock-gui/actions/workflows/publish-npm-package-and-deploy-gh-pages.yml/badge.svg)](https://github.com/openblockcc/openblock-gui/actions/workflows/publish-npm-package-and-deploy-gh-pages.yml) ![](https://img.shields.io/github/license/openblockcc/openblock-gui) [![Gitter](https://badges.gitter.im/openblockcc/community.svg)](https://gitter.im/openblockcc/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![ko-fi](https://img.shields.io/badge/donate-sponsors-ea4aaa.svg?logo=ko-fi)](https://ko-fi.com/X8X66DATO)
 
 **OpenBlock GUI is a set of React components that comprise the interface for creating and running OpenBlock projects**
 
