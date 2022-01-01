@@ -2,7 +2,7 @@ name: Publish Npm Package And Deploy Github Pages
 
 on:
   push:
-    branches: [ main, develop, desktop ]
+    branches: [ develop, desktop ]
     paths-ignore:
       - 'README.md'
       - '.github/*'
@@ -106,7 +106,7 @@ jobs:
           git push --set-upstream origin-translation develop
 
       - name: Set GA ID
-        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' }}
+        if: ${{ github.ref == 'refs/heads/develop' }}
         run: |
           echo "GA_ID=${{ secrets.GA_ID_ONLINE }}" >> $GITHUB_ENV
 
@@ -117,27 +117,27 @@ jobs:
         run: npm run build
 
       - name: Get package main version
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/develop' }}
         id: package-version
         uses: martinbeentjes/npm-get-version-action@v1.1.0
 
       - name: Generate release version
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/develop' }}
         run: |
           echo "RELEASE_VERSION=${{ steps.package-version.outputs.current-version }}-prerelease.$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
       - name: Set package version
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/develop' }}
         run: npm --no-git-tag-version version $RELEASE_VERSION
 
       - name: Tag release
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/develop' }}
         run: |
           git tag $RELEASE_VERSION
           git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY $RELEASE_VERSION
 
       - uses: JS-DevTools/npm-publish@v1
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/develop' }}
         with:
           token: ${{ secrets.NPM_TOKEN }}
 
