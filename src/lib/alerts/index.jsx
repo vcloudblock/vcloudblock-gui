@@ -325,7 +325,7 @@ const alerts = [
         closeButton: true,
         content: (
             <FormattedMessage
-                defaultMessage="Code editor is in unlock state, if you want to generate code from block, please lock it first"
+                defaultMessage="Code editor is in unlock state, if you want to generate code from block, please lock it first" // eslint-disable-line max-len
                 description="Message indicating that code editor is in unlock state"
                 id="gui.alerts.codeEditorIsUnlocked"
             />
