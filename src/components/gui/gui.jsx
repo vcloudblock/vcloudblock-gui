@@ -298,7 +298,9 @@ const GUIComponent = props => {
                                         />
                                     </Tab>
                                     <Tab
-                                        className={tabClassNames.tab}
+                                        className={classNames(tabClassNames.tab,
+                                            isRealtimeMode ? styles.hideCustomAndSoundTab :
+                                                styles.showCustomAndSoundTab)}
                                         onClick={onActivateCostumesTab}
                                     >
                                         <img
@@ -320,7 +322,9 @@ const GUIComponent = props => {
                                         )}
                                     </Tab>
                                     <Tab
-                                        className={tabClassNames.tab}
+                                        className={classNames(tabClassNames.tab,
+                                            isRealtimeMode ? styles.hideCustomAndSoundTab :
+                                                styles.showCustomAndSoundTab)}
                                         onClick={onActivateSoundsTab}
                                     >
                                         <img
@@ -380,12 +384,9 @@ const GUIComponent = props => {
                                     ) : null
                                 */}
                         </Box>
-
-                        {/* stageAndTargetWrapper should use css to control show or hidden,
-                        prevent scratch-vm error due to unload StageWrapper */}
                         <Box
                             className={classNames(styles.stageAndTargetWrapper, styles[stageSize],
-                                isRealtimeMode ? styles.show : styles.hidden)}
+                                isRealtimeMode ? styles.showStage : styles.hideStage)}
                         >
                             <StageWrapper
                                 isFullScreen={isFullScreen}
