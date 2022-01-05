@@ -22,7 +22,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(213);
 /* harmony import */ var _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(368);
 /* harmony import */ var _lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(369);
-/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(898);
+/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(897);
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_10__);
 // Polyfills
 
@@ -101,7 +101,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(213);
 /* harmony import */ var _containers_gui_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(225);
 /* harmony import */ var _lib_hash_parser_hoc_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(254);
-/* harmony import */ var _lib_log_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(58);
+/* harmony import */ var _lib_log_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(54);
 /* harmony import */ var _lib_message_box_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(166);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -145,6 +145,23 @@ var handleTelemetryModalOptIn = function handleTelemetryModalOptIn() {
 var handleTelemetryModalOptOut = function handleTelemetryModalOptOut() {
   Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('User opted out of telemetry');
 };
+
+var onClickAbout = [{
+  title: 'About',
+  onClick: function onClick() {
+    return Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('About');
+  }
+}, {
+  title: 'Privacy Policy',
+  onClick: function onClick() {
+    return Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('Privacy Policy');
+  }
+}, {
+  title: 'Data Settings',
+  onClick: function onClick() {
+    return Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('Data Settings');
+  }
+}];
 
 var handleShowMessageBox = function handleShowMessageBox(type, message) {
   if (type === _lib_message_box_js__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"].confirm) {
@@ -194,6 +211,7 @@ var handleShowMessageBox = function handleShowMessageBox(type, message) {
   simulateScratchDesktop ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WrappedGui, {
     canEditTitle: true,
     isScratchDesktop: true,
+    onClickAbout: onClickAbout,
     showTelemetryModal: true,
     canSave: false,
     onTelemetryModalCancel: handleTelemetryModalCancel,
@@ -217,7 +235,7 @@ var handleShowMessageBox = function handleShowMessageBox(type, message) {
 
 /***/ }),
 
-/***/ 898:
+/***/ 897:
 /***/ (function(module, exports, __webpack_require__) {
 
 
