@@ -828,7 +828,13 @@ Blocks.propTypes = {
     isRtl: PropTypes.bool,
     isVisible: PropTypes.bool,
     locale: PropTypes.string.isRequired,
-    messages: PropTypes.objectOf(PropTypes.string),
+    messages: PropTypes.oneOfType([
+        PropTypes.objectOf(PropTypes.string),
+        PropTypes.shape({
+            format: PropTypes.func,
+            message: PropTypes.string
+        })
+    ]),
     onActivateColorPicker: PropTypes.func,
     onActivateCustomProcedures: PropTypes.func,
     onCodeEditorIsUnlocked: PropTypes.func,
