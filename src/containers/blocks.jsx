@@ -740,6 +740,7 @@ class Blocks extends React.Component {
             options,
             stageSize,
             vm,
+            isCodeEditorLocked,
             isRealtimeMode,
             isRtl,
             isVisible,
