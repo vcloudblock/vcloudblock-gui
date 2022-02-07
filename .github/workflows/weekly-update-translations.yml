@@ -58,3 +58,4 @@ jobs:
           github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: ./build
           destination_dir: ${{ steps.get-branch-name.outputs.short_ref }}
+
