@@ -48,11 +48,38 @@ jobs:
           git remote add origin-translation https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY
           git push --set-upstream origin-translation develop
 
+      - name: Get package main version
+        if: ${{ steps.git-check.outputs.modified == 'true' }}
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.1.0
+
+      - name: Generate release version
+        if: ${{ steps.git-check.outputs.modified == 'true' }}
+        run: |
+          echo "RELEASE_VERSION=${{ steps.package-version.outputs.current-version }}-prerelease.$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+
+      - name: Set package version
+        if: ${{ steps.git-check.outputs.modified == 'true' }}
+        run: npm --no-git-tag-version version $RELEASE_VERSION
+
+      - name: Tag release
+        if: ${{ steps.git-check.outputs.modified == 'true' }}
+        run: |
+          git tag $RELEASE_VERSION
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY $RELEASE_VERSION
+
+      - uses: JS-DevTools/npm-publish@v1
+        if: ${{ steps.git-check.outputs.modified == 'true' }}
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+
       - name: Get branch name
+        if: ${{ steps.git-check.outputs.modified == 'true' }}
         id: get-branch-name
         run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
 
       - name: Deploy
+        if: ${{ steps.git-check.outputs.modified == 'true' }}
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GH_TOKEN }}
