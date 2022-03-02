@@ -105,12 +105,13 @@ const GUIComponent = props => {
         onLogOut,
         onOpenRegistration,
         onToggleLoginOpen,
+        onAbortUpdate,
         onActivateCostumesTab,
         onActivateSoundsTab,
         onActivateTab,
         onClickLogo,
         onClickCheckUpdate,
-        onClickUpgrade,
+        onClickUpdate,
         onClickClearCache,
         onClickInstallDriver,
         onExtensionButtonClick,
@@ -235,7 +236,8 @@ const GUIComponent = props => {
                 {updateModalVisible ? (
                     <UpdateModal
                         vm={vm}
-                        onClickUpgrade={onClickUpgrade}
+                        onAbortUpdate={onAbortUpdate}
+                        onClickUpdate={onClickUpdate}
                         onShowMessageBox={onShowMessageBox}
                     />
                 ) : null}
@@ -459,7 +461,8 @@ GUIComponent.propTypes = {
     onClickAccountNav: PropTypes.func,
     onClickLogo: PropTypes.func,
     onClickCheckUpdate: PropTypes.func,
-    onClickUpgrade: PropTypes.func,
+    onAbortUpdate: PropTypes.func,
+    onClickUpdate: PropTypes.func,
     onClickClearCache: PropTypes.func,
     onClickInstallDriver: PropTypes.func,
     onCloseAccountNav: PropTypes.func,

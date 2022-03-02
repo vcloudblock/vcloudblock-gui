@@ -29,6 +29,7 @@ import DeletionRestorer from '../../containers/deletion-restorer.jsx';
 import TurboMode from '../../containers/turbo-mode.jsx';
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
 import {isScratchDesktop} from '../../lib/isScratchDesktop';
+import {UPDATE_MODAL_STATE} from '../../lib/update-state.js';
 
 import {
     openTipsLibrary,
@@ -391,7 +392,7 @@ class MenuBar extends React.Component {
         }
     }
     handleCheckUpdate () {
-        this.props.onSetUpdate({phase: 'checking'});
+        this.props.onSetUpdate({phase: UPDATE_MODAL_STATE.checkingApplication});
         this.props.onClickCheckUpdate();
     }
     handleClearCache () {
