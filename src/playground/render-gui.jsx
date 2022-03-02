@@ -16,8 +16,12 @@ const onClickCheckUpdate = () => {
     log('User click check update');
 };
 
-const onClickUpgrade = () => {
-    log('User click upgrade');
+const onClickUpdate = () => {
+    log('User click update');
+};
+
+const onAbortUpdate = () => {
+    log('User click abort update');
 };
 
 const onClickClearCache = () => {
@@ -113,8 +117,9 @@ export default appTarget => {
                 onTelemetryModalCancel={handleTelemetryModalCancel}
                 onTelemetryModalOptIn={handleTelemetryModalOptIn}
                 onTelemetryModalOptOut={handleTelemetryModalOptOut}
+                onAbortUpdate={onAbortUpdate}
                 onClickCheckUpdate={onClickCheckUpdate}
-                onClickUpgrade={onClickUpgrade}
+                onClickUpdate={onClickUpdate}
                 onClickClearCache={onClickClearCache}
                 onClickInstallDriver={onClickInstallDriver}
                 onShowMessageBox={handleShowMessageBox}
