@@ -97,10 +97,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(108);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(68);
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(69);
 /* harmony import */ var _lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(213);
 /* harmony import */ var _containers_gui_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(225);
-/* harmony import */ var _lib_hash_parser_hoc_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(254);
+/* harmony import */ var _lib_hash_parser_hoc_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(253);
 /* harmony import */ var _lib_log_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(54);
 /* harmony import */ var _lib_message_box_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(166);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -122,8 +122,12 @@ var onClickCheckUpdate = function onClickCheckUpdate() {
   Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('User click check update');
 };
 
-var onClickUpgrade = function onClickUpgrade() {
-  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('User click upgrade');
+var onClickUpdate = function onClickUpdate() {
+  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('User click update');
+};
+
+var onAbortUpdate = function onAbortUpdate() {
+  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('User click abort update');
 };
 
 var onClickClearCache = function onClickClearCache() {
@@ -217,8 +221,9 @@ var handleShowMessageBox = function handleShowMessageBox(type, message) {
     onTelemetryModalCancel: handleTelemetryModalCancel,
     onTelemetryModalOptIn: handleTelemetryModalOptIn,
     onTelemetryModalOptOut: handleTelemetryModalOptOut,
+    onAbortUpdate: onAbortUpdate,
     onClickCheckUpdate: onClickCheckUpdate,
-    onClickUpgrade: onClickUpgrade,
+    onClickUpdate: onClickUpdate,
     onClickClearCache: onClickClearCache,
     onClickInstallDriver: onClickInstallDriver,
     onShowMessageBox: handleShowMessageBox
