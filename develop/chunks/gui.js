@@ -98,12 +98,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(108);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(69);
-/* harmony import */ var _lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(213);
-/* harmony import */ var _containers_gui_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(225);
-/* harmony import */ var _lib_hash_parser_hoc_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(253);
-/* harmony import */ var _lib_log_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(54);
-/* harmony import */ var _lib_message_box_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(166);
+/* harmony import */ var react_intl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
+/* harmony import */ var _lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(213);
+/* harmony import */ var _containers_gui_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(225);
+/* harmony import */ var _lib_hash_parser_hoc_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(253);
+/* harmony import */ var _lib_log_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(54);
+/* harmony import */ var _lib_message_box_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(166);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 
 
 
@@ -119,58 +121,67 @@ var onClickLogo = function onClickLogo() {
 };
 
 var onClickCheckUpdate = function onClickCheckUpdate() {
-  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('User click check update');
+  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"])('User click check update');
 };
 
 var onClickUpdate = function onClickUpdate() {
-  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('User click update');
+  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"])('User click update');
 };
 
 var onAbortUpdate = function onAbortUpdate() {
-  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('User click abort update');
+  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"])('User click abort update');
 };
 
 var onClickClearCache = function onClickClearCache() {
-  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('User click clear cahce');
+  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"])('User click clear cahce');
 };
 
 var onClickInstallDriver = function onClickInstallDriver() {
-  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('User click install driver');
+  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"])('User click install driver');
 };
 
 var handleTelemetryModalCancel = function handleTelemetryModalCancel() {
-  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('User canceled telemetry modal');
+  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"])('User canceled telemetry modal');
 };
 
 var handleTelemetryModalOptIn = function handleTelemetryModalOptIn() {
-  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('User opted into telemetry');
+  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"])('User opted into telemetry');
 };
 
 var handleTelemetryModalOptOut = function handleTelemetryModalOptOut() {
-  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('User opted out of telemetry');
+  Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"])('User opted out of telemetry');
 };
 
 var onClickAbout = [{
-  title: 'About',
+  title: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_intl__WEBPACK_IMPORTED_MODULE_3__[/* FormattedMessage */ "a"], {
+    defaultMessage: "About",
+    id: "gui.desktopMenuBar.about"
+  }),
   onClick: function onClick() {
-    return Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('About');
+    return Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"])('About');
   }
 }, {
-  title: 'Privacy Policy',
+  title: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_intl__WEBPACK_IMPORTED_MODULE_3__[/* FormattedMessage */ "a"], {
+    defaultMessage: "Privacy policy",
+    id: "gui.menuBar.privacyPolicy"
+  }),
   onClick: function onClick() {
-    return Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('Privacy Policy');
+    return Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"])('Privacy Policy');
   }
 }, {
-  title: 'Data Settings',
+  title: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_intl__WEBPACK_IMPORTED_MODULE_3__[/* FormattedMessage */ "a"], {
+    defaultMessage: "Data settings",
+    id: "gui.menuBar.dataSettings"
+  }),
   onClick: function onClick() {
-    return Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])('Data Settings');
+    return Object(_lib_log_js__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"])('Data Settings');
   }
 }];
 
 var handleShowMessageBox = function handleShowMessageBox(type, message) {
-  if (type === _lib_message_box_js__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"].confirm) {
+  if (type === _lib_message_box_js__WEBPACK_IMPORTED_MODULE_8__[/* default */ "a"].confirm) {
     return confirm(message); // eslint-disable-line no-alert
-  } else if (type === _lib_message_box_js__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"].alert) {
+  } else if (type === _lib_message_box_js__WEBPACK_IMPORTED_MODULE_8__[/* default */ "a"].alert) {
     return alert(message); // eslint-disable-line no-alert
   }
 };
@@ -182,11 +193,11 @@ var handleShowMessageBox = function handleShowMessageBox(type, message) {
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function (appTarget) {
-  _containers_gui_jsx__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"].setAppElement(appTarget); // note that redux's 'compose' function is just being used as a general utility to make
+  _containers_gui_jsx__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"].setAppElement(appTarget); // note that redux's 'compose' function is just being used as a general utility to make
   // the hierarchy of HOC constructor calls clearer here; it has nothing to do with redux's
   // ability to compose reducers.
 
-  var WrappedGui = Object(redux__WEBPACK_IMPORTED_MODULE_2__[/* compose */ "d"])(_lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"], _lib_hash_parser_hoc_jsx__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"])(_containers_gui_jsx__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"]); // TODO a hack for testing the backpack, allow backpack host to be set by url param
+  var WrappedGui = Object(redux__WEBPACK_IMPORTED_MODULE_2__[/* compose */ "d"])(_lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"], _lib_hash_parser_hoc_jsx__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])(_containers_gui_jsx__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"]); // TODO a hack for testing the backpack, allow backpack host to be set by url param
 
   var backpackHostMatches = window.location.href.match(/[?&]backpack_host=([^&]*)&?/);
   var backpackHost = backpackHostMatches ? backpackHostMatches[1] : null;
