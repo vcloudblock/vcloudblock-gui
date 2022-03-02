@@ -160,7 +160,7 @@ const UpdateModalComponent = props => {
                         </div>
                         <div className={styles.updateInfo}>
                             <FormattedMessage
-                                defaultMessage="Openblock is already the latest version"
+                                defaultMessage="Openblock is already the latest version."
                                 description="Prompt for already latest"
                                 id="gui.updateModel.alreadyLatestTips"
                             />
@@ -294,7 +294,7 @@ const UpdateModalComponent = props => {
                         </div>
                         <div className={styles.updateInfo}>
                             <FormattedMessage
-                                defaultMessage="External resource update complete, the application will automatically restart after 3 seconds" // eslint-disable-line max-len
+                                defaultMessage="External resource update complete, the application will automatically restart after 3 seconds." // eslint-disable-line max-len
                                 description="Prompt for external resource update finish"
                                 id="gui.updateModal.resourceUpdateFinishTips"
                             />
@@ -355,7 +355,7 @@ const UpdateModalComponent = props => {
                         </div>
                         <div className={styles.updateInfo}>
                             <FormattedMessage
-                                defaultMessage="Application download complete, it will automatically quit and start installer after 3 seconds" // eslint-disable-line max-len
+                                defaultMessage="Application download complete, it will automatically quit and start installer after 3 seconds." // eslint-disable-line max-len
                                 description="Prompt for application download finish"
                                 id="gui.updateModal.applicationDownloadeFinishTips"
                             />
