@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {compose} from 'redux';
+import {FormattedMessage} from 'react-intl';
 
 import AppStateHOC from '../lib/app-state-hoc.jsx';
 import GUI from '../containers/gui.jsx';
@@ -46,15 +47,27 @@ const handleTelemetryModalOptOut = () => {
 
 const onClickAbout = [
     {
-        title: 'About',
+        title: (<FormattedMessage
+            defaultMessage="About"
+            description="Menu bar item for about"
+            id="gui.desktopMenuBar.about"
+        />),
         onClick: () => log('About')
     },
     {
-        title: 'Privacy Policy',
+        title: (<FormattedMessage
+            defaultMessage="Privacy policy"
+            description="Menu bar item for privacy policy"
+            id="gui.menuBar.privacyPolicy"
+        />),
         onClick: () => log('Privacy Policy')
     },
     {
-        title: 'Data Settings',
+        title: (<FormattedMessage
+            defaultMessage="Data settings"
+            description="Menu bar item for data settings"
+            id="gui.menuBar.dataSettings"
+        />),
         onClick: () => log('Data Settings')
     }
 ];
