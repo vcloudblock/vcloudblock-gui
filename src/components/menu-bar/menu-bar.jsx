@@ -103,7 +103,7 @@ import fileIcon from './icon--file.svg';
 import screenshotIcon from './icon--screenshot.svg';
 import settingIcon from './icon--setting.svg';
 
-import downloadFirmwareIcon from './icon--download-firmware.svg';
+import uploadFirmwareIcon from './icon--upload-firmware.svg';
 import saveSvgAsPng from 'openblock-save-svg-as-png';
 import {showAlertWithTimeout} from '../../reducers/alerts';
 
@@ -203,7 +203,7 @@ class MenuBar extends React.Component {
             'getSaveToComputerHandler',
             'restoreOptionMessage',
             'handleConnectionMouseUp',
-            'handleDownloadFirmware',
+            'handleUploadFirmware',
             'handleSelectDeviceMouseUp',
             'handleProgramModeSwitchOnChange',
             'handleProgramModeUpdate',
@@ -363,7 +363,7 @@ class MenuBar extends React.Component {
             this.props.onSetUploadMode();
         }
     }
-    handleDownloadFirmware () {
+    handleUploadFirmware () {
         if (this.props.deviceId) {
             this.props.vm.uploadFirmwareToPeripheral(this.props.deviceId);
             this.props.onSetRealtimeConnection(false);
@@ -750,18 +750,18 @@ class MenuBar extends React.Component {
                         className={classNames(styles.menuBarItem, this.props.isRealtimeMode &&
                             this.props.peripheralName ? styles.hoverable : styles.disabled)}
                         onMouseUp={this.props.isRealtimeMode && this.props.peripheralName ?
-                            this.handleDownloadFirmware : null}
+                            this.handleUploadFirmware : null}
                     >
                         <img
-                            alt="DownloadFirmware"
-                            className={classNames(styles.downloadFirmwareLogo)}
+                            alt="UploadFirmware"
+                            className={classNames(styles.uploadFirmwareLogo)}
                             draggable={false}
-                            src={downloadFirmwareIcon}
+                            src={uploadFirmwareIcon}
                         />
                         <FormattedMessage
-                            defaultMessage="Download firmware"
-                            description="Button to download the realtime firmware"
-                            id="gui.menuBar.downloadFirmware"
+                            defaultMessage="Upload firmware"
+                            description="Button to upload the realtime firmware"
+                            id="gui.menuBar.uploadFirmware"
                         />
                     </div>
                     <Divider className={classNames(styles.divider)} />

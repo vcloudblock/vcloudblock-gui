@@ -19,7 +19,15 @@ const UpdateModalComponent = props => {
     let updateMessage;
     if (props.updateState.phase === UPDATE_MODAL_STATE.resourceUpdateAvailable ||
         props.updateState.phase === UPDATE_MODAL_STATE.applicationUpdateAvailable) {
-        updateMessage = props.updateState.info.message[`${props.intl.locale}`];
+        if (typeof props.updateState.info.message === 'object') {
+            if (props.updateState.info.message[`${props.intl.locale}`]) {
+                updateMessage = props.updateState.info.message[`${props.intl.locale}`];
+            } else if (props.intl.locale === 'zh-tw'){
+                updateMessage = props.updateState.info.message['zh-cn'];
+            } else {
+                updateMessage = props.updateState.info.message.en;
+            }
+        }
     }
 
     const close = (
@@ -110,7 +118,7 @@ const UpdateModalComponent = props => {
                                 {`: ${props.updateState.info.version}`}
                             </div>
                             <div className={styles.updateInfo}>
-                                {Object.keys(updateMessage).map((subTitle, index) => (
+                                {updateMessage ? Object.keys(updateMessage).map((subTitle, index) => (
                                     <div key={index}>
                                         <div className={styles.updateInfoSubTitle} >
                                             {subTitle}
@@ -120,7 +128,7 @@ const UpdateModalComponent = props => {
                                         </div>
                                         { index === Object.keys(updateMessage).length - 1 ? null : <br /> }
                                     </div>
-                                ))}
+                                )) : null}
                             </div>
                             <div className={styles.bottomArea}>
                                 <div className={styles.updateButtonWrapper}>
@@ -185,7 +193,7 @@ const UpdateModalComponent = props => {
                             />
                         </div>
                         <div className={styles.updateInfo}>
-                            {props.updateState.info.message}
+                            {props.updateState.info.message ? props.updateState.info.message : null}
                         </div>
                         <div className={styles.bottomArea}>
                             <button
