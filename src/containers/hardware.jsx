@@ -39,7 +39,9 @@ class Hardware extends React.Component {
         const messageContribution = editor.getContribution(
             'editor.contrib.messageController'
         );
-        messageContribution.dispose();
+        if (messageContribution) {
+            messageContribution.dispose();
+        }
 
         editor.onDidAttemptReadOnlyEdit(() => {
             this.props.onCodeEditorIsLocked();
