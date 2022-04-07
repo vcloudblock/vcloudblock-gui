@@ -16,10 +16,6 @@ import arduinoNanoIconURL from './arduinoNano/arduinoNano.png';
 import arduinoNanoConnectionIconURLL from './arduinoNano/arduinoNano-illustration.svg';
 import arduinoNanoConnectionSmallIconURL from './arduinoNano/arduinoNano-small.svg';
 
-import arduinoMiniIconURL from './arduinoMini/arduinoMini.png';
-import arduinoMiniConnectionIconURLL from './arduinoMini/arduinoMini-illustration.svg';
-import arduinoMiniConnectionSmallIconURL from './arduinoMini/arduinoMini-small.svg';
-
 import arduinoLeonardoIconURL from './arduinoLeonardo/arduinoLeonardo.png';
 import arduinoLeonardoConnectionIconURLL from './arduinoLeonardo/arduinoLeonardo-illustration.svg';
 import arduinoLeonardoConnectionSmallIconURL from './arduinoLeonardo/arduinoLeonardo-small.svg';
@@ -114,8 +110,7 @@ const deviceData = [
     },
     {
         name: 'Arduino Nano',
-        deviceId: 'arduinoNano_arduinoUno',
-        deviceExtensionsCompatible: 'arduinoUno',
+        deviceId: 'arduinoNano',
         manufactor: 'arduino.cc',
         learnMore: 'https://store.arduino.cc/usa/arduino-nano',
         type: 'arduino',
@@ -149,45 +144,6 @@ const deviceData = [
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
         helpLink: 'https://store.arduino.cc/usa/arduino-nano'
-    },
-    {
-        name: 'Arduino Mini',
-        deviceId: 'arduinoMini_arduinoUno',
-        deviceExtensionsCompatible: 'arduinoUno',
-        manufactor: 'arduino.cc',
-        // Discontinued board
-        // learnMore: 'https://store.arduino.cc/usa/arduino/boards-modules',
-        type: 'arduino',
-        iconURL: arduinoMiniIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="The Arduino Mini a classic smaller board to build your projects with."
-                description="Description for the Arduino Mini device"
-                id="gui.device.arduinoMini.description"
-            />
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: false,
-        serialportRequired: true,
-        defaultBaudRate: '9600',
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: true,
-        useAutoScan: false,
-        connectionIconURL: arduinoMiniConnectionIconURLL,
-        connectionSmallIconURL: arduinoMiniConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their arduino."
-                id="gui.device.arduino.connectingMessage"
-            />
-        ),
-        baseToolBoxXml: arduinoBaseToolBox,
-        programMode: ['realtime', 'upload'],
-        programLanguage: ['block', 'c', 'cpp'],
-        tags: ['arduino']
-        // helpLink: 'https://store.arduino.cc/usa/arduino-nano'
     },
     {
         name: 'Arduino Leonardo',
