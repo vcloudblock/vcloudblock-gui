@@ -2,7 +2,7 @@ name: Publish Npm Package And Deploy Github Pages
 
 on:
   push:
-    branches: [ develop, desktop ]
+    branches: [ develop, main, desktop ]
     paths-ignore:
       - 'README.md'
       - '.github/*'
