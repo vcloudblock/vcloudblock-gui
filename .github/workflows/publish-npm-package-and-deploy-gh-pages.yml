@@ -76,12 +76,13 @@ jobs:
 
       - run: npm ci
 
-      - name: Push i18n
-        if: ${{ github.ref == 'refs/heads/develop' }}
-        run: |
-            export TX_TOKEN=${{ secrets.TX_TOKEN }}
-            npm run i18n:src
-            npm run i18n:push
+    # Don't push translations to TX. The push step will be run by the enterprise edition repository.
+    #   - name: Push i18n
+    #     if: ${{ github.ref == 'refs/heads/develop' }}
+    #     run: |
+    #         export TX_TOKEN=${{ secrets.TX_TOKEN }}
+    #         npm run i18n:src
+    #         npm run i18n:push
 
       - name: Update openblock-l10n
         if: ${{ github.ref == 'refs/heads/develop' }}
