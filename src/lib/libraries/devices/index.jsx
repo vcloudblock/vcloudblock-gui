@@ -101,7 +101,7 @@ const deviceData = [
             <FormattedMessage
                 defaultMessage="Connecting"
                 description="Message to help people connect to their device."
-                id="gui.device.connectingMessage"
+                id="gui.device.arduinoUno.connectingMessage"
             />
         ),
         baseToolBoxXml: arduinoBaseToolBox,
@@ -138,7 +138,7 @@ const deviceData = [
             <FormattedMessage
                 defaultMessage="Connecting"
                 description="Message to help people connect to their device."
-                id="gui.device.connectingMessage"
+                id="gui.device.arduinoNano.connectingMessage"
             />
         ),
         baseToolBoxXml: arduinoBaseToolBox,
@@ -175,7 +175,7 @@ const deviceData = [
             <FormattedMessage
                 defaultMessage="Connecting"
                 description="Message to help people connect to their device."
-                id="gui.device.connectingMessage"
+                id="gui.device.arduinoLeonardo.connectingMessage"
             />
         ),
         baseToolBoxXml: arduinoBaseToolBox,
@@ -212,7 +212,7 @@ const deviceData = [
             <FormattedMessage
                 defaultMessage="Connecting"
                 description="Message to help people connect to their device."
-                id="gui.device.connectingMessage"
+                id="gui.device.arduinoMega2560.connectingMessage"
             />
         ),
         baseToolBoxXml: arduinoBaseToolBox,
@@ -230,9 +230,9 @@ const deviceData = [
         iconURL: esp32IconURL,
         description: (
             <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their device."
-                id="gui.device.connectingMessage"
+                defaultMessage="Wi-Fi & Bluetooth control board with rich functions."
+                description="Description for the esp32 device"
+                id="gui.device.esp32.description"
             />
         ),
         featured: true,
@@ -249,7 +249,7 @@ const deviceData = [
             <FormattedMessage
                 defaultMessage="Connecting"
                 description="Message to help people connect to their esp32."
-                id="gui.device.arduinoEsp32.connectingMessage"
+                id="gui.device.esp32.connectingMessage"
             />
         ),
         baseToolBoxXml: arduinoBaseToolBox,
@@ -269,7 +269,7 @@ const deviceData = [
             <FormattedMessage
                 defaultMessage="Low-cost Wi-Fi SOC control board."
                 description="Description for the esp8266 device"
-                id="gui.device.arduinoEsp8266.description"
+                id="gui.device.esp8266.description"
             />
         ),
         featured: true,
@@ -286,7 +286,7 @@ const deviceData = [
             <FormattedMessage
                 defaultMessage="Connecting"
                 description="Message to help people connect to their device."
-                id="gui.device.connectingMessage"
+                id="gui.device.esp8266.connectingMessage"
             />
         ),
         baseToolBoxXml: arduinoBaseToolBox,
@@ -323,7 +323,7 @@ const deviceData = [
             <FormattedMessage
                 defaultMessage="Connecting"
                 description="Message to help people connect to their device."
-                id="gui.device.connectingMessage"
+                id="gui.device.microbit.connectingMessage"
             />
         ),
         baseToolBoxXml: microbitBaseToolBox,
@@ -360,7 +360,7 @@ const deviceData = [
             <FormattedMessage
                 defaultMessage="Connecting"
                 description="Message to help people connect to their device."
-                id="gui.device.connectingMessage"
+                id="gui.device.microbitV2.connectingMessage"
             />
         ),
         baseToolBoxXml: microbitBaseToolBox,
@@ -397,7 +397,7 @@ const deviceData = [
             <FormattedMessage
                 defaultMessage="Connecting"
                 description="Message to help people connect to their device."
-                id="gui.device.connectingMessage"
+                id="gui.device.makeyMakey.connectingMessage"
             />
         ),
         baseToolBoxXml: arduinoBaseToolBox,
