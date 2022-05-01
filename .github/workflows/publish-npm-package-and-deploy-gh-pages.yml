@@ -2,7 +2,7 @@ name: Publish Npm Package And Deploy Github Pages
 
 on:
   push:
-    branches: [ develop, desktop ]
+    branches: [ develop, main, desktop ]
     paths-ignore:
       - 'README.md'
       - '.github/*'
@@ -76,12 +76,13 @@ jobs:
 
       - run: npm ci
 
-      - name: Push i18n
-        if: ${{ github.ref == 'refs/heads/develop' }}
-        run: |
-            export TX_TOKEN=${{ secrets.TX_TOKEN }}
-            npm run i18n:src
-            npm run i18n:push
+    # Don't push translations to TX. The push step will be run by the enterprise edition repository.
+    #   - name: Push i18n
+    #     if: ${{ github.ref == 'refs/heads/develop' }}
+    #     run: |
+    #         export TX_TOKEN=${{ secrets.TX_TOKEN }}
+    #         npm run i18n:src
+    #         npm run i18n:push
 
       - name: Update openblock-l10n
         if: ${{ github.ref == 'refs/heads/develop' }}
@@ -142,7 +143,7 @@ jobs:
         run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v3.8.0
         with:
           github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: ./build

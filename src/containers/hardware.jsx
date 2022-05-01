@@ -9,7 +9,7 @@ import {injectIntl} from 'react-intl';
 import {showAlertWithTimeout} from '../reducers/alerts';
 import {setCodeEditorValue, toggleLock} from '../reducers/code';
 
-import {getLanguageFromDeviceType} from '../lib/code';
+import {getLanguageFromDeviceType} from '../lib/device';
 
 import HardwareComponent from '../components/hardware/hardware.jsx';
 
@@ -39,7 +39,9 @@ class Hardware extends React.Component {
         const messageContribution = editor.getContribution(
             'editor.contrib.messageController'
         );
-        messageContribution.dispose();
+        if (messageContribution) {
+            messageContribution.dispose();
+        }
 
         editor.onDidAttemptReadOnlyEdit(() => {
             this.props.onCodeEditorIsLocked();
