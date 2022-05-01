@@ -340,7 +340,7 @@ const ArgumentType = {
     UINT8_NUMBER: 'uint8_number',
 
     /**
-     * Numeric value with slider field. from 0 to 1023
+     * Numeric value with slider field. from 0 to 1024
      */
     UINT10_NUMBER: 'uint10_number',
 
