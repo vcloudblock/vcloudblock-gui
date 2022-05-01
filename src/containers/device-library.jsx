@@ -54,10 +54,6 @@ class DeviceLibrary extends React.PureComponent {
             'handleItemSelect',
             'requestLoadDevice'
         ]);
-
-        this.state = {
-            device: null
-        };
     }
     componentDidMount () {
         this.props.vm.extensionManager.getDeviceList().then(data => {
@@ -97,15 +93,8 @@ class DeviceLibrary extends React.PureComponent {
     }
 
     handleItemSelect (item) {
-        // Detect whether the device id contains $(type), if it does,
-        // it means that it is a multi-programming type supported device
-        if (item.typeList && item.typeList.length > 1) {
-            this.props.onOpenDeviceTypeModal();
-            this.setState({device: item});
-        } else {
-            this.requestLoadDevice(item);
-            this.props.onRequestClose();
-        }
+        this.requestLoadDevice(item);
+        this.props.onRequestClose();
     }
 
     render () {
