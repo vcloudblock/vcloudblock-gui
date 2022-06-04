@@ -259,10 +259,10 @@ const deviceData = [
         helpLink: 'https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/hw-reference/esp32/get-started-devkitc.html'
     },
     {
-        name: 'ESP8266',
-        deviceId: 'arduinoEsp8266',
+        name: 'NodeMCU ',
+        deviceId: 'arduinoEsp8266NodeMCU',
         manufactor: 'espressif',
-        learnMore: 'https://www.espressif.com/',
+        learnMore: 'https://www.nodemcu.com',
         type: DeviceType.arduino,
         iconURL: esp8266IconURL,
         description: (
@@ -411,6 +411,22 @@ const deviceData = [
      */
     {
         deviceId: 'arduinoUnoUltra',
+        type: DeviceType.arduino,
+        featured: true,
+        disabled: false,
+        hide: true,
+        baseToolBoxXml: arduinoBaseToolBox
+    },
+    {
+        deviceId: 'arduinoSE',
+        type: DeviceType.arduino,
+        featured: true,
+        disabled: false,
+        hide: true,
+        baseToolBoxXml: arduinoBaseToolBox
+    },
+    {
+        deviceId: 'arduinoEsp8266',
         type: DeviceType.arduino,
         featured: true,
         disabled: false,
