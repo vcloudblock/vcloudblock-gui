@@ -268,8 +268,8 @@ const deviceData = [
         description: (
             <FormattedMessage
                 defaultMessage="Low-cost Wi-Fi SOC control board."
-                description="Description for the esp8266 device"
-                id="gui.device.esp8266.description"
+                description="Description for the esp8266 NodeMCU device"
+                id="gui.device.esp8266NodeMCU.description"
             />
         ),
         featured: true,
@@ -286,7 +286,7 @@ const deviceData = [
             <FormattedMessage
                 defaultMessage="Connecting"
                 description="Message to help people connect to their device."
-                id="gui.device.esp8266.connectingMessage"
+                id="gui.device.esp8266NodeMCU.connectingMessage"
             />
         ),
         baseToolBoxXml: arduinoBaseToolBox,
