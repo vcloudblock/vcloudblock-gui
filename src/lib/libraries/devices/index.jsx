@@ -462,6 +462,13 @@ const makeDeviceLibrary = (deviceList = null) => {
 
     if (deviceList) {
         deviceList.forEach(dev => {
+            // Because the micropython framework is not included in the community version,
+            // for a control board that supports multiple programming frameworks, if it
+            // also supports arduino, then we only load the arduino version of the device.
+            if ((typeof dev.typeList !== 'undefined') && (dev.deviceId.indexOf('arduino') !== -1)) {
+                dev.hide = false;
+            }
+
             // Check if this is a build-in device.
             const matchedDevice = deviceData.find(item => dev.deviceId === item.deviceId);
             if (matchedDevice) {
