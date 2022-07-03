@@ -1,6 +1,6 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
-import defaultsDeep from 'lodash.defaultsdeep';
+import {defaults} from 'lodash';
 import log from '../../log';
 import {DeviceType} from '../../device';
 
@@ -481,7 +481,7 @@ const makeDeviceLibrary = (deviceList = null) => {
             if (realDeviceId) {
                 const parentDevice = deviceData.find(item => realDeviceId === item.deviceId);
                 if (parentDevice) {
-                    return regeneratedDeviceData.push(defaultsDeep({}, dev, {hide: false}, parentDevice));
+                    return regeneratedDeviceData.push(defaults({}, dev, {hide: false}, parentDevice));
                 }
             }
             log.warn('Cannot find this device or it\'s parent device :', dev.deviceId);
