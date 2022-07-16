@@ -90,6 +90,8 @@ import languageIcon from '../language-selector/language-icon.svg';
 import aboutIcon from './icon--about.svg';
 import saveIcon from './icon--save.svg';
 import linkSocketIcon from './icon--link-socket.svg'; // eslint-disable-line no-unused-vars
+import communityIcon from './icon--community.svg';
+import wikiIcon from './icon--wiki.svg';
 
 import scratchLogo from './scratch-logo.svg';
 
@@ -117,6 +119,16 @@ const ariaMessages = defineMessages({
         id: 'gui.menuBar.tutorialsLibrary',
         defaultMessage: 'Tutorials',
         description: 'accessibility text for the tutorials button'
+    },
+    community: {
+        id: 'gui.menuBar.community',
+        defaultMessage: 'Open Community',
+        description: 'accessibility text for the community button'
+    },
+    wiki: {
+        id: 'gui.menuBar.wiki',
+        defaultMessage: 'Wiki',
+        description: 'accessibility text for the wiki button'
     }
 });
 
@@ -193,6 +205,8 @@ class MenuBar extends React.Component {
         bindAll(this, [
             'handleClickNew',
             'handleClickRemix',
+            'handleClickOpenCommunity',
+            'handleClickOpenWiki',
             'handleClickSave',
             'handleClickSaveAsCopy',
             'handleClickSeeCommunity',
@@ -297,6 +311,12 @@ class MenuBar extends React.Component {
         if (!this.props.languageMenuOpen) {
             this.props.onClickLanguage(e);
         }
+    }
+    handleClickOpenCommunity () {
+        window.open('https://community.openblock.cc');
+    }
+    handleClickOpenWiki () {
+        window.open('https://wiki.openblock.cc');
     }
     restoreOptionMessage (deletedItem) {
         switch (deletedItem) {
@@ -744,6 +764,40 @@ class MenuBar extends React.Component {
                 </div>
                 <div className={styles.tailMenu}>
                     <div
+                        aria-label={this.props.intl.formatMessage(ariaMessages.community)}
+                        className={classNames(styles.menuBarItem, styles.hoverable)}
+                        onClick={this.handleClickOpenCommunity}
+                    >
+                        <img
+                            className={styles.communityIcon}
+                            src={communityIcon}
+                        />
+                        <FormattedMessage {...ariaMessages.community} />
+                    </div>
+                    <div
+                        aria-label={this.props.intl.formatMessage(ariaMessages.wiki)}
+                        className={classNames(styles.menuBarItem, styles.hoverable)}
+                        onClick={this.handleClickOpenWiki}
+                    >
+                        <img
+                            className={styles.wikiIcon}
+                            src={wikiIcon}
+                        />
+                        <FormattedMessage {...ariaMessages.wiki} />
+                    </div>
+                    <div
+                        aria-label={this.props.intl.formatMessage(ariaMessages.tutorials)}
+                        className={classNames(styles.menuBarItem, styles.hoverable)}
+                        onClick={this.props.onOpenTipLibrary}
+                    >
+                        <img
+                            className={styles.helpIcon}
+                            src={helpIcon}
+                        />
+                        <FormattedMessage {...ariaMessages.tutorials} />
+                    </div>
+                    <Divider className={classNames(styles.divider)} />
+                    <div
                         className={classNames(styles.menuBarItem, styles.hoverable)}
                         onMouseUp={this.handleScreenshot}
                     >
@@ -772,18 +826,6 @@ class MenuBar extends React.Component {
                             description="Button to upload the realtime firmware"
                             id="gui.menuBar.uploadFirmware"
                         />
-                    </div>
-                    <Divider className={classNames(styles.divider)} />
-                    <div
-                        aria-label={this.props.intl.formatMessage(ariaMessages.tutorials)}
-                        className={classNames(styles.menuBarItem, styles.hoverable)}
-                        onClick={this.props.onOpenTipLibrary}
-                    >
-                        <img
-                            className={styles.helpIcon}
-                            src={helpIcon}
-                        />
-                        <FormattedMessage {...ariaMessages.tutorials} />
                     </div>
                     <Divider className={classNames(styles.divider)} />
                     <div className={classNames(styles.menuBarItem, styles.programModeGroup)}>
