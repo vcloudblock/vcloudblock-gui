@@ -1,6 +1,6 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
-import defaultsDeep from 'lodash.defaultsdeep';
+import {defaults} from 'lodash';
 import log from '../../log';
 import {DeviceType} from '../../device';
 
@@ -259,17 +259,17 @@ const deviceData = [
         helpLink: 'https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/hw-reference/esp32/get-started-devkitc.html'
     },
     {
-        name: 'ESP8266',
-        deviceId: 'arduinoEsp8266',
+        name: 'NodeMCU ',
+        deviceId: 'arduinoEsp8266NodeMCU',
         manufactor: 'espressif',
-        learnMore: 'https://www.espressif.com/',
+        learnMore: 'https://www.nodemcu.com',
         type: DeviceType.arduino,
         iconURL: esp8266IconURL,
         description: (
             <FormattedMessage
                 defaultMessage="Low-cost Wi-Fi SOC control board."
-                description="Description for the esp8266 device"
-                id="gui.device.esp8266.description"
+                description="Description for the esp8266 NodeMCU device"
+                id="gui.device.esp8266NodeMCU.description"
             />
         ),
         featured: true,
@@ -286,10 +286,11 @@ const deviceData = [
             <FormattedMessage
                 defaultMessage="Connecting"
                 description="Message to help people connect to their device."
-                id="gui.device.esp8266.connectingMessage"
+                id="gui.device.esp8266NodeMCU.connectingMessage"
             />
         ),
         baseToolBoxXml: arduinoBaseToolBox,
+        deviceExtensionsCompatible: 'arduinoEsp8266',
         programMode: ['upload'],
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
@@ -416,6 +417,22 @@ const deviceData = [
         disabled: false,
         hide: true,
         baseToolBoxXml: arduinoBaseToolBox
+    },
+    {
+        deviceId: 'arduinoSE',
+        type: DeviceType.arduino,
+        featured: true,
+        disabled: false,
+        hide: true,
+        baseToolBoxXml: arduinoBaseToolBox
+    },
+    {
+        deviceId: 'arduinoEsp8266',
+        type: DeviceType.arduino,
+        featured: true,
+        disabled: false,
+        hide: true,
+        baseToolBoxXml: arduinoBaseToolBox
     }
 ];
 
@@ -446,6 +463,13 @@ const makeDeviceLibrary = (deviceList = null) => {
 
     if (deviceList) {
         deviceList.forEach(dev => {
+            // Because the micropython framework is not included in the community version,
+            // for a control board that supports multiple programming frameworks, if it
+            // also supports arduino, then we only load the arduino version of the device.
+            if ((typeof dev.typeList !== 'undefined') && (dev.deviceId.indexOf('arduino') !== -1)) {
+                dev.hide = false;
+            }
+
             // Check if this is a build-in device.
             const matchedDevice = deviceData.find(item => dev.deviceId === item.deviceId);
             if (matchedDevice) {
@@ -457,7 +481,7 @@ const makeDeviceLibrary = (deviceList = null) => {
             if (realDeviceId) {
                 const parentDevice = deviceData.find(item => realDeviceId === item.deviceId);
                 if (parentDevice) {
-                    return regeneratedDeviceData.push(defaultsDeep({}, dev, {hide: false}, parentDevice));
+                    return regeneratedDeviceData.push(defaults({}, dev, {hide: false}, parentDevice));
                 }
             }
             log.warn('Cannot find this device or it\'s parent device :', dev.deviceId);
