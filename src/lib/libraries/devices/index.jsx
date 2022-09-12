@@ -308,7 +308,7 @@ const deviceData = [
         name: 'MaixDock',
         deviceId: 'arduinoK210MaixDock',
         manufactor: 'sipeed',
-        leanMore: 'https://wiki.sipeed.com/',
+        learnMore: 'https://wiki.sipeed.com/',
         type: DeviceType.arduino,
         iconURL: k210MaixDockIconURL,
         description: (
@@ -345,7 +345,7 @@ const deviceData = [
         name: 'Maixduino',
         deviceId: 'arduinoK210Maixduino',
         manufactor: 'sipeed',
-        leanMore: 'https://maixduino.sipeed.com/',
+        learnMore: 'https://maixduino.sipeed.com/',
         type: DeviceType.arduino,
         iconURL: k210MaixduinoIconURL,
         description: (
