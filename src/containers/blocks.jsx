@@ -249,6 +249,11 @@ class Blocks extends React.Component {
             });
     }
     onProgramModeUpdate () {
+        if (this.props.isRealtimeMode) {
+            this.ScratchBlocks.ProgramMode.setProgramMode(this.ScratchBlocks.ProgramMode.REALTIME);
+        } else {
+            this.ScratchBlocks.ProgramMode.setProgramMode(this.ScratchBlocks.ProgramMode.UPLOAD);
+        }
         this._programMode = this.props.isRealtimeMode;
         const toolboxXML = this.getToolboxXML();
         if (toolboxXML) {
