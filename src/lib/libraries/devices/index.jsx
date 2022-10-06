@@ -50,6 +50,10 @@ import k210MaixduinoIconURL from './k210Maixduino/k210Maixduino.png';
 import k210MaixduinoConnectionIconURLL from './k210Maixduino/k210Maixduino-illustration.svg';
 import k210MaixduinoConnectionSmallIconURL from './k210Maixduino/k210Maixduino-small.svg';
 
+import arduinoRaspberryPiPicoIconURL from './arduinoRaspberryPiPico/arduinoRaspberryPiPico.png';
+import arduinoRaspberryPiPicoConnectionIconURL from './arduinoRaspberryPiPico/arduinoRaspberryPiPico-illustration.svg';
+import arduinoRaspberryPiPicoConnectionSmallIconURL from './arduinoRaspberryPiPico/arduinoRaspberryPiPico-small.svg';
+
 import makeymakeyIconURL from './makeymakey/makeymakey.png';
 import makeymakeyConnectionIconURL from './makeymakey/makeymakey-illustration.svg';
 import makeymakeyConnectionSmallIconURL from './makeymakey/makeymakey-small.svg';
@@ -377,6 +381,43 @@ const deviceData = [
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
         helpLink: 'https://wiki.sipeed.com/soft/maixpy/en/develop_kit_board/maix_duino.html'
+    },
+    {
+        name: 'Raspberry Pi Pico',
+        deviceId: 'arduinoRaspberryPiPico',
+        manufactor: 'Raspberry Pi Foundation',
+        learnMore: 'https://www.raspberrypi.com/',
+        type: DeviceType.arduino,
+        iconURL: arduinoRaspberryPiPicoIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="The powerful, flexible microcontroller board."
+                description="Description for the Raspberry Pi Pico device"
+                id="gui.device.raspberryPiPicoIconURL.description"
+            />
+        ),
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        serialportRequired: true,
+        defaultBaudRate: '9600',
+        internetConnectionRequired: false,
+        launchPeripheralConnectionFlow: true,
+        useAutoScan: false,
+        connectionIconURL: arduinoRaspberryPiPicoConnectionIconURL,
+        connectionSmallIconURL: arduinoRaspberryPiPicoConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their device."
+                id="gui.device.raspberryPiPicoIconURL.connectingMessage"
+            />
+        ),
+        baseToolBoxXml: arduinoBaseToolBox,
+        programMode: ['upload'],
+        programLanguage: ['block', 'c', 'cpp'],
+        tags: ['arduino'],
+        helpLink: 'https://wiki.openblock.cc/general-hardware-guidelines/boards/raspberry-pi-pico'
     },
     {
         name: 'Micro:bit',
