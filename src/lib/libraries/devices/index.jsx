@@ -50,9 +50,9 @@ import k210MaixduinoIconURL from './k210Maixduino/k210Maixduino.png';
 import k210MaixduinoConnectionIconURLL from './k210Maixduino/k210Maixduino-illustration.svg';
 import k210MaixduinoConnectionSmallIconURL from './k210Maixduino/k210Maixduino-small.svg';
 
-import arduinoRaspberryPiPicoIconURL from './arduinoRaspberryPiPico/arduinoRaspberryPiPico.png';
-import arduinoRaspberryPiPicoConnectionIconURL from './arduinoRaspberryPiPico/arduinoRaspberryPiPico-illustration.svg';
-import arduinoRaspberryPiPicoConnectionSmallIconURL from './arduinoRaspberryPiPico/arduinoRaspberryPiPico-small.svg';
+import raspberryPiPicoIconURL from './raspberryPiPico/raspberryPiPico.png';
+import raspberryPiPicoConnectionIconURL from './raspberryPiPico/raspberryPiPico-illustration.svg';
+import raspberryPiPicoConnectionSmallIconURL from './raspberryPiPico/raspberryPiPico-small.svg';
 
 import makeymakeyIconURL from './makeymakey/makeymakey.png';
 import makeymakeyConnectionIconURL from './makeymakey/makeymakey-illustration.svg';
@@ -265,7 +265,7 @@ const deviceData = [
             />
         ),
         baseToolBoxXml: arduinoBaseToolBox,
-        programMode: ['upload'],
+        programMode: ['upload', 'realtime'],
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
         helpLink: 'https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/hw-reference/esp32/get-started-devkitc.html'
@@ -388,7 +388,7 @@ const deviceData = [
         manufactor: 'Raspberry Pi Foundation',
         learnMore: 'https://www.raspberrypi.com/',
         type: DeviceType.arduino,
-        iconURL: arduinoRaspberryPiPicoIconURL,
+        iconURL: raspberryPiPicoIconURL,
         description: (
             <FormattedMessage
                 defaultMessage="The powerful, flexible microcontroller board."
@@ -404,8 +404,8 @@ const deviceData = [
         internetConnectionRequired: false,
         launchPeripheralConnectionFlow: true,
         useAutoScan: false,
-        connectionIconURL: arduinoRaspberryPiPicoConnectionIconURL,
-        connectionSmallIconURL: arduinoRaspberryPiPicoConnectionSmallIconURL,
+        connectionIconURL: raspberryPiPicoConnectionIconURL,
+        connectionSmallIconURL: raspberryPiPicoConnectionSmallIconURL,
         connectingMessage: (
             <FormattedMessage
                 defaultMessage="Connecting"
