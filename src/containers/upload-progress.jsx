@@ -33,8 +33,10 @@ class UploadProgress extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
+            'handleAbort',
             'handleCancel',
             'handleHelp',
+            'handleSetUploadAbortEnabled',
             'handleStdout',
             'handleUploadError',
             'handleUploadSuccess',
@@ -44,6 +46,7 @@ class UploadProgress extends React.Component {
             extension: this.props.deviceData.find(dev => dev.deviceId === props.deviceId),
             phase: PHASES.uploading,
             peripheralName: null,
+            abortEnabled: false,
             text: ''
         };
         // if the upload progress stack some seconds with out any info.
@@ -60,12 +63,18 @@ class UploadProgress extends React.Component {
         this.props.vm.on('PERIPHERAL_UPLOAD_ERROR', this.handleUploadError);
         this.props.vm.on('PERIPHERAL_CONNECTION_LOST_ERROR', this.handleUploadError);
         this.props.vm.on('PERIPHERAL_UPLOAD_SUCCESS', this.handleUploadSuccess);
+        this.props.vm.on('PERIPHERAL_SET_UPLOAD_ABORT_ENABLED', this.handleSetUploadAbortEnabled);
     }
     componentWillUnmount () {
         this.props.vm.removeListener('PERIPHERAL_UPLOAD_STDOUT', this.handleStdout);
         this.props.vm.removeListener('PERIPHERAL_UPLOAD_ERROR', this.handleUploadError);
         this.props.vm.removeListener('PERIPHERAL_CONNECTION_LOST_ERROR', this.handleUploadError);
         this.props.vm.removeListener('PERIPHERAL_UPLOAD_SUCCESS', this.handleUploadSuccess);
+        this.props.vm.removeListener('PERIPHERAL_SET_UPLOAD_ABORT_ENABLED', this.handleSetUploadAbortEnabled);
+        clearTimeout(this.uploadTimeout);
+    }
+    handleAbort () {
+        this.props.vm.abortUploadToPeripheral(this.props.deviceId);
         clearTimeout(this.uploadTimeout);
     }
     handleCancel () {
@@ -85,6 +94,13 @@ class UploadProgress extends React.Component {
         });
         clearTimeout(this.uploadTimeout);
         this.uploadTimeout = setTimeout(() => this.handleUploadTimeout(), UPLOAD_TIMEOUT_TIME);
+    }
+    handleSetUploadAbortEnabled (enabled) {
+        if (enabled) {
+            this.setState({abortEnabled: true});
+        } else {
+            this.setState({abortEnabled: false});
+        }
     }
     handleUploadError (data) {
         // if the upload progress has been in success don't handle the upload error.
@@ -130,6 +146,8 @@ class UploadProgress extends React.Component {
             <UploadProgressComponent
                 connectionSmallIconURL={this.state.extension && this.state.extension.connectionSmallIconURL}
                 name={this.state.extension && this.state.extension.name}
+                abortEnabled={this.state.abortEnabled}
+                onAbort={this.handleAbort}
                 onCancel={this.handleCancel}
                 onHelp={this.handleHelp}
                 text={this.state.text}

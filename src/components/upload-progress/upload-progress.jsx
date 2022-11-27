@@ -78,17 +78,30 @@ const UploadProgressComponent = props => (
                         />
                     ) : null}
                 </Box>
-                <button
-                    className={classNames(styles.bottomAreaItem, styles.connectionButton)}
-                    onClick={props.onCancel}
-                    disabled={props.phase === PHASES.uploading}
-                >
-                    <FormattedMessage
-                        defaultMessage="Close"
-                        description="Button in bottom to close after upload"
-                        id="gui.uploadProgress.close"
-                    />
-                </button>
+                {
+                    (props.phase === PHASES.uploading && props.abortEnabled) ?
+                        <button
+                            className={classNames(styles.bottomAreaItem, styles.connectionButton)}
+                            onClick={props.onAbort}
+                        >
+                            <FormattedMessage
+                                defaultMessage="Abort"
+                                description="Button in bottom to abort upload process"
+                                id="gui.uploadProgress.abort"
+                            />
+                        </button> :
+                        <button
+                            className={classNames(styles.bottomAreaItem, styles.connectionButton)}
+                            onClick={props.onCancel}
+                            disabled={props.phase === PHASES.uploading}
+                        >
+                            <FormattedMessage
+                                defaultMessage="Close"
+                                description="Button in bottom to close after upload"
+                                id="gui.uploadProgress.close"
+                            />
+                        </button>
+                }
             </Box>
         </Box>
     </Modal>
@@ -97,6 +110,8 @@ const UploadProgressComponent = props => (
 UploadProgressComponent.propTypes = {
     connectionSmallIconURL: PropTypes.string,
     name: PropTypes.node,
+    abortEnabled: PropTypes.bool.isRequired,
+    onAbort: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onHelp: PropTypes.func.isRequired,
     text: PropTypes.string.isRequired,
