@@ -70,7 +70,7 @@ const deviceData = [
                 id="gui.device.unselectDevice.name"
             />
         ),
-        deviceId: 'unselectDevice',
+        deviceId: 'null',
         iconURL: unselectDeviceIconURL,
         description: (
             <FormattedMessage
