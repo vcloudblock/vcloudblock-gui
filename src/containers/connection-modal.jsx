@@ -24,7 +24,8 @@ class ConnectionModal extends React.Component {
             device: this.props.deviceData.find(device => device.deviceId === props.deviceId),
             phase: props.vm.getPeripheralIsConnected(props.deviceId) ?
                 PHASES.connected : PHASES.scanning,
-            peripheralName: null
+            peripheralName: null,
+            errorMessage: null
         };
     }
     componentDidMount () {
@@ -74,7 +75,7 @@ class ConnectionModal extends React.Component {
             this.props.onCancel();
         }
     }
-    handleError () {
+    handleError (err) {
         // Assume errors that come in during scanning phase are the result of not
         // having scratch-link installed.
         if (this.state.phase === PHASES.scanning || this.state.phase === PHASES.unavailable) {
@@ -83,7 +84,8 @@ class ConnectionModal extends React.Component {
             });
         } else {
             this.setState({
-                phase: PHASES.error
+                phase: PHASES.error,
+                errorMessage: err.message
             });
             analytics.event({
                 category: 'devices',
@@ -117,6 +119,7 @@ class ConnectionModal extends React.Component {
                 connectingMessage={this.state.device && this.state.device.connectingMessage}
                 connectionIconURL={this.state.device && this.state.device.connectionIconURL}
                 connectionSmallIconURL={this.state.device && this.state.device.connectionSmallIconURL}
+                errorMessage={this.state.errorMessage}
                 isSerialport={this.state.device && this.state.device.serialportRequired}
                 isListAll={this.props.isListAll}
                 connectionTipIconURL={this.state.device && this.state.device.connectionTipIconURL}
