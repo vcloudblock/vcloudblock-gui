@@ -26,8 +26,8 @@ const messages = defineMessages({
     }
 });
 
-// 60s
-const UPLOAD_TIMEOUT_TIME = 60 * 1000;
+const UPLOAD_TIMEOUT_TIME = 60 * 1000; // 60s
+const AUTO_CLOSE_TIME = 3 * 1000; // 3s
 
 class UploadProgress extends React.Component {
     constructor (props) {
@@ -40,14 +40,16 @@ class UploadProgress extends React.Component {
             'handleStdout',
             'handleUploadError',
             'handleUploadSuccess',
-            'handleUploadTimeout'
+            'handleUploadTimeout',
+            'handleStopAutoClose'
         ]);
         this.state = {
             extension: this.props.deviceData.find(dev => dev.deviceId === props.deviceId),
             phase: PHASES.uploading,
             peripheralName: null,
             abortEnabled: false,
-            text: ''
+            text: '',
+            autoCloseCount: AUTO_CLOSE_TIME
         };
         // if the upload progress stack some seconds with out any info.
         // set state to timeout let user could colse the modal.
@@ -119,12 +121,29 @@ class UploadProgress extends React.Component {
             clearTimeout(this.uploadTimeout);
         }
     }
-    handleUploadSuccess () {
-        this.setState({
-            phase: PHASES.success
-        });
-        this.props.onUploadSuccess();
-        this.handleCancel();
+    handleUploadSuccess (aborted) {
+        // if be aborted, don't show success alert.
+        if (aborted) {
+            this.setState({
+                phase: PHASES.aborted
+            });
+        } else {
+            this.setState({
+                phase: PHASES.success
+            });
+            this.props.onUploadSuccess();
+        }
+        // this.handleCancel();
+        this.autoCloseInterval = setInterval(() => {
+            this.setState({
+                autoCloseCount: this.state.autoCloseCount - 1000
+            });
+            if (this.state.autoCloseCount === 0) {
+                clearInterval(this.autoCloseInterval);
+                this.handleCancel();
+            }
+        }, 1000);
+
         clearTimeout(this.uploadTimeout);
     }
     handleUploadTimeout () {
@@ -140,6 +159,14 @@ class UploadProgress extends React.Component {
         });
         clearTimeout(this.uploadTimeout);
     }
+    handleStopAutoClose () {
+        if (this.autoCloseInterval) {
+            clearInterval(this.autoCloseInterval);
+            this.setState({
+                autoCloseCount: 0
+            });
+        }
+    }
 
     render () {
         return (
@@ -147,9 +174,11 @@ class UploadProgress extends React.Component {
                 connectionSmallIconURL={this.state.extension && this.state.extension.connectionSmallIconURL}
                 name={this.state.extension && this.state.extension.name}
                 abortEnabled={this.state.abortEnabled}
+                autoCloseCount={this.state.autoCloseCount}
                 onAbort={this.handleAbort}
                 onCancel={this.handleCancel}
                 onHelp={this.handleHelp}
+                onStopAutoClose={this.handleStopAutoClose}
                 text={this.state.text}
                 phase={this.state.phase}
             />
