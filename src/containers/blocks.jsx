@@ -548,11 +548,13 @@ class Blocks extends React.Component {
             defineBlocks(categoryInfo.blocks);
         });
 
-        // Update the toolbox with new blocks if possible
-        const toolboxXML = this.getToolboxXML();
-        if (toolboxXML) {
-            this.props.updateToolboxState(this.deviceFakeToolboxHead + toolboxXML);
-        }
+        // Update the toolbox with new blocks if possible, use timeout to let props update first
+        setTimeout(() => {
+            const toolboxXML = this.getToolboxXML();
+            if (toolboxXML) {
+                this.props.updateToolboxState(this.deviceFakeToolboxHead + toolboxXML);
+            }
+        }, 0);
     }
     handleScratchExtensionRemoved (extensionInfo) {
         const {deviceId} = extensionInfo;
