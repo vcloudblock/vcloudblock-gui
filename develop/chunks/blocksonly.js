@@ -5,7 +5,7 @@ var GUI =
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(1970);
+var content = __webpack_require__(1973);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -27,7 +27,7 @@ if(false) {}
 
 /***/ }),
 
-/***/ 1969:
+/***/ 1972:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -81,7 +81,7 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEB
 
 /***/ }),
 
-/***/ 1970:
+/***/ 1973:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(21)(false);
@@ -98,5 +98,5 @@ exports.locals = {
 
 /***/ })
 
-},[[1969,0]]]);
+},[[1972,0]]]);
 //# sourceMappingURL=blocksonly.js.map
