@@ -1,4 +1,4 @@
-import GoogleAnalytics from 'react-ga';
+import GoogleAnalytics from 'react-ga4';
 
 import log from './log';
 
@@ -7,11 +7,12 @@ const GA_ID = (process.env.GA_ID || window.GA_ID);
 const initialAnalytics = (clientId = null) => {
     if (GA_ID) {
         const arg = {
-            debug: (process.env.NODE_ENV !== 'production'),
-            titleCase: true,
-            sampleRate: (process.env.NODE_ENV === 'production') ? 100 : 0,
-            forceSSL: true,
-            gaOptions: clientId ? {clientId: clientId} : null
+            testMode: (process.env.NODE_ENV !== 'production'),
+            gaOptions: {
+                clientId: clientId,
+                sampleRate: (process.env.NODE_ENV === 'production') ? 100 : 0,
+                forceSSL: true
+            }
         };
 
         GoogleAnalytics.initialize(GA_ID, arg);
