@@ -59,6 +59,7 @@ class UploadProgress extends React.Component {
             action: 'uploading',
             label: this.props.deviceId
         });
+        this.scrollableRef = React.createRef();
     }
     componentDidMount () {
         this.props.vm.on('PERIPHERAL_UPLOAD_STDOUT', this.handleStdout);
@@ -94,6 +95,7 @@ class UploadProgress extends React.Component {
         this.setState({
             text: this.state.text + data.message
         });
+        this.scrollableRef.current.scrollToBottom();
         clearTimeout(this.uploadTimeout);
         this.uploadTimeout = setTimeout(() => this.handleUploadTimeout(), UPLOAD_TIMEOUT_TIME);
     }
@@ -133,7 +135,6 @@ class UploadProgress extends React.Component {
             });
             this.props.onUploadSuccess();
         }
-        // this.handleCancel();
         this.autoCloseInterval = setInterval(() => {
             this.setState({
                 autoCloseCount: this.state.autoCloseCount - 1000
@@ -181,6 +182,7 @@ class UploadProgress extends React.Component {
                 onStopAutoClose={this.handleStopAutoClose}
                 text={this.state.text}
                 phase={this.state.phase}
+                scrollableRef={this.scrollableRef}
             />
         );
     }

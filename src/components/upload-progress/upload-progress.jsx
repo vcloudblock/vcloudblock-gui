@@ -40,7 +40,7 @@ const UploadProgressComponent = props => (
             <Box className={styles.terminalWarper}>
                 <ScrollableFeed
                     className={styles.terminalText}
-                    forceScroll
+                    ref={props.scrollableRef}
                 >
                     <Ansi>
                         {props.text}
@@ -134,7 +134,8 @@ UploadProgressComponent.propTypes = {
     onHelp: PropTypes.func.isRequired,
     onStopAutoClose: PropTypes.func.isRequired,
     text: PropTypes.string.isRequired,
-    phase: PropTypes.oneOf(Object.keys(PHASES)).isRequired
+    phase: PropTypes.oneOf(Object.keys(PHASES)).isRequired,
+    scrollableRef: PropTypes.object // eslint-disable-line react/forbid-prop-types
 };
 
 UploadProgressComponent.defaultProps = {
