@@ -79,6 +79,7 @@ class UploadProgress extends React.Component {
     handleAbort () {
         this.props.vm.abortUploadToPeripheral(this.props.deviceId);
         clearTimeout(this.uploadTimeout);
+        this.setState({abortEnabled: false});
     }
     handleCancel () {
         this.props.oncloseUploadProgress();
