@@ -1,7 +1,7 @@
 import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {injectIntl} from 'react-intl';
+import {injectIntl, intlShape} from 'react-intl';
 
 import LibraryItemComponent from '../components/library-item/library-item.jsx';
 
@@ -124,9 +124,10 @@ class LibraryItem extends React.PureComponent {
     }
     render () {
         const iconMd5 = this.curIconMd5();
-        const iconURL = iconMd5 ?
-            `https://openblockcc.github.io/openblock-assets/assets/${iconMd5}` :
-            this.props.iconRawURL;
+        const iconURL = iconMd5 ? (this.props.intl.locale === 'zh-cn' ?
+            `https://openblockcc.gitee.io/openblock-assets/assets/${iconMd5}` :
+            `https://openblockcc.github.io/openblock-assets/assets/${iconMd5}`
+        ) : this.props.iconRawURL;
         return (
             <LibraryItemComponent
                 author={this.props.author}
@@ -196,6 +197,7 @@ LibraryItem.propTypes = {
     id: PropTypes.number.isRequired,
     insetIconURL: PropTypes.string,
     internetConnectionRequired: PropTypes.bool,
+    intl: intlShape.isRequired,
     isLoaded: PropTypes.bool,
     isUnloadble: PropTypes.bool,
     isPlaying: PropTypes.bool,
