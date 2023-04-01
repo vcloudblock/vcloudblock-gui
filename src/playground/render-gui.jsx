@@ -10,7 +10,7 @@ import log from '../lib/log.js';
 import MessageBoxType from '../lib/message-box.js';
 
 const onClickLogo = () => {
-    window.location = 'https://openblockcc.github.io/wiki/';
+    window.location = 'https://www.openblock.cc/';
 };
 
 const onClickCheckUpdate = () => {
