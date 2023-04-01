@@ -120,7 +120,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
 var onClickLogo = function onClickLogo() {
-  window.location = 'https://openblockcc.github.io/wiki/';
+  window.location = 'https://www.openblock.cc/';
 };
 
 var onClickCheckUpdate = function onClickCheckUpdate() {
