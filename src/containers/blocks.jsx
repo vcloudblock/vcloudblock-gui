@@ -493,6 +493,8 @@ class Blocks extends React.Component {
                 if (dev.programMode.includes(defaultProgramMode)) {
                     if (defaultProgramMode === 'upload') {
                         this.props.vm.runtime.setRealtimeMode(false);
+                    } else {
+                        this.props.vm.runtime.setRealtimeMode(true);
                     }
                 }
 
