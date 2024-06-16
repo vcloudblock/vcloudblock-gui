@@ -76,7 +76,7 @@ jobs:
 
       - run: npm ci
 
-    # Don't push translations to TX. The push step will be run by the enterprise edition repository.
+    # Don't push translations to TX. The push step will be run by the distro repository.
     #   - name: Push i18n
     #     if: ${{ github.ref == 'refs/heads/main' }}
     #     run: |
@@ -104,7 +104,7 @@ jobs:
           git add .
           git commit -m '[skip ci] Update translations from transifex'
           git remote add origin-translation https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY
-          git push --set-upstream origin-translation develop
+          git push --set-upstream origin-translation main
 
       - name: Build
         env:

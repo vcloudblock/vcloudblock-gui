@@ -5,9 +5,6 @@ import log from '../../log';
 import {DeviceType} from '../../device';
 
 
-import arduinoBaseToolBox from './baseToolbox/arduino';
-import microbitBaseToolBox from './baseToolbox/microbit';
-
 import unselectDeviceIconURL from './unselectDevice/unselectDevice.png';
 
 import arduinoUnoIconURL from './arduinoUno/arduinoUno.png';
@@ -80,7 +77,6 @@ const deviceData = [
             />
         ),
         featured: true,
-        hide: false,
         programMode: ['realtime'],
         programLanguage: ['block'],
         tags: ['realtime']
@@ -116,7 +112,6 @@ const deviceData = [
                 id="gui.device.arduinoUno.connectingMessage"
             />
         ),
-        baseToolBoxXml: arduinoBaseToolBox,
         programMode: ['realtime', 'upload'],
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
@@ -153,7 +148,6 @@ const deviceData = [
                 id="gui.device.arduinoNano.connectingMessage"
             />
         ),
-        baseToolBoxXml: arduinoBaseToolBox,
         programMode: ['realtime', 'upload'],
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
@@ -190,7 +184,6 @@ const deviceData = [
                 id="gui.device.arduinoLeonardo.connectingMessage"
             />
         ),
-        baseToolBoxXml: arduinoBaseToolBox,
         programMode: ['upload'], // due to the software serilport realtim mode is unstable
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
@@ -227,7 +220,6 @@ const deviceData = [
                 id="gui.device.arduinoMega2560.connectingMessage"
             />
         ),
-        baseToolBoxXml: arduinoBaseToolBox,
         programMode: ['realtime', 'upload'],
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
@@ -264,7 +256,6 @@ const deviceData = [
                 id="gui.device.esp32.connectingMessage"
             />
         ),
-        baseToolBoxXml: arduinoBaseToolBox,
         programMode: ['upload', 'realtime'],
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
@@ -301,7 +292,6 @@ const deviceData = [
                 id="gui.device.esp8266NodeMCU.connectingMessage"
             />
         ),
-        baseToolBoxXml: arduinoBaseToolBox,
         deviceExtensionsCompatible: 'arduinoEsp8266',
         programMode: ['upload'],
         programLanguage: ['block', 'c', 'cpp'],
@@ -339,7 +329,6 @@ const deviceData = [
                 id="gui.device.k210MaixDock.connectingMessage"
             />
         ),
-        baseToolBoxXml: arduinoBaseToolBox,
         programMode: ['upload'],
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
@@ -376,7 +365,6 @@ const deviceData = [
                 id="gui.device.k210Maixduino.connectingMessage"
             />
         ),
-        baseToolBoxXml: arduinoBaseToolBox,
         programMode: ['upload'],
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
@@ -413,7 +401,6 @@ const deviceData = [
                 id="gui.device.raspberryPiPicoIconURL.connectingMessage"
             />
         ),
-        baseToolBoxXml: arduinoBaseToolBox,
         programMode: ['upload'],
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
@@ -450,7 +437,6 @@ const deviceData = [
                 id="gui.device.microbit.connectingMessage"
             />
         ),
-        baseToolBoxXml: microbitBaseToolBox,
         programMode: ['upload'],
         programLanguage: ['block', 'microPython'],
         tags: ['microPython'],
@@ -487,7 +473,6 @@ const deviceData = [
                 id="gui.device.microbitV2.connectingMessage"
             />
         ),
-        baseToolBoxXml: microbitBaseToolBox,
         programMode: ['upload'],
         programLanguage: ['block', 'microPython'],
         tags: ['microPython'],
@@ -524,7 +509,6 @@ const deviceData = [
                 id="gui.device.makeyMakey.connectingMessage"
             />
         ),
-        baseToolBoxXml: arduinoBaseToolBox,
         programMode: ['upload'],
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
@@ -538,26 +522,35 @@ const deviceData = [
         type: DeviceType.arduino,
         featured: true,
         disabled: false,
-        hide: true,
-        baseToolBoxXml: arduinoBaseToolBox
+        hide: true
     },
     {
         deviceId: 'arduinoSE',
         type: DeviceType.arduino,
         featured: true,
         disabled: false,
-        hide: true,
-        baseToolBoxXml: arduinoBaseToolBox
+        hide: true
     },
     {
         deviceId: 'arduinoEsp8266',
         type: DeviceType.arduino,
         featured: true,
         disabled: false,
-        hide: true,
-        baseToolBoxXml: arduinoBaseToolBox
+        hide: true
     }
 ];
+
+/**
+ * Unique event blocks under different programming frameworks.
+ */
+const eventBlock = {
+    [DeviceType.arduino]: '<block type="event_whenarduinobegin"/>',
+    [DeviceType.microPython]: '<block type="event_whenmicropythonbegin"/>',
+    [DeviceType.microbit]: `<block type="event_whenmicrobitbegin"/>
+                                <block type="event_whenmicrobitbuttonpressed"/>
+                                <block type="event_whenmicrobitpinbeingtouched"/>
+                                <block type="event_whenmicrobitgesture"/>`
+};
 
 /**
  * To get real device id. eg: the third party id like ironKit_arduinoUno.
@@ -565,13 +558,10 @@ const deviceData = [
  * @return {string} deviceId - the real device id.
  */
 const analysisRealDeviceId = deviceId => {
-    if (deviceId){
-        // if the id contain '_' use the string afer the '_'.
-        if (deviceId.indexOf('_') !== -1) {
-            deviceId = deviceId.split('_')[1];
-        }
+    // if the id contain '_' use the string afer the '_'.
+    if (deviceId.indexOf('_') !== -1) {
+        return deviceId.split('_')[1];
     }
-    return deviceId;
 };
 
 /**
@@ -586,16 +576,23 @@ const makeDeviceLibrary = (deviceList = null) => {
 
     if (deviceList) {
         deviceList.forEach(dev => {
-            // Because the micropython framework is not included in the community version,
-            // for a control board that supports multiple programming frameworks, if it
-            // also supports arduino, then we only load the arduino version of the device.
-            if ((typeof dev.typeList !== 'undefined') && (dev.deviceId.indexOf('arduino') !== -1)) {
-                dev.hide = false;
-            }
-
             // Check if this is a build-in device.
             const matchedDevice = deviceData.find(item => dev.deviceId === item.deviceId);
             if (matchedDevice) {
+                // processing the device which just select only one type
+                if (matchedDevice.deviceId.indexOf('arduino') !== -1 ||
+                    matchedDevice.deviceId.indexOf('microPython') !== -1) {
+
+                    const deviceId = matchedDevice.deviceId;
+                    const deviceType = matchedDevice.type;
+
+                    let parentId = deviceId.replace(deviceType, '');
+                    parentId = parentId.replace(parentId[0], parentId[0].toLowerCase());
+                    if (!deviceList.find(item => item.deviceId === parentId)) {
+                        matchedDevice.hide = false;
+                        matchedDevice.typeList = [deviceType];
+                    }
+                }
                 return regeneratedDeviceData.push(matchedDevice);
             }
 
@@ -606,9 +603,10 @@ const makeDeviceLibrary = (deviceList = null) => {
                 if (parentDevice) {
                     return regeneratedDeviceData.push(defaults({}, dev, {hide: false}, parentDevice));
                 }
+                log.warn('Cannot find the parent device of this device:', dev.deviceId);
+                return;
             }
-            log.warn('Cannot find this device or it\'s parent device :', dev.deviceId);
-            return null;
+            return regeneratedDeviceData.push(defaults({}, dev, {hide: false}));
         });
 
         regeneratedDeviceData.unshift(deviceData[0]); // add unselect deive in the head.
@@ -621,5 +619,6 @@ const makeDeviceLibrary = (deviceList = null) => {
 
 export {
     deviceData as default,
+    eventBlock,
     makeDeviceLibrary
 };
