@@ -562,6 +562,7 @@ const analysisRealDeviceId = deviceId => {
     if (deviceId.indexOf('_') !== -1) {
         return deviceId.split('_')[1];
     }
+    return deviceId;
 };
 
 /**
@@ -575,41 +576,24 @@ const makeDeviceLibrary = (deviceList = null) => {
     let regeneratedDeviceData = [];
 
     if (deviceList) {
+        if (deviceList[0].isOrdered) { // External resources customize the device arrangement
+            regeneratedDeviceData.push(deviceData[0]);
+        } else {
+            deviceList = deviceData.concat(deviceList);
+        }
+
         deviceList.forEach(dev => {
-            // Check if this is a build-in device.
-            const matchedDevice = deviceData.find(item => dev.deviceId === item.deviceId);
+            const realDeviceId = analysisRealDeviceId(dev.deviceId);
+            const matchedDevice = deviceData.find(item => realDeviceId === item.deviceId);
             if (matchedDevice) {
-                // processing the device which just select only one type
-                if (matchedDevice.deviceId.indexOf('arduino') !== -1 ||
-                    matchedDevice.deviceId.indexOf('microPython') !== -1) {
-
-                    const deviceId = matchedDevice.deviceId;
-                    const deviceType = matchedDevice.type;
-
-                    let parentId = deviceId.replace(deviceType, '');
-                    parentId = parentId.replace(parentId[0], parentId[0].toLowerCase());
-                    if (!deviceList.find(item => item.deviceId === parentId)) {
-                        matchedDevice.hide = false;
-                        matchedDevice.typeList = [deviceType];
-                    }
+                if (realDeviceId !== dev.deviceId) {
+                    return regeneratedDeviceData.push(defaults({}, dev, {hide: false}, matchedDevice));
                 }
                 return regeneratedDeviceData.push(matchedDevice);
             }
-
-            // This is a third party device. Try to parse it's parent deivce.
-            const realDeviceId = analysisRealDeviceId(dev.deviceId);
-            if (realDeviceId) {
-                const parentDevice = deviceData.find(item => realDeviceId === item.deviceId);
-                if (parentDevice) {
-                    return regeneratedDeviceData.push(defaults({}, dev, {hide: false}, parentDevice));
-                }
-                log.warn('Cannot find the parent device of this device:', dev.deviceId);
-                return;
-            }
-            return regeneratedDeviceData.push(defaults({}, dev, {hide: false}));
+            log.warn('Unable to find the corresponding built-in device:', dev.deviceId);
+            return;
         });
-
-        regeneratedDeviceData.unshift(deviceData[0]); // add unselect deive in the head.
     } else {
         regeneratedDeviceData = deviceData;
     }
