@@ -725,9 +725,9 @@ class MenuBar extends React.Component {
                         />
                         {
                             this.props.deviceName ? (
-                                <div>
+                                <span>
                                     {this.props.deviceName}
-                                </div>
+                                </span>
                             ) : (
                                 <FormattedMessage
                                     defaultMessage="No device selected"
