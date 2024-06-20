@@ -9,7 +9,7 @@ import {injectIntl} from 'react-intl';
 import VM from 'openblock-vm';
 
 import {setStageSize} from '../reducers/stage-size';
-import {STAGE_SIZE_MODES} from '../lib/layout-constants';
+import {STAGE_SIZE_MODES, STAGE_DISPLAY_SIZES} from '../lib/layout-constants';
 import {openUploadProgress} from '../reducers/modals';
 import {showAlertWithTimeout} from '../reducers/alerts';
 
@@ -57,15 +57,14 @@ HardwareHeader.propTypes = {
     onOpenUploadProgress: PropTypes.func,
     onWorkspaceIsEmpty: PropTypes.func.isRequired,
     peripheralName: PropTypes.string,
-    stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
+    stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
 const mapStateToProps = state => ({
     codeEditorValue: state.scratchGui.code.codeEditorValue,
     deviceId: state.scratchGui.device.deviceId,
-    peripheralName: state.scratchGui.connectionModal.peripheralName,
-    stageSizeMode: state.scratchGui.stageSize.stageSize
+    peripheralName: state.scratchGui.connectionModal.peripheralName
 });
 
 const mapDispatchToProps = dispatch => ({
