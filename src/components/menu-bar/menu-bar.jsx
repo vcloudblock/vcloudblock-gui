@@ -92,8 +92,11 @@ import saveIcon from './icon--save.svg';
 import linkSocketIcon from './icon--link-socket.svg'; // eslint-disable-line no-unused-vars
 import communityIcon from './icon--community.svg';
 import wikiIcon from './icon--wiki.svg';
+import fileIcon from './icon--file.svg';
+import editIcon from './icon--edit.svg';
 
-import scratchLogo from './scratch-logo.svg';
+import openblockLogo from './openblock-logo.svg';
+import openblockLogoSmall from './openblock-logo-small.svg';
 
 import sharedMessages from '../../lib/shared-messages';
 
@@ -203,6 +206,8 @@ class MenuBar extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
+            'checkOverflow',
+            'containerRef',
             'handleClickNew',
             'handleClickRemix',
             'handleClickOpenCommunity',
@@ -218,6 +223,7 @@ class MenuBar extends React.Component {
             'restoreOptionMessage',
             'handleConnectionMouseUp',
             'handleUploadFirmware',
+            'handleWindowsResize',
             'handleSelectDeviceMouseUp',
             'handleProgramModeSwitchOnChange',
             'handleProgramModeUpdate',
@@ -225,16 +231,46 @@ class MenuBar extends React.Component {
             'handleCheckUpdate',
             'handleClearCache'
         ]);
+        this.state = {
+            isOverflow: false
+        };
     }
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyPress);
         this.props.vm.on('PERIPHERAL_DISCONNECTED', this.props.onDisconnect);
         this.props.vm.on('PROGRAM_MODE_UPDATE', this.handleProgramModeUpdate);
+        window.addEventListener('resize', this.handleWindowsResize);
+    }
+    componentDidUpdate (prevProps) {
+        if (prevProps.isToolboxUpdating !== this.props.isToolboxUpdating && !this.state.isOverflow
+        ) {
+            this.checkOverflow();
+        }
     }
     componentWillUnmount () {
         document.removeEventListener('keydown', this.handleKeyPress);
         this.props.vm.removeListener('PERIPHERAL_DISCONNECTED', this.props.onDisconnect);
         this.props.vm.removeListener('PROGRAM_MODE_UPDATE', this.handleProgramModeUpdate);
+        window.removeEventListener('resize', this.handleWindowsResize);
+    }
+    handleWindowsResize () {
+        this.setState({isOverflow: false});
+        if (this.resizeTimerout) {
+            clearTimeout(this.resizeTimerout);
+        }
+        // When you continue to drag and resize the window, the menu content is not hidden immediately,
+        // but delayed for a period of time to prevent the menu content from flickering frequently.After
+        // testing, a delay of 300ms seems to be the most comfortable.
+        this.resizeTimerout = setTimeout(() => this.checkOverflow(), 300);
+    }
+    containerRef (el) {
+        this.containerElement = el;
+    }
+    checkOverflow () {
+        if (this.containerElement) {
+            const container = this.containerElement;
+            this.setState({isOverflow: container.scrollWidth > container.clientWidth});
+        }
     }
     handleClickNew () {
         // if the project is dirty, and user owns the project, we will autosave.
@@ -525,16 +561,17 @@ class MenuBar extends React.Component {
                     this.props.className,
                     styles.menuBar
                 )}
+                componentRef={this.containerRef}
             >
                 <div className={styles.mainMenu}>
                     <div className={classNames(styles.menuBarItem)}>
                         <img
                             alt="OpenBlock"
-                            className={classNames(styles.scratchLogo, {
+                            className={classNames(styles.openblockLogo, {
                                 [styles.clickable]: typeof this.props.onClickLogo !== 'undefined'
                             })}
                             draggable={false}
-                            src={this.props.logo}
+                            src={this.state.isOverflow ? this.props.logoSmall : this.props.logo}
                             onClick={this.props.onClickLogo}
                         />
                     </div>
@@ -560,11 +597,16 @@ class MenuBar extends React.Component {
                             })}
                             onMouseUp={this.props.onClickFile}
                         >
-                            <FormattedMessage
-                                defaultMessage="File"
-                                description="Text for file dropdown menu"
-                                id="gui.menuBar.file"
-                            />
+                            {this.state.isOverflow ? (
+                                <img
+                                    className={styles.fileIcon}
+                                    src={fileIcon}
+                                />) :
+                                <FormattedMessage
+                                    defaultMessage="File"
+                                    description="Text for file dropdown menu"
+                                    id="gui.menuBar.file"
+                                />}
                             <MenuBarMenu
                                 className={classNames(styles.menuBarMenu)}
                                 open={this.props.fileMenuOpen}
@@ -628,11 +670,16 @@ class MenuBar extends React.Component {
                         onMouseUp={this.props.isRealtimeMode ? this.props.onClickEdit : null}
                     >
                         <div className={classNames(styles.editMenu)} >
-                            <FormattedMessage
-                                defaultMessage="Edit"
-                                description="Text for edit dropdown menu"
-                                id="gui.menuBar.edit"
-                            />
+                            {this.state.isOverflow ? (
+                                <img
+                                    className={styles.editIcon}
+                                    src={editIcon}
+                                />) :
+                                <FormattedMessage
+                                    defaultMessage="Edit"
+                                    description="Text for edit dropdown menu"
+                                    id="gui.menuBar.edit"
+                                />}
                         </div>
                         <MenuBarMenu
                             className={classNames(styles.menuBarMenu)}
@@ -680,9 +727,9 @@ class MenuBar extends React.Component {
                         />
                         {
                             this.props.deviceName ? (
-                                <div>
+                                <span>
                                     {this.props.deviceName}
-                                </div>
+                                </span>
                             ) : (
                                 <FormattedMessage
                                     defaultMessage="No device selected"
@@ -702,7 +749,7 @@ class MenuBar extends React.Component {
                                     className={styles.connectedIcon}
                                     src={connectedIcon}
                                 />
-                                {this.props.peripheralName}
+                                {this.state.isOverflow ? null : this.props.peripheralName}
                             </React.Fragment>
                         ) : (
                             <React.Fragment>
@@ -710,11 +757,11 @@ class MenuBar extends React.Component {
                                     className={styles.unconnectedIcon}
                                     src={unconnectedIcon}
                                 />
-                                <FormattedMessage
+                                {this.state.isOverflow ? null : <FormattedMessage
                                     defaultMessage="Unconnected"
                                     description="Text for menubar unconnected button"
                                     id="gui.menuBar.noConnection"
-                                />
+                                />}
                             </React.Fragment>
                         )}
                     </div>
@@ -727,41 +774,42 @@ class MenuBar extends React.Component {
                         />
                     </div>*/}
                 </div>
-                <div className={styles.fileMenu}>
-                    {this.props.canEditTitle ? (
-                        <div className={classNames(styles.menuBarItem, styles.growable)}>
-                            <MenuBarItemTooltip
-                                enable
-                                id="title-field"
-                            >
-                                <ProjectTitleInput
-                                    className={classNames(styles.titleFieldGrowable)}
-                                />
-                            </MenuBarItemTooltip>
-                        </div>
-                    ) : ((this.props.authorUsername && this.props.authorUsername !== this.props.username) ? (
-                        <AuthorInfo
-                            className={styles.authorInfo}
-                            imageUrl={this.props.authorThumbnailUrl}
-                            projectTitle={this.props.projectTitle}
-                            userId={this.props.authorId}
-                            username={this.props.authorUsername}
-                        />
-                    ) : null)}
-                    {(this.props.canManageFiles) && (
-                        <SB3Downloader>{(className, downloadProjectCallback) => (
-                            <div
-                                className={classNames(styles.menuBarItem, styles.hoverable)}
-                                onClick={this.getSaveToComputerHandler(downloadProjectCallback)}
-                            >
-                                <img
-                                    className={styles.saveIcon}
-                                    src={saveIcon}
-                                />
+                {this.state.isOverflow ? null :
+                    (<div className={styles.fileMenu}>
+                        {this.props.canEditTitle ? (
+                            <div className={classNames(styles.menuBarItem, styles.growable)}>
+                                <MenuBarItemTooltip
+                                    enable
+                                    id="title-field"
+                                >
+                                    <ProjectTitleInput
+                                        className={classNames(styles.titleFieldGrowable)}
+                                    />
+                                </MenuBarItemTooltip>
                             </div>
-                        )}</SB3Downloader>
-                    )}
-                </div>
+                        ) : ((this.props.authorUsername && this.props.authorUsername !== this.props.username) ? (
+                            <AuthorInfo
+                                className={styles.authorInfo}
+                                imageUrl={this.props.authorThumbnailUrl}
+                                projectTitle={this.props.projectTitle}
+                                userId={this.props.authorId}
+                                username={this.props.authorUsername}
+                            />
+                        ) : null)}
+                        {(this.props.canManageFiles) && (
+                            <SB3Downloader>{(className, downloadProjectCallback) => (
+                                <div
+                                    className={classNames(styles.menuBarItem, styles.hoverable)}
+                                    onClick={this.getSaveToComputerHandler(downloadProjectCallback)}
+                                >
+                                    <img
+                                        className={styles.saveIcon}
+                                        src={saveIcon}
+                                    />
+                                </div>
+                            )}</SB3Downloader>
+                        )}
+                    </div>)}
                 <div className={styles.tailMenu}>
                     <div
                         aria-label={this.props.intl.formatMessage(ariaMessages.community)}
@@ -772,7 +820,7 @@ class MenuBar extends React.Component {
                             className={styles.communityIcon}
                             src={communityIcon}
                         />
-                        <FormattedMessage {...ariaMessages.community} />
+                        {this.state.isOverflow ? null : <FormattedMessage {...ariaMessages.community} />}
                     </div>
                     <div
                         aria-label={this.props.intl.formatMessage(ariaMessages.wiki)}
@@ -783,7 +831,7 @@ class MenuBar extends React.Component {
                             className={styles.wikiIcon}
                             src={wikiIcon}
                         />
-                        <FormattedMessage {...ariaMessages.wiki} />
+                        {this.state.isOverflow ? null : <FormattedMessage {...ariaMessages.wiki} />}
                     </div>
                     <div
                         aria-label={this.props.intl.formatMessage(ariaMessages.tutorials)}
@@ -794,7 +842,7 @@ class MenuBar extends React.Component {
                             className={styles.helpIcon}
                             src={helpIcon}
                         />
-                        <FormattedMessage {...ariaMessages.tutorials} />
+                        {this.state.isOverflow ? null : <FormattedMessage {...ariaMessages.tutorials} />}
                     </div>
                     <Divider className={classNames(styles.divider)} />
                     <div
@@ -821,43 +869,32 @@ class MenuBar extends React.Component {
                             draggable={false}
                             src={uploadFirmwareIcon}
                         />
-                        <FormattedMessage
-                            defaultMessage="Upload firmware"
+                        {this.state.isOverflow ? null : <FormattedMessage
+                            defaultMessage="Upload Firmware"
                             description="Button to upload the realtime firmware"
                             id="gui.menuBar.uploadFirmware"
-                        />
+                        />}
                     </div>
                     <Divider className={classNames(styles.divider)} />
                     <div className={classNames(styles.menuBarItem, styles.programModeGroup)}>
+                        <FormattedMessage
+                            defaultMessage="Program Mode"
+                            description="Button to switch to upload mode"
+                            id="gui.menu-bar.programMode"
+                        />
                         <Switch
                             className={styles.programModeSwitch}
                             onChange={this.handleProgramModeSwitchOnChange}
                             checked={!this.props.isRealtimeMode}
                             disabled={this.props.isToolboxUpdating || !this.props.isSupportSwitchMode}
                             height={25}
-                            width={90}
+                            width={45}
                             onColor={this.props.isToolboxUpdating ||
                                 !this.props.isSupportSwitchMode ? '#888888' : '#008800'}
                             offColor={this.props.isToolboxUpdating ||
                                 !this.props.isSupportSwitchMode ? '#888888' : '#FF8C1A'}
-                            uncheckedIcon={
-                                <div className={styles.modeSwitchRealtime}>
-                                    <FormattedMessage
-                                        defaultMessage="Realtime"
-                                        description="Button to switch to upload mode"
-                                        id="gui.menu-bar.modeSwitchRealtime"
-                                    />
-                                </div>
-                            }
-                            checkedIcon={
-                                <div className={styles.modeSwitchUpload}>
-                                    <FormattedMessage
-                                        defaultMessage="Upload"
-                                        description="Button to switch to realtime mode"
-                                        id="gui.menu-bar.modeSwitchRealtimeUpload"
-                                    />
-                                </div>
-                            }
+                            uncheckedIcon={false}
+                            checkedIcon={false}
                         />
                     </div>
                     {isScratchDesktop() ? (
@@ -946,6 +983,7 @@ MenuBar.propTypes = {
     locale: PropTypes.string.isRequired,
     loginMenuOpen: PropTypes.bool,
     logo: PropTypes.string,
+    logoSmall: PropTypes.string,
     onClickAbout: PropTypes.oneOfType([
         PropTypes.func, // button mode: call this callback when the About button is clicked
         PropTypes.arrayOf( // menu mode: list of items in the About menu
@@ -1014,7 +1052,8 @@ MenuBar.propTypes = {
 };
 
 MenuBar.defaultProps = {
-    logo: scratchLogo,
+    logo: openblockLogo,
+    logoSmall: openblockLogoSmall,
     onShare: () => {}
 };
 
