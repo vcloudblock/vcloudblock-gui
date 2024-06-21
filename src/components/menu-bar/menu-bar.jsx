@@ -241,15 +241,10 @@ class MenuBar extends React.Component {
         this.props.vm.on('PROGRAM_MODE_UPDATE', this.handleProgramModeUpdate);
         window.addEventListener('resize', this.handleWindowsResize);
     }
-    componentDidUpdate (prevProps, prevState) {
-        if ((prevState.isOverflow !== this.state.isOverflow && !this.state.isOverflow) ||
-            prevProps.isToolboxUpdating !== this.props.isToolboxUpdating
+    componentDidUpdate (prevProps) {
+        if (prevProps.isToolboxUpdating !== this.props.isToolboxUpdating && !this.state.isOverflow
         ) {
-            // TODO Maybe there is a better way to dynamically adjust the hidden state of
-            // the element so that the content does not flicker when the window is resized
-            setTimeout(() => {
-                this.checkOverflow();
-            }, 50);
+            this.checkOverflow();
         }
     }
     componentWillUnmount () {
@@ -259,7 +254,14 @@ class MenuBar extends React.Component {
         window.removeEventListener('resize', this.handleWindowsResize);
     }
     handleWindowsResize () {
-        this.checkOverflow();
+        this.setState({isOverflow: false});
+        if (this.resizeTimerout) {
+            clearTimeout(this.resizeTimerout);
+        }
+        // When you continue to drag and resize the window, the menu content is not hidden immediately,
+        // but delayed for a period of time to prevent the menu content from flickering frequently.After
+        // testing, a delay of 300ms seems to be the most comfortable.
+        this.resizeTimerout = setTimeout(() => this.checkOverflow(), 300);
     }
     containerRef (el) {
         this.containerElement = el;
