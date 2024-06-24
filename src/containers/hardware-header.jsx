@@ -25,8 +25,8 @@ class HardwareHeader extends React.Component {
 
     handleUpload () {
         if (this.props.peripheralName) {
-            const blocks = document.querySelector('.blocklyWorkspace .blocklyBlockCanvas');
-            if (blocks.getBBox().height === 0) {
+            const blocklyBlockCanvas = document.querySelector('.blocklyWorkspace .blocklyBlockCanvas');
+            if (blocklyBlockCanvas.childNodes.length === 0) {
                 this.props.onWorkspaceIsEmpty();
             } else {
                 this.props.vm.uploadToPeripheral(this.props.deviceId, this.props.codeEditorValue);

@@ -391,8 +391,8 @@ class MenuBar extends React.Component {
         }
     }
     handleSelectDeviceMouseUp () {
-        const blocks = document.querySelector('.blocklyWorkspace .blocklyBlockCanvas');
-        if (blocks.getBBox().height === 0) {
+        const blocklyBlockCanvas = document.querySelector('.blocklyWorkspace .blocklyBlockCanvas');
+        if (blocklyBlockCanvas.childNodes.length === 0) {
             this.props.onOpenDeviceLibrary();
         } else {
             this.props.onWorkspaceIsNotEmpty();
@@ -429,19 +429,19 @@ class MenuBar extends React.Component {
         }
     }
     handleScreenshot () {
-        const blocks = document.querySelector('.blocklyWorkspace .blocklyBlockCanvas');
-        if (blocks.getBBox().height === 0) {
+        const blocklyBlockCanvas = document.querySelector('.blocklyWorkspace .blocklyBlockCanvas');
+        if (blocklyBlockCanvas.childNodes.length === 0) {
             this.props.onWorkspaceIsEmpty();
         } else {
-            const transform = blocks.getAttribute('transform');
+            const transform = blocklyBlockCanvas.getAttribute('transform');
             const scale = parseFloat(transform.substring(transform.indexOf('scale') + 6, transform.length - 1));
             const data = new Date();
 
-            saveSvgAsPng.saveSvgAsPng(blocks, `${this.props.projectTitle}-${data.getTime()}.png`, {
-                left: blocks.getBBox().x * scale,
-                top: blocks.getBBox().y * scale,
-                height: blocks.getBBox().height * scale,
-                width: blocks.getBBox().width * scale,
+            saveSvgAsPng.saveSvgAsPng(blocklyBlockCanvas, `${this.props.projectTitle}-${data.getTime()}.png`, {
+                left: blocklyBlockCanvas.getBBox().x * scale,
+                top: blocklyBlockCanvas.getBBox().y * scale,
+                height: blocklyBlockCanvas.getBBox().height * scale,
+                width: blocklyBlockCanvas.getBBox().width * scale,
                 scale: 2 / scale,
                 encoderOptions: 1
             });
