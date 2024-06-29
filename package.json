@@ -57,7 +57,7 @@
     "monaco-editor": "^0.20.0",
     "omggif": "1.0.9",
     "openblock-blocks": "^0.1.0-prerelease.20240624113036",
-    "openblock-l10n": "^3.15.20240620160344",
+    "openblock-l10n": "^3.15.20240627004658",
     "openblock-save-svg-as-png": "^1.4.18",
     "openblock-vm": "^0.2.0-prerelease.20240620151653",
     "papaparse": "5.3.0",

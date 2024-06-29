@@ -16,7 +16,7 @@ import styles from './index.css';
 
 initialAnalytics();
 // Register "base" page view
-analytics.send({hitType: 'pageview', page: '/'});
+analytics.send({hitType: 'pageview', page: '/community/web'});
 
 const appTarget = document.createElement('div');
 appTarget.className = styles.app;
