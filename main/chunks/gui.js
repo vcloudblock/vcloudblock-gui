@@ -41,7 +41,7 @@ Object(_lib_analytics__WEBPACK_IMPORTED_MODULE_6__[/* initialAnalytics */ "b"])(
 
 _lib_analytics__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"].send({
   hitType: 'pageview',
-  page: '/'
+  page: '/community/web'
 });
 var appTarget = document.createElement('div');
 appTarget.className = _index_css__WEBPACK_IMPORTED_MODULE_10___default.a.app;
