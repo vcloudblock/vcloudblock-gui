@@ -46,7 +46,7 @@ jobs:
       - name: Build
         env:
           NODE_ENV: production
-          GA_ID: ${{ secrets.GA_ID_ONLINE }}
+          GA_ID: ${{ secrets.GA_ID }}
           NODE_OPTIONS: --max-old-space-size=4000
         run: npm run build
 
@@ -109,7 +109,7 @@ jobs:
       - name: Build
         env:
           NODE_ENV: production
-          GA_ID: ${{ secrets.GA_ID_ONLINE }}
+          GA_ID: ${{ secrets.GA_ID }}
           NODE_OPTIONS: --max-old-space-size=4000
         run: npm run build
 
