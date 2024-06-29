@@ -104,6 +104,7 @@ jobs:
           git add .
           git commit -m '[skip ci] Update translations from transifex'
           git remote add origin-translation https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git pull
           git push --set-upstream origin-translation main
 
       - name: Build
