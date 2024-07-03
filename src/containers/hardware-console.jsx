@@ -154,6 +154,8 @@ class HardwareConsole extends React.Component {
         const keyCode = e.keyCode || e.which || e.charCode;
         const ctrlKey = e.ctrlKey || e.metaKey;
 
+        e.preventDefault();
+
         // Ctrl + A
         if (keyCode === 65 && ctrlKey) {
             this.writeToPeripheral(String.fromCharCode(1));
