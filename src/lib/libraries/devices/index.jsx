@@ -256,7 +256,7 @@ const deviceData = [
                 id="gui.device.esp32.connectingMessage"
             />
         ),
-        programMode: ['upload', 'realtime'],
+        programMode: ['upload'],
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
         helpLink: 'https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/hw-reference/esp32/get-started-devkitc.html'
