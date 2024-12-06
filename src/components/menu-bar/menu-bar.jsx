@@ -7,7 +7,7 @@ import bindAll from 'lodash.bindall';
 import bowser from 'bowser';
 import React from 'react';
 
-import VM from 'openblock-vm';
+import VM from 'vcloudblock-vm';
 
 import Box from '../box/box.jsx';
 import Button from '../button/button.jsx';
@@ -109,7 +109,7 @@ import screenshotIcon from './icon--screenshot.svg';
 import settingIcon from './icon--setting.svg';
 
 import uploadFirmwareIcon from './icon--upload-firmware.svg';
-import saveSvgAsPng from 'openblock-save-svg-as-png';
+import saveSvgAsPng from 'vcloudblock-save-svg-as-png';
 import {showAlertWithTimeout} from '../../reducers/alerts';
 
 const ariaMessages = defineMessages({

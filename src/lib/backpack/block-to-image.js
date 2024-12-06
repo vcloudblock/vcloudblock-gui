@@ -1,5 +1,5 @@
 import computedStyleToInlineStyle from 'computed-style-to-inline-style';
-import ScratchBlocks from 'openblock-blocks';
+import ScratchBlocks from 'vcloudblock-blocks';
 
 /**
  * Given a blockId, return a data-uri image that can be used to create a thumbnail.
@@ -7,7 +7,7 @@ import ScratchBlocks from 'openblock-blocks';
  * @return {Promise} resolves to a data-url of a picture of the blocks
  */
 export default function (blockId) {
-    // Not sure any better way to access the openblock-blocks workspace than this...
+    // Not sure any better way to access the vcloudblock-blocks workspace than this...
     const block = ScratchBlocks.getMainWorkspace().getBlockById(blockId);
     const blockSvg = block.getSvgRoot().cloneNode(true /* deep */);
 

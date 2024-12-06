@@ -1,5 +1,5 @@
-import 'openblock-blocks/arduino_compressed';
-import 'openblock-blocks/python_compressed';
+import 'vcloudblock-blocks/arduino_compressed';
+import 'vcloudblock-blocks/python_compressed';
 
 import {DeviceType} from './device';
 
