@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {injectIntl} from 'react-intl';
 
-import VM from 'openblock-vm';
+import VM from 'vcloudblock-vm';
 
 import {setStageSize} from '../reducers/stage-size';
 import {STAGE_SIZE_MODES, STAGE_DISPLAY_SIZES} from '../lib/layout-constants';
