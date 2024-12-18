@@ -349,10 +349,12 @@ class MenuBar extends React.Component {
         }
     }
     handleClickOpenCommunity () {
-        window.open('https://community.openblock.cc');
+        // window.open('https://community.openblock.cc');
+        window.open('https://github.com/vcloudblock/vcloudblock-wiki');
     }
     handleClickOpenWiki () {
-        window.open('https://wiki.openblock.cc');
+        // window.open('https://wiki.openblock.cc');
+        window.open('https://github.com/vcloudblock/vcloudblock-wiki');
     }
     restoreOptionMessage (deletedItem) {
         switch (deletedItem) {

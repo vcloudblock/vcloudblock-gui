@@ -69,17 +69,17 @@ const WebGlModal = ({intl, ...props}) => (
                 <div className={styles.faqLinkText}>
                     <FormattedMessage
                         defaultMessage="To learn more, go to the {previewFaqLink}."
-                        description="OpenBlock FAQ description"
+                        description="VCloudBlock FAQ description"
                         id="gui.webglModal.previewfaq"
                         values={{
                             previewFaqLink: (
                                 <a
                                     className={styles.faqLink}
-                                    href="//openblock.cc/faq"
+                                    href="//github.com/vcloudblock/vcloudblock-wiki"
                                 >
                                     <FormattedMessage
                                         defaultMessage="FAQ"
-                                        description="link to OpenBlock FAQ page"
+                                        description="link to VCloudBlock FAQ page"
                                         id="gui.webglModal.previewfaqlinktext"
                                     />
                                 </a>
