@@ -95,8 +95,8 @@ import wikiIcon from './icon--wiki.svg';
 import fileIcon from './icon--file.svg';
 import editIcon from './icon--edit.svg';
 
-import openblockLogo from './openblock-logo.svg';
-import openblockLogoSmall from './openblock-logo-small.svg';
+import vcloudblockLogo from './vcloudblock-logo.svg';
+import vcloudblockLogoSmall from './vcloudblock-logo-small.svg';
 
 import sharedMessages from '../../lib/shared-messages';
 
@@ -568,8 +568,8 @@ class MenuBar extends React.Component {
                 <div className={styles.mainMenu}>
                     <div className={classNames(styles.menuBarItem)}>
                         <img
-                            alt="OpenBlock"
-                            className={classNames(styles.openblockLogo, {
+                            alt="VCloudBlock"
+                            className={classNames(styles.vcloudblockLogo, {
                                 [styles.clickable]: typeof this.props.onClickLogo !== 'undefined'
                             })}
                             draggable={false}
@@ -1054,8 +1054,8 @@ MenuBar.propTypes = {
 };
 
 MenuBar.defaultProps = {
-    logo: openblockLogo,
-    logoSmall: openblockLogoSmall,
+    logo: vcloudblockLogo,
+    logoSmall: vcloudblockLogoSmall,
     onShare: () => {}
 };
 

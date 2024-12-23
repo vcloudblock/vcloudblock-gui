@@ -43,7 +43,7 @@ export default function (blockId) {
             computedStyleToInlineStyle(svg, {
                 recursive: true,
                 // Enumerate the specific properties we need to inline.
-                // Specifically properties that are set from CSS in openblock-blocks
+                // Specifically properties that are set from CSS in vcloudblock-blocks
                 properties: ['fill', 'font-family', 'font-size', 'font-weight']
             });
 

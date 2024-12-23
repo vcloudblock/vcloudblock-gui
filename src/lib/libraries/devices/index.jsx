@@ -404,7 +404,8 @@ const deviceData = [
         programMode: ['upload'],
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
-        helpLink: 'https://wiki.openblock.cc/general-hardware-guidelines/boards/raspberry-pi-pico'
+        // helpLink: 'https://wiki.openblock.cc/general-hardware-guidelines/boards/raspberry-pi-pico'
+        helpLink: 'https://github.com/vcloudblock/vcloudblock-wiki'
     },
     {
         name: 'Micro:bit',

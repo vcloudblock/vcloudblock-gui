@@ -18,7 +18,7 @@ import unFullScreenIcon from './icon--unfullscreen.svg';
 
 import signalIcon from './icon--signal.svg';
 
-import openblockLogo from '../menu-bar/openblock-logo.svg';
+import vcloudblockLogo from '../menu-bar/vcloudblock-logo.svg';
 import styles from './stage-header.css';
 
 const messages = defineMessages({
@@ -71,13 +71,13 @@ const StageHeaderComponent = function (props) {
         const stageButton = showBranding ? (
             <div className={styles.embedOpenblockLogo}>
                 <a
-                    href="https://openblock.cc"
+                    href="https://vcloudblock.cn"
                     rel="noopener noreferrer"
                     target="_blank"
                 >
                     <img
-                        alt="OpenBlock"
-                        src={openblockLogo}
+                        alt="VCloudBlock"
+                        src={vcloudblockLogo}
                     />
                 </a>
             </div>
